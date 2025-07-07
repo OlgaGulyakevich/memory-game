@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Игра Мемори. Игра для изучения иностранных языков</title>
+  <title>Игра Мемори. Игра для тренировки памяти на разных наборах изображений</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="vendor/react.development.js"></script>
   <script src="vendor/react-dom.development.js"></script>
@@ -14,68 +14,40 @@
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App />);
+    root.render(<App data={images} visibleItems={visibleItems} finishedItems={finishedItems}/>);
 
-    // корневой компонент приложения
-    function App() {
+
+    // компонент карточки
+    function Card({ url, description, isCardShow, isCardFinished }) {
+      const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
       return (
-        <section className="game container">
-    <ul className="cards cards-theme-cars">
-      <li className="card card-show">
-        <img src="img/cats-1.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-2.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-3.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-4.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card card-finished">
-        <img src="img/cats-5.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card card-show">
-        <img src="img/cats-6.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-6.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card card-finished">
-        <img src="img/cats-5.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-4.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-3.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-2.jpg" width="204" height="144" alt="Котик" />
-      </li>
-      <li className="card">
-        <img src="img/cats-1.jpg" width="204" height="144" alt="Котик" />
-      </li>
-    </ul>
-  </section>
+        <li className={cardClasses}>
+          <img src={url} width="204" height="144" alt={description} />
+        </li>
       );
     }
 
-    // компонент карточки
-    // function Card(props) {
-    //   return (
-    //     <li className="card">
-    //       <img src={props.url} width="204" height="144" alt={props.description} />
-    //     </li>
-    //   );
-    // }
-
-
-    // передача данных в компоненты
-    // const cards = data.map((item) => <Card image={item.image} />);
-
+    // корневой компонент приложения
+    function App ({data=[], visibleItems=[], finishedItems=[]}) {
+      const cards = data.map((item) => (
+        <Card
+          key={item.id}
+          url={item.url}
+          description={item.description}
+          isCardShow={visibleItems.includes(item.id)}
+          isCardFinished={finishedItems.includes(item.id)}
+        />
+      ));
+      return (
+        <section className="game container">
+          <ul className="cards cards-theme-cars">
+            {cards}
+          </ul>
+        </section>
+      );
+    }
 
   </script>
 </body>
 </html>
+
