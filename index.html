@@ -14,7 +14,7 @@
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App data={images} visibleItems={visibleItems} finishedItems={finishedItems}/>);
+    root.render(<App images={images} visibleItems={visibleItems} finishedItems={finishedItems}/>);
 
 
     // компонент карточки
@@ -26,23 +26,28 @@
         </li>
       );
     }
+    // компонент сетки
+    function Grid({images, visibleItems, finishedItems}) {
+      return (
+        <ul className="cards cards-theme-cars">
+          {images.map((item) => (
+            <Card
+              key={item.id}
+              url={item.url}
+              description={item.description}
+              isCardShow={visibleItems.includes(item.id)}
+              isCardFinished={finishedItems.includes(item.id)}
+            />
+          ))}
+        </ul>
+      );
+    }
 
     // корневой компонент приложения
-    function App ({data=[], visibleItems=[], finishedItems=[]}) {
-      const cards = data.map((item) => (
-        <Card
-          key={item.id}
-          url={item.url}
-          description={item.description}
-          isCardShow={visibleItems.includes(item.id)}
-          isCardFinished={finishedItems.includes(item.id)}
-        />
-      ));
+    function App ({images=[], visibleItems=[], finishedItems=[]}) {
       return (
         <section className="game container">
-          <ul className="cards cards-theme-cars">
-            {cards}
-          </ul>
+          <Grid images={images} visibleItems={visibleItems} finishedItems={finishedItems}/>
         </section>
       );
     }
