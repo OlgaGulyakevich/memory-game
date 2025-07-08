@@ -3,37 +3,37 @@ const themes = {
   cats: [
     {
       id: 'cat-1',
-      url: 'img/cats-1.jpg',
+      url: 'img/cats/cats-1.jpg',
       description: 'Серый кот',
       theme: 'cats'
     },
     {
       id: 'cat-2', 
-      url: 'img/cats-2.jpg',
+      url: 'img/cats/cats-2.jpg',
       description: 'Рыжий кот',
       theme: 'cats'
     },
     {
       id: 'cat-3',
-      url: 'img/cats-3.jpg', 
+      url: 'img/cats/cats-3.jpg', 
       description: 'Белый кот',
       theme: 'cats'
     },
     {
       id: 'cat-4',
-      url: 'img/cats-4.jpg',
+      url: 'img/cats/cats-4.jpg',
       description: 'Черный кот',
       theme: 'cats'
     },
     {
       id: 'cat-5',
-      url: 'img/cats-5.jpg',
+      url: 'img/cats/cats-5.jpg',
       description: 'Полосатый кот',
       theme: 'cats'
     },
     {
       id: 'cat-6',
-      url: 'img/cats-6.jpg',
+      url: 'img/cats/cats-6.jpg',
       description: 'Пушистый кот',
       theme: 'cats'
     }
@@ -42,37 +42,37 @@ const themes = {
   flowers: [
     {
       id: 'flower-1',
-      url: 'img/flowers-1.jpg',
+      url: 'img/flowers/flowers-1.jpg',
       description: 'Красная роза',
       theme: 'flowers'
     },
     {
       id: 'flower-2',
-      url: 'img/flowers-2.jpg', 
+      url: 'img/flowers/flowers-2.jpg', 
       description: 'Белая лилия',
       theme: 'flowers'
     },
     {
       id: 'flower-3',
-      url: 'img/flowers-3.jpg',
+      url: 'img/flowers/flowers-3.jpg',
       description: 'Желтый тюльпан',
       theme: 'flowers'
     },
     {
       id: 'flower-4',
-      url: 'img/flowers-4.jpg',
+      url: 'img/flowers/flowers-4.jpg',
       description: 'Фиолетовая орхидея',
       theme: 'flowers'
     },
     {
       id: 'flower-5',
-      url: 'img/flowers-5.jpg',
+      url: 'img/flowers/flowers-5.jpg',
       description: 'Розовый пион',
       theme: 'flowers'
     },
     {
       id: 'flower-6',
-      url: 'img/flowers-6.jpg',
+      url: 'img/flowers/flowers-6.jpg',
       description: 'Синяя гортензия',
       theme: 'flowers'
     }
@@ -81,37 +81,37 @@ const themes = {
   cars: [
     {
       id: 'car-1',
-      url: 'img/cars-1.jpg',
+      url: 'img/cars/cars-1.jpg',
       description: 'Красная спортивная машина',
       theme: 'cars'
     },
     {
       id: 'car-2',
-      url: 'img/cars-2.jpg',
+      url: 'img/cars/cars-2.jpg',
       description: 'Синий внедорожник',
       theme: 'cars'
     },
     {
       id: 'car-3',
-      url: 'img/cars-3.jpg',
+      url: 'img/cars/cars-3.jpg',
       description: 'Желтое такси',
       theme: 'cars'
     },
     {
       id: 'car-4',
-      url: 'img/cars-4.jpg',
+      url: 'img/cars/cars-4.jpg',
       description: 'Белый седан',
       theme: 'cars'
     },
     {
       id: 'car-5',
-      url: 'img/cars-5.jpg',
+      url: 'img/cars/cars-5.jpg',
       description: 'Черный кабриолет',
       theme: 'cars'
     },
     {
       id: 'car-6',
-      url: 'img/cars-6.jpg',
+      url: 'img/cars/cars-6.jpg',
       description: 'Зеленый хэтчбек',
       theme: 'cars'
     }
