@@ -8,27 +8,67 @@
   <script src="vendor/react-dom.development.js"></script>
   <script src="vendor/babel.min.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/setting.js"></script>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App images={images} visibleItems={visibleItems} finishedItems={finishedItems}/>);
+    root.render(<App images={images}/>);
 
 
-    // компонент карточки
-    function Card({ url, description, isCardShow, isCardFinished }) {
-      const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
+    function App ({images=[]}) {
+    // TODO: добавьте состояние для счётчика шагов
+  // const [openedCards, setOpenedCards] = React.useState([]);     // Открытые карточки (максимум 2)
+  // const [matchedCards, setMatchedCards] = React.useState([]);   // Найденные пары
+  // const [moves, setMoves] = React.useState(0);                  // Количество ходов
+
+  //   const isCardAlreadyOpen = openedCards.includes(cardId);
+  //   const isCardMatched = matchedCards.includes(cardId);
+  //   const maxCardsOpen = openedCards.length >= 2;
+  //   const isGameFinished = matchedCards.length === images.length;
+
+  //    // Если карточка уже открыта, найдена, или открыто максимум карточек - игнорируем клик
+  //    if (isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
+  //     return;
+  //   }
+
+  //   // Если открыто максимум карточек, закрываем одну из них
+    // if (maxCardsOpen) {
+    //   setOpenedCards([...openedCards, cardId]);
+    // }
+
+    // Если открыто 2 карточки, проверяем, совпадают ли они
+  //   if (openedCards.length === 2) {
+  //     const [firstCard, secondCard] = openedCards;
+  //     if (images[firstCard].url === images[secondCard].url) {
+  //       setMatchedCards([...matchedCards, firstCard, secondCard]);
+  //     }
+
+  //   // Добавляем карточку к открытым и увеличиваем счетчик ходов
+  //   setOpenedCards(prev => [...prev, cardId]);
+  //   setMoves(prev => prev + 1);
+  // };
+
+
       return (
-        <li className={cardClasses}>
-          <img src={url} width="204" height="144" alt={description} />
-        </li>
+        <section className="game container">
+          <div className="steps">Шаг {42}</div>
+              // <Grid images={images} 
+              //       visibleItems={visibleItems} 
+              //       finishedItems={finishedItems}
+              //       openedCards={openedCards}
+              //       matchedCards={matchedCards}
+              //       moves={moves}
+              //       isGameFinished={isGameFinished}
+                />
+        </section>
       );
     }
-    
-    // компонент сетки
-    function Grid({images, visibleItems, finishedItems}) {
+
+    function Grid({images=[], visibleItems=[], finishedItems=[] }) {
+      // TODO: добавьте состояние списка открытых карточек
       return (
         <ul className="cards cards-theme-cars">
           {images.map((item) => (
@@ -44,14 +84,17 @@
       );
     }
 
-    // корневой компонент приложения
-    function App ({images=[], visibleItems=[], finishedItems=[]}) {
+    function Card({ url, description, isCardShow, isCardFinished }) {
+        // TODO: добавьте обработку события
+      const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
       return (
-        <section className="game container">
-          <Grid images={images} visibleItems={visibleItems} finishedItems={finishedItems}/>
-        </section>
+        <li className={cardClasses}>
+          <img src={url} width="204" height="144" alt={description} />
+        </li>
       );
     }
+
+
 
   </script>
 </body>
