@@ -19,76 +19,66 @@
 
 
     function App ({images=[]}) {
-    // TODO: добавьте состояние для счётчика шагов
-  // const [openedCards, setOpenedCards] = React.useState([]);     // Открытые карточки (максимум 2)
-  // const [matchedCards, setMatchedCards] = React.useState([]);   // Найденные пары
-  // const [moves, setMoves] = React.useState(0);                  // Количество ходов
+    // Включаем состотояния
+  const [openedCards, setOpenedCards] = React.useState([]);     // Открытые карточки (максимум 2)
+  const [matchedCards, setMatchedCards] = React.useState([]);   // Найденные пары
+  const [moves, setMoves] = React.useState(0);                 // Количество ходов
+  
+   // Функция для обработки клика на карточке
+   const handleCardClick = (cardId) => {
 
-  //   const isCardAlreadyOpen = openedCards.includes(cardId);
-  //   const isCardMatched = matchedCards.includes(cardId);
-  //   const maxCardsOpen = openedCards.length >= 2;
-  //   const isGameFinished = matchedCards.length === images.length;
+  // Проверяем: можно ли открыть карточку?
+   const isCardAlreadyOpen = openedCards.includes(cardId);
+   const isCardMatched = matchedCards.includes(cardId);
+   const maxCardsOpen = openedCards.length >= 2;
 
-  //    // Если карточка уже открыта, найдена, или открыто максимум карточек - игнорируем клик
-  //    if (isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
-  //     return;
-  //   }
-
-  //   // Если открыто максимум карточек, закрываем одну из них
-    // if (maxCardsOpen) {
-    //   setOpenedCards([...openedCards, cardId]);
-    // }
-
-    // Если открыто 2 карточки, проверяем, совпадают ли они
-  //   if (openedCards.length === 2) {
-  //     const [firstCard, secondCard] = openedCards;
-  //     if (images[firstCard].url === images[secondCard].url) {
-  //       setMatchedCards([...matchedCards, firstCard, secondCard]);
-  //     }
-
-  //   // Добавляем карточку к открытым и увеличиваем счетчик ходов
-  //   setOpenedCards(prev => [...prev, cardId]);
-  //   setMoves(prev => prev + 1);
-  // };
-
+   // Если карточка уже открыта, найдена, или открыто максимум карточек - игнорируем клик
+   if (isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
+    return;
+   }
+    
+  // Добавляем карточку к открытым и увеличиваем ходы
+    setOpenedCards(prev => [...prev, cardId]);
+    setMoves(prev => prev + 1);
+   }
 
       return (
         <section className="game container">
-          <div className="steps">Шаг {42}</div>
-              // <Grid images={images} 
-              //       visibleItems={visibleItems} 
-              //       finishedItems={finishedItems}
-              //       openedCards={openedCards}
-              //       matchedCards={matchedCards}
-              //       moves={moves}
-              //       isGameFinished={isGameFinished}
-                />
+          <div className="steps">Шаг {moves}</div>
+              <Grid 
+              images={images}
+              openedCards={openedCards}
+              matchedCards={matchedCards}
+              onCardClick={handleCardClick} />
         </section>
       );
     }
 
-    function Grid({images=[], visibleItems=[], finishedItems=[] }) {
-      // TODO: добавьте состояние списка открытых карточек
+    function Grid({images=[], openedCards=[], matchedCards=[], onCardClick }) {
       return (
         <ul className="cards cards-theme-cars">
           {images.map((item) => (
             <Card
               key={item.id}
+              id={item.id}
               url={item.url}
               description={item.description}
-              isCardShow={visibleItems.includes(item.id)}
-              isCardFinished={finishedItems.includes(item.id)}
+              isCardShow={openedCards.includes(item.id)}
+              isCardFinished={matchedCards.includes(item.id)}
+              onCardClick={onCardClick}
             />
           ))}
         </ul>
       );
     }
 
-    function Card({ url, description, isCardShow, isCardFinished }) {
-        // TODO: добавьте обработку события
+    function Card({ id, url, description, isCardShow, isCardFinished, onCardClick }) {
       const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
       return (
-        <li className={cardClasses}>
+        <li 
+        className={cardClasses} 
+        onClick={() => onCardClick(id)}
+        >
           <img src={url} width="204" height="144" alt={description} />
         </li>
       );
