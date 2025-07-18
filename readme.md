@@ -92,7 +92,7 @@ memory-game/
 ### Быстрый старт
 ```bash
 # Клонируйте репозиторий
-git clone https://github.com/yourusername/memory-game.git
+git clone https://github.com/olgagulyakevich.github/memory-game.git
 
 # Перейдите в папку проекта
 cd memory-game

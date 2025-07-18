@@ -8,50 +8,83 @@
   <script src="vendor/react-dom.development.js"></script>
   <script src="vendor/babel.min.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/setting.js"></script>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App images={images} visibleItems={visibleItems} finishedItems={finishedItems}/>);
+    root.render(<App images={images}/>);
 
 
-    // компонент карточки
-    function Card({ url, description, isCardShow, isCardFinished }) {
-      const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
+    function App ({images=[]}) {
+    // Включаем состотояния
+  const [openedCards, setOpenedCards] = React.useState([]);     // Открытые карточки (максимум 2)
+  const [matchedCards, setMatchedCards] = React.useState([]);   // Найденные пары
+  const [moves, setMoves] = React.useState(0);                 // Количество ходов
+  
+   // Функция для обработки клика на карточке
+   const handleCardClick = (cardId) => {
+
+  // Проверяем: можно ли открыть карточку?
+   const isCardAlreadyOpen = openedCards.includes(cardId);
+   const isCardMatched = matchedCards.includes(cardId);
+   const maxCardsOpen = openedCards.length >= 2;
+
+   // Если карточка уже открыта, найдена, или открыто максимум карточек - игнорируем клик
+   if (isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
+    return;
+   }
+    
+  // Добавляем карточку к открытым и увеличиваем ходы
+    setOpenedCards(prev => [...prev, cardId]);
+    setMoves(prev => prev + 1);
+   }
+
       return (
-        <li className={cardClasses}>
-          <img src={url} width="204" height="144" alt={description} />
-        </li>
+        <section className="game container">
+          <div className="steps">Шаг {moves}</div>
+              <Grid 
+              images={images}
+              openedCards={openedCards}
+              matchedCards={matchedCards}
+              onCardClick={handleCardClick} />
+        </section>
       );
     }
-    
-    // компонент сетки
-    function Grid({images, visibleItems, finishedItems}) {
+
+    function Grid({images=[], openedCards=[], matchedCards=[], onCardClick }) {
       return (
         <ul className="cards cards-theme-cars">
           {images.map((item) => (
             <Card
               key={item.id}
+              id={item.id}
               url={item.url}
               description={item.description}
-              isCardShow={visibleItems.includes(item.id)}
-              isCardFinished={finishedItems.includes(item.id)}
+              isCardShow={openedCards.includes(item.id)}
+              isCardFinished={matchedCards.includes(item.id)}
+              onCardClick={onCardClick}
             />
           ))}
         </ul>
       );
     }
 
-    // корневой компонент приложения
-    function App ({images=[], visibleItems=[], finishedItems=[]}) {
+    function Card({ id, url, description, isCardShow, isCardFinished, onCardClick }) {
+      const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
       return (
-        <section className="game container">
-          <Grid images={images} visibleItems={visibleItems} finishedItems={finishedItems}/>
-        </section>
+        <li 
+        className={cardClasses} 
+        onClick={() => onCardClick(id)}
+        >
+          <img src={url} width="204" height="144" alt={description} />
+        </li>
       );
     }
+
+
 
   </script>
 </body>
