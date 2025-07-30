@@ -4,10 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
-  <title>Игровое поле</title>
+  <title>Игра Мемори</title>
 </head>
 <body>
   <section class="game container">
+    <div class="progress-wrapper">
+      <div class="progress" style="width: 10%;"></div>
+    </div>
+    <p class="progress-description">Открыто <span>1</span> / <span>6</span></p>
+    <div class="steps">Шаг 12</div>
     <ul class="cards cards-theme-cars">
       <li class="card card-show">
         <img src="img/cats-1.jpg" width="204" height="144" alt="Котик">
@@ -47,5 +52,12 @@
       </li>
     </ul>
   </section>
+  <div class="modal">
+    <div class="modal-box">
+      <h3 class="modal-caption">Победа!</h3>
+      <p class="modal-description">Вы собрали все пары за 7 шагов</p>
+      <button class="button modal-button" type="button">Новая игра</button>
+    </div>
+  </div>
 </body>
 </html>
