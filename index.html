@@ -28,60 +28,7 @@
         isWin: false           // Игрок победил?
       });
 
-      // ⏰ useEffect: Автоматическое закрытие неподходящих пар с задержкой
-      React.useEffect(() => {
-        // Если открыто ровно 2 карточки - запускаем проверку МГНОВЕННО
-        if (gameState.openedCards.length === 2) {
-          // 🚀 МГНОВЕННАЯ проверка пары (для автотестов)
-          checkPair();
-        }
-      }, [gameState.openedCards]); // Зависимость: следим за изменениями openedCards
-
-      // 🔍 Функция проверки пары карточек
-      const checkPair = () => {
-        const [cardId1, cardId2] = gameState.openedCards; // Деструктуризация массива
-
-        // Находим карточки по их ID в массиве images
-        const card1 = images.find(img => img.id === cardId1);
-        const card2 = images.find(img => img.id === cardId2);
-
-        // Сравниваем URL изображений для определения совпадения
-        const isPairMatch = card1.url === card2.url;
-
-        if (isPairMatch) {
-          // 🎉 Пара найдена! МГНОВЕННО добавляем в найденные и проверяем победу
-          setGameState(prevState => {
-            const newMatchedCards = [...prevState.matchedCards, cardId1, cardId2];
-            const totalCards = images.length;
-            const isGameWon = newMatchedCards.length === totalCards; // Все карточки найдены?
-
-            return {
-              ...prevState,
-              matchedCards: newMatchedCards,
-              openedCards: [], // МГНОВЕННО очищаем открытые карточки
-              isWin: isGameWon,
-              isGameOver: isGameWon // Игра завершена при победе
-            };
-          });
-        } else {
-          // 💔 Пара не подошла! Показываем задержку перед закрытием
-          setTimeout(() => {
-            setGameState(prevState => {
-              const newErrors = prevState.errors + 1;
-              const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT; // Кончились жизни?
-
-              return {
-                ...prevState,
-                errors: newErrors,
-                openedCards: [], // Закрываем карточки ПОСЛЕ задержки
-                isGameOver: isGameLost // Игра завершена при поражении
-              };
-            });
-          }, GAME_SETTINGS.FLIP_DELAY); // Задержка только для неподходящих пар
-        }
-      };
-
-      // 🔄 Обработчик клика по карточке
+      // 🔄 Обработчик клика по карточке (вся логика здесь)
       const handleCardClick = (cardId) => {
         // Проверяем: можно ли открыть карточку?
         const isCardAlreadyOpen = gameState.openedCards.includes(cardId);
@@ -105,54 +52,60 @@
             break;
 
           case 1:
-            // Вторая карточка - открываем и checkPair сработает через useEffect
-            setGameState(prevState => ({
-              ...prevState,
-              openedCards: [...prevState.openedCards, cardId],
-              moves: prevState.moves + 1
-            }));
-            break;
-
-          default:
-            // 🚀 Третья карточка - СНАЧАЛА обрабатываем предыдущие, ПОТОМ открываем новую
-            const [cardId1, cardId2] = gameState.openedCards;
-            
-            // Проверяем предыдущую пару МГНОВЕННО
-            const card1 = images.find(img => img.id === cardId1);
-            const card2 = images.find(img => img.id === cardId2);
+            // Вторая карточка - открываем и СРАЗУ проверяем пару
+            const firstCardId = gameState.openedCards[0];
+            const card1 = images.find(img => img.id === firstCardId);
+            const card2 = images.find(img => img.id === cardId);
             const isPairMatch = card1.url === card2.url;
 
             if (isPairMatch) {
-              // Предыдущая пара совпала - добавляем в найденные
+              // 🎉 Пара найдена! МГНОВЕННО добавляем в найденные
               setGameState(prevState => {
-                const newMatchedCards = [...prevState.matchedCards, cardId1, cardId2];
+                const newMatchedCards = [...prevState.matchedCards, firstCardId, cardId];
                 const totalCards = images.length;
                 const isGameWon = newMatchedCards.length === totalCards;
 
                 return {
                   ...prevState,
                   matchedCards: newMatchedCards,
-                  openedCards: [cardId], // Открываем новую карточку
+                  openedCards: [], // Очищаем открытые карточки
                   moves: prevState.moves + 1,
                   isWin: isGameWon,
                   isGameOver: isGameWon
                 };
               });
             } else {
-              // Предыдущая пара НЕ совпала - увеличиваем ошибки и открываем новую
-              setGameState(prevState => {
-                const newErrors = prevState.errors + 1;
-                const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT;
+              // 💔 Пара НЕ совпала - показываем на 800ms, потом закрываем
+              setGameState(prevState => ({
+                ...prevState,
+                openedCards: [...prevState.openedCards, cardId],
+                moves: prevState.moves + 1
+              }));
 
-                return {
-                  ...prevState,
-                  errors: newErrors,
-                  openedCards: [cardId], // Открываем новую карточку (предыдущие закрылись)
-                  moves: prevState.moves + 1,
-                  isGameOver: isGameLost
-                };
-              });
+              // Закрываем через задержку
+              setTimeout(() => {
+                setGameState(prevState => {
+                  const newErrors = prevState.errors + 1;
+                  const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT;
+
+                  return {
+                    ...prevState,
+                    errors: newErrors,
+                    openedCards: [], // Закрываем все карточки
+                    isGameOver: isGameLost
+                  };
+                });
+              }, GAME_SETTINGS.FLIP_DELAY);
             }
+            break;
+
+          default:
+            // 🚀 Третья карточка - МГНОВЕННО закрываем предыдущие и открываем новую
+            setGameState(prevState => ({
+              ...prevState,
+              openedCards: [cardId], // Заменяем все на новую карточку
+              moves: prevState.moves + 1
+            }));
             break;
         }
       };
