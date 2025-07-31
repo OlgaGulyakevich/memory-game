@@ -134,7 +134,7 @@
             totalPairs={totalPairs}  
           />
           
-          <Grid 
+          <GameBoard 
             images={images}
             gameState={gameState}
             onCardClick={handleCardClick} 
@@ -167,14 +167,14 @@ function GameHeader({ moves, progress, remainingLives, matchedPairs, totalPairs 
     }
 
 
-    // 🃏 Компонент сетки карточек
-    function Grid({ images = [], gameState, onCardClick }) {
+// Компонент игрового поля с карточками
+function GameBoard({ images = [], gameState, onCardClick }) {
       return (
         <ul className="cards cards-theme-cars">
           {images.map((item) => (
             <Card
               key={item.id}
-              {...item}  // Деструктуризация: передаем id, url, description
+              {...item}  // 🎯 Деструктуризация: передаем id, url, description
               isCardShow={gameState.openedCards.includes(item.id)}
               isCardFinished={gameState.matchedCards.includes(item.id)}
               onCardClick={onCardClick}
