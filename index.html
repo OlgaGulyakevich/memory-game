@@ -31,14 +31,9 @@
 
     // useEffect: Автоматическая проверка пар когда открыто 2 карточки
       React.useEffect(() => {
-        // Если открыто ровно 2 карточки - запускаем проверку с задержкой
+        // Если открыто ровно 2 карточки - запускаем проверку
         if (gameState.openedCards.length === 2) {
-          const timer = setTimeout(() => {
-            checkPair();
-          }, GAME_SETTINGS.FLIP_DELAY); // 800ms задержка из настроек
-
-          // 🧹 Очищаем таймер при размонтировании или изменении зависимостей
-          return () => clearTimeout(timer);
+          checkPair();
         }
       }, [gameState.openedCards]); // Зависимость: следим за изменениями openedCards
 
@@ -69,20 +64,22 @@
             };
           });
         } else {
-          // Пара не подошла! Увеличиваем ошибки и проверяем поражение
-          setGameState(prevState => {
-            const newErrors = prevState.errors + 1;
-            const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT; // Кончились жизни?
+         // 💔 Пара не подошла! Показываем задержку перед закрытием 
+         setTimeout(() => {
+            setGameState(prevState => {
+              const newErrors = prevState.errors + 1;
+              const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT; // Кончились жизни?
 
-            return {
-              ...prevState,
-              errors: newErrors,
-              openedCards: [], // Закрываем карточки
-              isGameOver: isGameLost // Игра завершена при поражении
-            };
-          });
+              return {
+                ...prevState,
+                errors: newErrors,
+                openedCards: [], // Закрываем карточки ПОСЛЕ задержки
+                isGameOver: isGameLost // Игра завершена при поражении
+              };
+            });
+          }, GAME_SETTINGS.FLIP_DELAY); // Задержка только для неподходящих пар
         }
-      };  
+      };
   
    // Функция для обработки клика на карточке
    const handleCardClick = (cardId) => {
@@ -90,20 +87,42 @@
   // Проверяем: можно ли открыть карточку?
   const isCardAlreadyOpen = gameState.openedCards.includes(cardId);
   const isCardMatched = gameState.matchedCards.includes(cardId);
-  const maxCardsOpen = gameState.openedCards.length >= 2;
   const gameIsOver = gameState.isGameOver;
 
      // Если игра окончена или карточка уже открыта/найдена, или открыто максимум карточек - игнорируем клик
-     if (gameIsOver || isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
+     if (gameIsOver || isCardAlreadyOpen || isCardMatched) {
           return;
         }
     
-    // Добавляем карточку к открытым и увеличиваем ходы
-    setGameState(prevState => ({
-          ...prevState,
-          openedCards: [...prevState.openedCards, cardId],
-          moves: prevState.moves + 1
-        }));
+   // ЛОГИКА КЛИКА ПО КАРТОЧКАМ через switch case:
+   switch (gameState.openedCards.length) {
+          case 0:
+            // Первая карточка - просто открываем
+            setGameState(prevState => ({
+              ...prevState,
+              openedCards: [cardId],
+              moves: prevState.moves + 1
+            }));
+            break;
+
+          case 1:
+            // Вторая карточка - открываем и checkPair сработает через useEffect
+            setGameState(prevState => ({
+              ...prevState,
+              openedCards: [...prevState.openedCards, cardId],
+              moves: prevState.moves + 1
+            }));
+            break;
+
+          default:
+            // Третья карточка и больше - заменяем все на новую карточку
+            setGameState(prevState => ({
+              ...prevState,
+              openedCards: [cardId],
+              moves: prevState.moves + 1
+            }));
+            break;
+        }
       };
 
     // Сброс игры к начальному состоянию
