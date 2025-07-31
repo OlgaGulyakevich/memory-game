@@ -19,52 +19,116 @@
 
 
     function App ({images=[]}) {
-    // Включаем состотояния
-  const [openedCards, setOpenedCards] = React.useState([]);     // Открытые карточки (максимум 2)
-  const [matchedCards, setMatchedCards] = React.useState([]);   // Найденные пары
-  const [moves, setMoves] = React.useState(0);                 // Количество ходов
+     // 🎯 Объединяем все состояние игры в один объект (React best practice для связанных данных)
+     const [gameState, setGameState] = React.useState({
+        openedCards: [],        // Открытые карточки (максимум 2)
+        matchedCards: [],       // Найденные пары карточек
+        moves: 0,               // Количество ходов
+        errors: 0,              // Количество ошибок
+        isGameOver: false,      // Игра завершена?
+        isWin: false           // Игрок победил?
+      });
   
    // Функция для обработки клика на карточке
    const handleCardClick = (cardId) => {
 
   // Проверяем: можно ли открыть карточку?
-   const isCardAlreadyOpen = openedCards.includes(cardId);
-   const isCardMatched = matchedCards.includes(cardId);
-   const maxCardsOpen = openedCards.length >= 2;
+  const isCardAlreadyOpen = gameState.openedCards.includes(cardId);
+  const isCardMatched = gameState.matchedCards.includes(cardId);
+  const maxCardsOpen = gameState.openedCards.length >= 2;
+  const gameIsOver = gameState.isGameOver;
+  const remainingLives = GAME_SETTINGS.LIVES_COUNT - gameState.errors;
 
-   // Если карточка уже открыта, найдена, или открыто максимум карточек - игнорируем клик
-   if (isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
-    return;
-   }
+     // Если игра окончена или карточка уже открыта/найдена, или открыто максимум карточек - игнорируем клик
+     if (gameIsOver || isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
+          return;
+        }
     
-  // Добавляем карточку к открытым и увеличиваем ходы
-    setOpenedCards(prev => [...prev, cardId]);
-    setMoves(prev => prev + 1);
-   }
+    // Добавляем карточку к открытым и увеличиваем ходы
+    setGameState(prevState => ({
+          ...prevState,
+          openedCards: [...prevState.openedCards, cardId],
+          moves: prevState.moves + 1
+        }));
+      };
+
+    // Сброс игры к начальному состоянию
+        const resetGame = () => {
+        setGameState({
+          openedCards: [],
+          matchedCards: [],
+          moves: 0,
+          errors: 0,
+          isGameOver: false,
+          isWin: false
+        });
+      };
+
+      // Вычисляем производные значения 
+      const totalPairs = images.length / 2;
+      const matchedPairs = gameState.matchedCards.length / 2;
+      const progress = totalPairs > 0 ? (matchedPairs / totalPairs) * 100 : 0;
+      const remainingLives = GAME_SETTINGS.LIVES_COUNT - gameState.errors;
 
       return (
         <section className="game container">
-          <div className="steps">Шаг {moves}</div>
-              <Grid 
-              images={images}
-              openedCards={openedCards}
-              matchedCards={matchedCards}
-              onCardClick={handleCardClick} />
+          <GameHeader 
+            moves={gameState.moves}
+            progress={progress}
+            remainingLives={remainingLives}
+          />
+          
+          <Grid 
+            images={images}
+            gameState={gameState}
+            onCardClick={handleCardClick} 
+          />
+
+          {gameState.isGameOver && (
+            <GameModal 
+              isWin={gameState.isWin}
+              moves={gameState.moves}
+              matchedPairs={matchedPairs}
+              onRestart={resetGame}
+            />
+          )}
         </section>
       );
     }
 
-    function Grid({images=[], openedCards=[], matchedCards=[], onCardClick }) {
+    // Компонент шапки игры с прогрессом
+    function GameHeader({ moves, progress, remainingLives }) {
+      return (
+        <>
+          <div className="steps">Шаг {moves}</div>
+          <ProgressBar progress={progress} />
+          <div className="lives">❤️ {remainingLives}</div>
+        </>
+      );
+    }
+
+    // Компонент прогресс-бара
+    function ProgressBar({ progress }) {
+      return (
+        <div className="progress">
+          <div 
+            className="progress-bar" 
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      );
+    }
+
+    // 🃏 Компонент сетки карточек
+    function Grid({ images = [], gameState, onCardClick }) {
       return (
         <ul className="cards cards-theme-cars">
           {images.map((item) => (
             <Card
               key={item.id}
-              id={item.id}
-              url={item.url}
-              description={item.description}
-              isCardShow={openedCards.includes(item.id)}
-              isCardFinished={matchedCards.includes(item.id)}
+              {...item}  // Деструктуризация: передаем id, url, description
+              isCardShow={gameState.openedCards.includes(item.id)}
+              isCardFinished={gameState.matchedCards.includes(item.id)}
               onCardClick={onCardClick}
             />
           ))}
@@ -72,18 +136,39 @@
       );
     }
 
+    // Компонент карточки
     function Card({ id, url, description, isCardShow, isCardFinished, onCardClick }) {
       const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
+      
       return (
         <li 
-        className={cardClasses} 
-        onClick={() => onCardClick(id)}
+          className={cardClasses} 
+          onClick={() => onCardClick(id)}
         >
           <img src={url} width="204" height="144" alt={description} />
         </li>
       );
     }
 
+    // Компонент модального окна с результатом
+    function GameModal({ isWin, moves, matchedPairs, onRestart }) {
+      return (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>{isWin ? '🎉 Победа!' : '💔 Игра окончена'}</h2>
+            <p>
+              {isWin 
+                ? `Поздравляем! Вы собрали все пары за ${moves} ходов!`
+                : `Вы собрали ${matchedPairs} пар из возможных.`
+              }
+            </p>
+            <button onClick={onRestart} className="restart-button">
+              Начать заново
+            </button>
+          </div>
+        </div>
+      );
+    }
 
 
   </script>
