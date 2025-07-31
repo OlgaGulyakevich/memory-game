@@ -28,6 +28,61 @@
         isGameOver: false,      // Игра завершена?
         isWin: false           // Игрок победил?
       });
+
+    // useEffect: Автоматическая проверка пар когда открыто 2 карточки
+      React.useEffect(() => {
+        // Если открыто ровно 2 карточки - запускаем проверку с задержкой
+        if (gameState.openedCards.length === 2) {
+          const timer = setTimeout(() => {
+            checkPair();
+          }, GAME_SETTINGS.FLIP_DELAY); // 800ms задержка из настроек
+
+          // 🧹 Очищаем таймер при размонтировании или изменении зависимостей
+          return () => clearTimeout(timer);
+        }
+      }, [gameState.openedCards]); // Зависимость: следим за изменениями openedCards
+
+      //Функция проверки пары карточек
+      const checkPair = () => {
+        const [cardId1, cardId2] = gameState.openedCards; // Деструктуризация массива
+
+        // Находим карточки по их ID в массиве images
+        const card1 = images.find(img => img.id === cardId1);
+        const card2 = images.find(img => img.id === cardId2);
+
+        // Сравниваем URL изображений для определения совпадения
+        const isPairMatch = card1.url === card2.url;
+
+        if (isPairMatch) {
+          // 🎉 Пара найдена! Добавляем в найденные и проверяем победу
+          setGameState(prevState => {
+            const newMatchedCards = [...prevState.matchedCards, cardId1, cardId2];
+            const totalCards = images.length;
+            const isGameWon = newMatchedCards.length === totalCards; // Все карточки найдены?
+
+            return {
+              ...prevState,
+              matchedCards: newMatchedCards,
+              openedCards: [], // Очищаем открытые карточки
+              isWin: isGameWon,
+              isGameOver: isGameWon // Игра завершена при победе
+            };
+          });
+        } else {
+          // 💔 Пара не подошла! Увеличиваем ошибки и проверяем поражение
+          setGameState(prevState => {
+            const newErrors = prevState.errors + 1;
+            const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT; // Кончились жизни?
+
+            return {
+              ...prevState,
+              errors: newErrors,
+              openedCards: [], // Закрываем карточки
+              isGameOver: isGameLost // Игра завершена при поражении
+            };
+          });
+        }
+      };  
   
    // Функция для обработки клика на карточке
    const handleCardClick = (cardId) => {
