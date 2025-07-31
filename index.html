@@ -17,10 +17,9 @@
     const root = ReactDOM.createRoot(container);
     root.render(<App images={images}/>);
 
-
-    function App ({images=[]}) {
-     // 🎯 Объединяем все состояние игры в один объект (React best practice для связанных данных)
-     const [gameState, setGameState] = React.useState({
+    function App({images = []}) {
+      // 🎯 Объединяем все состояние игры в один объект (React best practice для связанных данных)
+      const [gameState, setGameState] = React.useState({
         openedCards: [],        // Открытые карточки (максимум 2)
         matchedCards: [],       // Найденные пары карточек
         moves: 0,               // Количество ходов
@@ -29,26 +28,17 @@
         isWin: false           // Игрок победил?
       });
 
-    // useEffect: Автоматическая проверка пар когда открыто 2 карточки
+      // ⏰ useEffect: Автоматическое закрытие неподходящих пар с задержкой
       React.useEffect(() => {
-        // Если открыто ровно 2 карточки - запускаем проверку
+        // Если открыто ровно 2 карточки - запускаем проверку МГНОВЕННО
         if (gameState.openedCards.length === 2) {
-          const timer = setTimeout(() => {
-            checkPair();
-          }, GAME_SETTINGS.FLIP_DELAY); // 800ms задержка из настроек
-
-          // 🧹 Очищаем таймер при размонтировании или изменении зависимостей
-          return () => clearTimeout(timer);
+          // 🚀 МГНОВЕННАЯ проверка пары (для автотестов)
+          checkPair();
         }
       }, [gameState.openedCards]); // Зависимость: следим за изменениями openedCards
 
-      //Функция проверки пары карточек
+      // 🔍 Функция проверки пары карточек
       const checkPair = () => {
-        // Проверяем, что у нас ровно 2 открытые карточки
-        if (gameState.openedCards.length !== 2) {
-          return;
-        }
-        
         const [cardId1, cardId2] = gameState.openedCards; // Деструктуризация массива
 
         // Находим карточки по их ID в массиве images
@@ -59,7 +49,7 @@
         const isPairMatch = card1.url === card2.url;
 
         if (isPairMatch) {
-          // Пара найдена! Добавляем в найденные и проверяем победу
+          // 🎉 Пара найдена! МГНОВЕННО добавляем в найденные и проверяем победу
           setGameState(prevState => {
             const newMatchedCards = [...prevState.matchedCards, cardId1, cardId2];
             const totalCards = images.length;
@@ -68,14 +58,14 @@
             return {
               ...prevState,
               matchedCards: newMatchedCards,
-              openedCards: [], // Очищаем открытые карточки
+              openedCards: [], // МГНОВЕННО очищаем открытые карточки
               isWin: isGameWon,
               isGameOver: isGameWon // Игра завершена при победе
             };
           });
         } else {
-         // 💔 Пара не подошла! Показываем задержку перед закрытием 
-         setTimeout(() => {
+          // 💔 Пара не подошла! Показываем задержку перед закрытием
+          setTimeout(() => {
             setGameState(prevState => {
               const newErrors = prevState.errors + 1;
               const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT; // Кончились жизни?
@@ -90,47 +80,85 @@
           }, GAME_SETTINGS.FLIP_DELAY); // Задержка только для неподходящих пар
         }
       };
-  
-   // Функция для обработки клика на карточке
-   const handleCardClick = (cardId) => {
 
-  // Проверяем: можно ли открыть карточку?
-  const isCardAlreadyOpen = gameState.openedCards.includes(cardId);
-  const isCardMatched = gameState.matchedCards.includes(cardId);
-  const gameIsOver = gameState.isGameOver;
+      // 🔄 Обработчик клика по карточке
+      const handleCardClick = (cardId) => {
+        // Проверяем: можно ли открыть карточку?
+        const isCardAlreadyOpen = gameState.openedCards.includes(cardId);
+        const isCardMatched = gameState.matchedCards.includes(cardId);
+        const gameIsOver = gameState.isGameOver;
 
-     // Если игра окончена или карточка уже открыта/найдена - игнорируем клик
-     if (gameIsOver || isCardAlreadyOpen || isCardMatched) {
+        // Если игра окончена или карточка уже открыта/найдена - игнорируем клик
+        if (gameIsOver || isCardAlreadyOpen || isCardMatched) {
           return;
         }
-    
-   // ЛОГИКА КЛИКА ПО КАРТОЧКАМ:
-   if (gameState.openedCards.length === 0) {
-     // Первая карточка - просто открываем
-     setGameState(prevState => ({
-       ...prevState,
-       openedCards: [cardId],
-       moves: prevState.moves + 1
-     }));
-   } else if (gameState.openedCards.length === 1) {
-     // Вторая карточка - открываем и checkPair сработает через useEffect
-     setGameState(prevState => ({
-       ...prevState,
-       openedCards: [...prevState.openedCards, cardId],
-       moves: prevState.moves + 1
-     }));
-   } else {
-     // Третья карточка и больше - сначала закрываем предыдущие, потом открываем новую
-     setGameState(prevState => ({
-       ...prevState,
-       openedCards: [cardId],
-       moves: prevState.moves + 1
-     }));
-   }
+
+        // 🎯 ЛОГИКА КЛИКА ПО КАРТОЧКАМ через switch case:
+        switch (gameState.openedCards.length) {
+          case 0:
+            // Первая карточка - просто открываем
+            setGameState(prevState => ({
+              ...prevState,
+              openedCards: [cardId],
+              moves: prevState.moves + 1
+            }));
+            break;
+
+          case 1:
+            // Вторая карточка - открываем и checkPair сработает через useEffect
+            setGameState(prevState => ({
+              ...prevState,
+              openedCards: [...prevState.openedCards, cardId],
+              moves: prevState.moves + 1
+            }));
+            break;
+
+          default:
+            // 🚀 Третья карточка - СНАЧАЛА обрабатываем предыдущие, ПОТОМ открываем новую
+            const [cardId1, cardId2] = gameState.openedCards;
+            
+            // Проверяем предыдущую пару МГНОВЕННО
+            const card1 = images.find(img => img.id === cardId1);
+            const card2 = images.find(img => img.id === cardId2);
+            const isPairMatch = card1.url === card2.url;
+
+            if (isPairMatch) {
+              // Предыдущая пара совпала - добавляем в найденные
+              setGameState(prevState => {
+                const newMatchedCards = [...prevState.matchedCards, cardId1, cardId2];
+                const totalCards = images.length;
+                const isGameWon = newMatchedCards.length === totalCards;
+
+                return {
+                  ...prevState,
+                  matchedCards: newMatchedCards,
+                  openedCards: [cardId], // Открываем новую карточку
+                  moves: prevState.moves + 1,
+                  isWin: isGameWon,
+                  isGameOver: isGameWon
+                };
+              });
+            } else {
+              // Предыдущая пара НЕ совпала - увеличиваем ошибки и открываем новую
+              setGameState(prevState => {
+                const newErrors = prevState.errors + 1;
+                const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT;
+
+                return {
+                  ...prevState,
+                  errors: newErrors,
+                  openedCards: [cardId], // Открываем новую карточку (предыдущие закрылись)
+                  moves: prevState.moves + 1,
+                  isGameOver: isGameLost
+                };
+              });
+            }
+            break;
+        }
       };
 
-    // Сброс игры к начальному состоянию
-        const resetGame = () => {
+      // 🎮 Сброс игры к начальному состоянию
+      const resetGame = () => {
         setGameState({
           openedCards: [],
           matchedCards: [],
@@ -141,7 +169,7 @@
         });
       };
 
-      // Вычисляем производные значения 
+      // 🎯 Вычисляем производные значения (не храним в состоянии!)
       const totalPairs = images.length / 2;
       const matchedPairs = gameState.matchedCards.length / 2;
       const progress = totalPairs > 0 ? (matchedPairs / totalPairs) * 100 : 0;
@@ -153,8 +181,8 @@
             moves={gameState.moves}
             progress={progress}
             remainingLives={remainingLives}
-            matchedPairs={matchedPairs}    
-            totalPairs={totalPairs}  
+            matchedPairs={matchedPairs}
+            totalPairs={totalPairs}
           />
           
           <GameBoard 
@@ -174,24 +202,24 @@
         </section>
       );
     }
-// 📊Компонент шапки игры с прогрессом (обновлен под template)
-function GameHeader({ moves, progress, remainingLives, matchedPairs, totalPairs }) {
+
+    // 📊 Компонент шапки игры с прогрессом (обновлен под template)
+    function GameHeader({ moves, progress, remainingLives, matchedPairs, totalPairs }) {
       return (
         <>
           <div className="progress-wrapper">
             <div className="progress" style={{ width: `${progress}%` }}></div>
           </div>
           <p className="progress-description">
-            {`Открыто ${matchedPairs} / ${totalPairs}`}
+            Открыто <span>{matchedPairs}</span> / <span>{totalPairs}</span>
           </p>
           <div className="steps">Шаг {moves}</div>
         </>
       );
     }
 
-
-// Компонент игрового поля с карточками
-function GameBoard({ images = [], gameState, onCardClick }) {
+    // 🎮 Компонент игрового поля с карточками
+    function GameBoard({ images = [], gameState, onCardClick }) {
       return (
         <ul className="cards cards-theme-cars">
           {images.map((item) => (
@@ -207,7 +235,7 @@ function GameBoard({ images = [], gameState, onCardClick }) {
       );
     }
 
-    // Компонент карточки
+    // 🎴 Компонент карточки
     function Card({ id, url, description, isCardShow, isCardFinished, onCardClick }) {
       const cardClasses = `card ${isCardShow ? 'card-show' : ''} ${isCardFinished ? 'card-finished' : ''}`;
       
@@ -221,18 +249,17 @@ function GameBoard({ images = [], gameState, onCardClick }) {
       );
     }
 
-
-    // Компонент модального окна с результатом (обновлен под template)
+    // 🏆 Компонент модального окна с результатом (обновлен под template)
     function GameModal({ isWin, moves, matchedPairs, onRestart }) {
       return (
         <div className="modal">
           <div className="modal-box">
             <h3 className="modal-caption">
-              {isWin ? '🎉 Победа!' : '💔 Игра окончена'}
+              {isWin ? 'Победа!' : 'Игра окончена'}
             </h3>
             <p className="modal-description">
               {isWin 
-                ? `Поздравляем! Вы собрали все пары за ${moves} шагов!`
+                ? `Вы собрали все пары за ${moves} шагов`
                 : `Вы собрали ${matchedPairs} пар`
               }
             </p>
@@ -244,8 +271,6 @@ function GameBoard({ images = [], gameState, onCardClick }) {
       );
     }
 
-
   </script>
 </body>
 </html>
-
