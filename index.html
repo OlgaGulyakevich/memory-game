@@ -54,7 +54,7 @@
         const isPairMatch = card1.url === card2.url;
 
         if (isPairMatch) {
-          // 🎉 Пара найдена! Добавляем в найденные и проверяем победу
+          // Пара найдена! Добавляем в найденные и проверяем победу
           setGameState(prevState => {
             const newMatchedCards = [...prevState.matchedCards, cardId1, cardId2];
             const totalCards = images.length;
@@ -69,7 +69,7 @@
             };
           });
         } else {
-          // 💔 Пара не подошла! Увеличиваем ошибки и проверяем поражение
+          // Пара не подошла! Увеличиваем ошибки и проверяем поражение
           setGameState(prevState => {
             const newErrors = prevState.errors + 1;
             const isGameLost = newErrors >= GAME_SETTINGS.LIVES_COUNT; // Кончились жизни?
@@ -92,7 +92,6 @@
   const isCardMatched = gameState.matchedCards.includes(cardId);
   const maxCardsOpen = gameState.openedCards.length >= 2;
   const gameIsOver = gameState.isGameOver;
-  const remainingLives = GAME_SETTINGS.LIVES_COUNT - gameState.errors;
 
      // Если игра окончена или карточка уже открыта/найдена, или открыто максимум карточек - игнорируем клик
      if (gameIsOver || isCardAlreadyOpen || isCardMatched || maxCardsOpen) {
@@ -131,6 +130,8 @@
             moves={gameState.moves}
             progress={progress}
             remainingLives={remainingLives}
+            matchedPairs={matchedPairs}    
+            totalPairs={totalPairs}  
           />
           
           <Grid 
@@ -150,29 +151,21 @@
         </section>
       );
     }
-
-    // Компонент шапки игры с прогрессом
-    function GameHeader({ moves, progress, remainingLives }) {
+// 📊Компонент шапки игры с прогрессом (обновлен под template)
+function GameHeader({ moves, progress, remainingLives, matchedPairs, totalPairs }) {
       return (
         <>
+          <div className="progress-wrapper">
+            <div className="progress" style={{ width: `${progress}%` }}></div>
+          </div>
+          <p className="progress-description">
+            {`Открыто ${matchedPairs} / ${totalPairs}`}
+          </p>
           <div className="steps">Шаг {moves}</div>
-          <ProgressBar progress={progress} />
-          <div className="lives">❤️ {remainingLives}</div>
         </>
       );
     }
 
-    // Компонент прогресс-бара
-    function ProgressBar({ progress }) {
-      return (
-        <div className="progress">
-          <div 
-            className="progress-bar" 
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-      );
-    }
 
     // 🃏 Компонент сетки карточек
     function Grid({ images = [], gameState, onCardClick }) {
@@ -205,20 +198,23 @@
       );
     }
 
-    // Компонент модального окна с результатом
+
+    // Компонент модального окна с результатом (обновлен под template)
     function GameModal({ isWin, moves, matchedPairs, onRestart }) {
       return (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>{isWin ? '🎉 Победа!' : '💔 Игра окончена'}</h2>
-            <p>
+        <div className="modal">
+          <div className="modal-box">
+            <h3 className="modal-caption">
+              {isWin ? '🎉 Победа!' : '💔 Игра окончена'}
+            </h3>
+            <p className="modal-description">
               {isWin 
-                ? `Поздравляем! Вы собрали все пары за ${moves} ходов!`
-                : `Вы собрали ${matchedPairs} пар из возможных.`
+                ? `Поздравляем! Вы собрали все пары за ${moves} шагов!`
+                : `Вы собрали ${matchedPairs} пар`
               }
             </p>
-            <button onClick={onRestart} className="restart-button">
-              Начать заново
+            <button className="button modal-button" type="button" onClick={onRestart}>
+              Новая игра
             </button>
           </div>
         </div>
