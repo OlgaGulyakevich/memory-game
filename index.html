@@ -15,7 +15,7 @@
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App images={images}/>);
+    root.render(<App images={images} results={results}/>);
 
     // 🎮 Логика игры в отдельном хуке 
     const useGame = (images) => {
@@ -63,7 +63,59 @@
       };
     };
 
-    function App({images = []}) {
+    function App({images = [], results = []}) {
+      // Экраны приложения
+      const [currentScreen, setCurrentScreen] = React.useState(SCREENS.GAME);
+      const [currentResult, setCurrentResult] = React.useState(null);
+      const [allResults, setAllResults] = React.useState(results);
+
+      // Обработчик завершения игры
+      const handleGameFinish = React.useCallback((gameData) => {
+        const newResult = {
+          name: 'Ваш результат',
+          stepsCount: gameData.moves,
+          errors: gameData.errors,
+          timestamp: new Date().toISOString(),
+          isCurrent: true
+        };
+        setCurrentResult(newResult);
+        
+        // Добавляем новый результат к существующим
+        const updatedResults = [...allResults, newResult];
+        setAllResults(updatedResults);
+        
+        // Переходим на экран результатов
+        setCurrentScreen(SCREENS.RESULTS);
+      }, [allResults]);
+
+      // Обработчик новой игры
+      const handleNewGame = () => {
+        setCurrentScreen(SCREENS.GAME);
+        setCurrentResult(null);
+      };
+
+      // Рендерим соответствующий экран
+      if (currentScreen === SCREENS.RESULTS) {
+        return (
+          <ResultScreen 
+            currentResult={currentResult}
+            allResults={allResults}
+            onNewGame={handleNewGame}
+          />
+        );
+      }
+
+      return (
+        <GameScreen 
+          images={images}
+          onGameFinish={handleGameFinish}
+          onShowResults={() => setCurrentScreen(SCREENS.RESULTS)}
+        />
+      );
+    }
+
+    // Компонент игрового экрана
+    function GameScreen({ images, onGameFinish, onShowResults }) {
       const {
         finishedItems,
         handleReset,
@@ -96,12 +148,19 @@
             isGameOver={isGameOver}
           />
 
-          {(isWin || isGameOver) && (
+          {(isGameOver || isWin) && (
             <GameModal 
               isWin={isWin}
               moves={stepsCount}
               matchedPairs={matchedPairs}
               onRestart={handleReset}
+              onShowResults={() => {
+                onGameFinish({
+                  moves: stepsCount,
+                  errors: errors
+                });
+                onShowResults();
+              }}
             />
           )}
         </section>
@@ -195,7 +254,7 @@
     }
 
     // Компонент модального окна
-    function GameModal({ isWin, moves, matchedPairs, onRestart }) {
+    function GameModal({ isWin, moves, matchedPairs, onRestart, onShowResults }) {
       return (
         <div className="modal">
           <div className="modal-box">
@@ -208,11 +267,88 @@
                 : `Вы собрали ${matchedPairs} пар`
               }
             </p>
-            <button className="button modal-button" type="button" onClick={onRestart}>
+            <div className="modal-buttons">
+              <button className="button modal-button" type="button" onClick={onRestart}>
+                Новая игра
+              </button>
+              <button 
+                className="button" 
+                type="button" 
+                onClick={onShowResults}
+              >
+                Результаты
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Компонент экрана результатов
+    function ResultScreen({ currentResult, allResults, onNewGame }) {
+      // Объединяем результаты и сортируем
+      const combinedResults = React.useMemo(() => {
+        const results = [...allResults];
+        
+        if (currentResult) {
+          // Удаляем предыдущий текущий результат, если он есть
+          const filteredResults = results.filter(result => !result.isCurrent);
+          return [currentResult, ...filteredResults].sort((a, b) => a.stepsCount - b.stepsCount);
+        }
+        
+        // Сортируем по возрастанию количества ходов
+        return results.sort((a, b) => a.stepsCount - b.stepsCount);
+      }, [allResults, currentResult]);
+
+      return (
+        <section className="result container">
+          <h2>Лучшие результаты:</h2>
+          
+          {currentResult && (
+            <p>
+              Поздравляем! Вы завершили игру за <b>{currentResult.stepsCount} шагов</b> 
+              {currentResult.errors > 0 && ` с ${currentResult.errors} ошибками`}.
+            </p>
+          )}
+          
+          {combinedResults.length > 0 ? (
+            <table className="result-table">
+              <thead>
+                <tr className="result-table-row">
+                  <th>Место</th>
+                  <th>Результат</th>
+                  <th>Шаги</th>
+                  <th>Ошибки</th>
+                </tr>
+              </thead>
+              <tbody>
+                {combinedResults.map((result, index) => (
+                  <tr 
+                    key={`${result.name}-${result.stepsCount}-${index}`}
+                    className={`result-table-row ${result.isCurrent ? 'active' : ''}`}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{result.name}</td>
+                    <td>{result.stepsCount}</td>
+                    <td>{result.errors || 0}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>Пока нет сохраненных результатов. Сыграйте игру, чтобы увидеть свой результат!</p>
+          )}
+          
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+            <button 
+              className="button result-button" 
+              type="button"
+              onClick={onNewGame}
+            >
               Новая игра
             </button>
           </div>
-        </div>
+        </section>
       );
     }
 
