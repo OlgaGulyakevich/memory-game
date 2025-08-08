@@ -1,2 +1,1 @@
-// Файл для настроек приложения
-const TIMEOUT = 800;
+const TIMEOUT = 900;
