@@ -125,20 +125,14 @@
         isWin,
         isGameOver
       } = useGame(images);
-
-      // Состояние для задержки показа модального окна победы
+      // Управляем показом модального окна победы
       const [showVictoryModal, setShowVictoryModal] = React.useState(false);
-
-      // Задержка перед показом модального окна победы
       React.useEffect(() => {
-        if (isWin && !showVictoryModal) {
-          const timer = setTimeout(() => {
-            setShowVictoryModal(true);
-          }, GAME_SETTINGS.FLIP_DELAY);
-          
-          return () => clearTimeout(timer);
+        if (isWin) {
+          const timerId = setTimeout(() => setShowVictoryModal(true), 100);
+          return () => clearTimeout(timerId);
         }
-      }, [isWin, showVictoryModal]);
+      }, [isWin]);
 
       // Вычисляем производные значения
       const totalPairs = images.length / 2;

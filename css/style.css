@@ -325,7 +325,8 @@ body {
 }
 
 .result-table {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 36px auto 32px;
   font-size: 16px;
   line-height: 22px;
@@ -337,9 +338,10 @@ body {
 
 .result-table-row {
   display: grid;
-  grid-template-columns: 80px 200px 100px;
+  grid-template-columns: 80px 1fr 100px;
   align-items: center;
 }
+
 
 .result-table-row th {
   padding: 18px 32px 8px;
