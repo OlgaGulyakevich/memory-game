@@ -325,7 +325,7 @@ body {
 }
 
 .result-table {
-  width: 100%;
+  width: 60%;
   max-width: 600px;
   margin: 36px auto 32px;
   font-size: 16px;
@@ -338,7 +338,7 @@ body {
 
 .result-table-row {
   display: grid;
-  grid-template-columns: 80px 1fr 100px;
+  grid-template-columns: 100px 1fr 120px;
   align-items: center;
 }
 
@@ -372,3 +372,9 @@ body {
 .result .button {
   width: 160px;
 }
+
+.result-table-row th,
+.result-table-row td { text-align: left; }
+
+.result-table-row th:nth-child(2),
+.result-table-row td:nth-child(2) { text-align: left; }
