@@ -32,6 +32,9 @@ yarn-error.log*
 node_modules/
 npm-debug.log
 
+# Notes
+notes/
+
 # Environment files
 .env
 .env.local

@@ -126,6 +126,20 @@
         isGameOver
       } = useGame(images);
 
+      // Состояние для задержки показа модального окна победы
+      const [showVictoryModal, setShowVictoryModal] = React.useState(false);
+
+      // Задержка перед показом модального окна победы
+      React.useEffect(() => {
+        if (isWin && !showVictoryModal) {
+          const timer = setTimeout(() => {
+            setShowVictoryModal(true);
+          }, GAME_SETTINGS.FLIP_DELAY);
+          
+          return () => clearTimeout(timer);
+        }
+      }, [isWin, showVictoryModal]);
+
       // Вычисляем производные значения
       const totalPairs = images.length / 2;
       const matchedPairs = finishedItems.length / 2;
@@ -148,12 +162,15 @@
             isGameOver={isGameOver}
           />
 
-          {(isGameOver || isWin) && (
+          {(isGameOver || showVictoryModal) && (
             <GameModal 
               isWin={isWin}
               moves={stepsCount}
               matchedPairs={matchedPairs}
-              onRestart={handleReset}
+              onRestart={() => {
+                setShowVictoryModal(false);
+                handleReset();
+              }}
               onShowResults={() => {
                 onGameFinish({
                   moves: stepsCount,
@@ -186,7 +203,7 @@
     function GameBoard({images = [], finishedItems, checkItems, isGameOver}) {
       const [visibleItems, setVisibleItems] = React.useState([]);
 
-      const handleCardClick = (id) => {
+      const handleCardClick = React.useCallback((id) => {
         // Игнорируем клики если игра окончена, карточка отгадана или уже видима
         if (isGameOver || finishedItems.includes(id) || visibleItems.includes(id)) {
           return;
@@ -212,7 +229,7 @@
             // Третья карточка и больше - просто очищаем видимые
             setVisibleItems([]);
         }
-      };
+      }, [isGameOver, finishedItems, visibleItems, checkItems]);
 
       return (
         <ul className="cards cards-theme-cars">
@@ -263,21 +280,33 @@
             </h3>
             <p className="modal-description">
               {isWin 
-                ? `Вы собрали все пары за ${moves} шагов`
+                ? 'Теперь давайте узнаем результаты этой партии'
                 : `Вы собрали ${matchedPairs} пар`
               }
             </p>
             <div className="modal-buttons">
-              <button className="button modal-button" type="button" onClick={onRestart}>
-                Новая игра
-              </button>
-              <button 
-                className="button" 
-                type="button" 
-                onClick={onShowResults}
-              >
-                Результаты
-              </button>
+              {isWin ? (
+                <button 
+                  className="button modal-button" 
+                  type="button" 
+                  onClick={onShowResults}
+                >
+                  Показать результаты
+                </button>
+              ) : (
+                <>
+                  <button className="button modal-button" type="button" onClick={onRestart}>
+                    Новая игра
+                  </button>
+                  <button 
+                    className="button" 
+                    type="button" 
+                    onClick={onShowResults}
+                  >
+                    Результаты
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

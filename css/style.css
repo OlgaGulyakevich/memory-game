@@ -291,6 +291,20 @@ body {
   background-color: #5a7a94;
 }
 
+/* Оранжевая кнопка для модального окна победы */
+.modal-buttons .button.modal-button {
+  background-color: #ffbf20;
+  color: #333333;
+}
+
+.modal-buttons .button.modal-button:hover {
+  background-color: #ffd97c;
+}
+
+.modal-buttons .button.modal-button:active {
+  background-color: #ffd97c;
+}
+
 .result {
   padding-top: 40px;
   padding-bottom: 40px;
