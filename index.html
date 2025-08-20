@@ -335,8 +335,7 @@
           
           {currentResult && (
             <p>
-              Поздравляем! Вы завершили игру за <b>{currentResult.stepsCount} шагов</b> 
-              {currentResult.errors > 0 && ` с ${currentResult.errors} ошибками`}.
+              Вы завершили игру за <b>{currentResult.stepsCount} шагов</b>, так держать!
             </p>
           )}
           
@@ -345,9 +344,8 @@
               <thead>
                 <tr className="result-table-row">
                   <th>Место</th>
-                  <th>Результат</th>
+                  <th>Имя</th>
                   <th>Шаги</th>
-                  <th>Ошибки</th>
                 </tr>
               </thead>
               <tbody>
@@ -359,7 +357,6 @@
                     <td>{index + 1}</td>
                     <td>{result.name}</td>
                     <td>{result.stepsCount}</td>
-                    <td>{result.errors || 0}</td>
                   </tr>
                 ))}
               </tbody>
@@ -367,6 +364,8 @@
           ) : (
             <p>Пока нет сохраненных результатов. Сыграйте игру, чтобы увидеть свой результат!</p>
           )}
+          
+          <p>Хотите попробовать ещё раз?</p>
           
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
             <button 
