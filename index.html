@@ -16,6 +16,13 @@
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
+    
+    // Простая функция склонения числительных
+    const getDeclension = (count, words) => {
+      const cases = [2, 0, 1, 1, 1, 2];
+      return words[(count % 100 > 4 && count % 100 < 20) ? 2 : cases[Math.min(count % 10, 5)]];
+    };
+    
     root.render(<App results={results}/>);
 
     // 🎮 Логика игры в отдельном хуке 
@@ -121,18 +128,24 @@
         );
       }
 
+      // Не показываем игру без карточек
+      if (gameImages.length === 0) {
+        return <StartScreen onThemeSelect={handleThemeSelect} />;
+      }
+
       return (
         <GameScreen 
           images={gameImages}
           selectedTheme={selectedTheme}
           onGameFinish={handleGameFinish}
           onShowResults={() => setCurrentScreen(SCREENS.RESULTS)}
+          onNewGame={handleNewGame}
         />
       );
     }
 
     // Компонент игрового экрана
-    function GameScreen({ images, selectedTheme, onGameFinish, onShowResults }) {
+    function GameScreen({ images, selectedTheme, onGameFinish, onShowResults, onNewGame }) {
       const {
         finishedItems,
         handleReset,
@@ -174,22 +187,32 @@
             isGameOver={isGameOver}
           />
 
-          {(isGameOver || showVictoryModal) && (
+          {/* Модальное окно поражения */}
+          {isGameOver && !isWin && (
             <GameModal 
-              isWin={isWin}
+              isWin={false}
+              moves={stepsCount}
+              matchedPairs={matchedPairs}
+              onRestart={() => {
+                handleReset();
+              }}
+              onNewGame={onNewGame}
+              onShowResults={onShowResults}
+            />
+          )}
+
+          {/* Модальное окно победы */}
+          {showVictoryModal && isWin && (
+            <GameModal 
+              isWin={true}
               moves={stepsCount}
               matchedPairs={matchedPairs}
               onRestart={() => {
                 setShowVictoryModal(false);
                 handleReset();
               }}
-              onShowResults={() => {
-                onGameFinish({
-                  moves: stepsCount,
-                  errors: errors
-                });
-                onShowResults();
-              }}
+              onNewGame={onNewGame}
+              onShowResults={onShowResults}
             />
           )}
         </section>
@@ -283,7 +306,7 @@
     }
 
     // Компонент модального окна
-    function GameModal({ isWin, moves, matchedPairs, onRestart, onShowResults }) {
+    function GameModal({ isWin, moves, matchedPairs, onRestart, onNewGame, onShowResults }) {
       return (
         <div className="modal">
           <div className="modal-box">
@@ -293,7 +316,7 @@
             <p className="modal-description">
               {isWin 
                 ? 'Теперь давайте узнаем результаты этой партии'
-                : `Вы собрали ${matchedPairs} пар`
+                : `Вы собрали ${matchedPairs} ${getDeclension(matchedPairs, ['пару', 'пары', 'пар'])}`
               }
             </p>
             <div className="modal-buttons">
@@ -307,7 +330,7 @@
                 </button>
               ) : (
                 <>
-                  <button className="button modal-button" type="button" onClick={onRestart}>
+                  <button className="button modal-button" type="button" onClick={onNewGame}>
                     Новая игра
                   </button>
                   <button 
