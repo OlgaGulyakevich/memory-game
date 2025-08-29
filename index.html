@@ -7,6 +7,7 @@
   <script src="vendor/react.development.js"></script>
   <script src="vendor/react-dom.development.js"></script>
   <script src="vendor/babel.min.js"></script>
+  <script src="vendor/get-declension.min.umd.js"></script>
   <script src="js/data.js"></script>
   <script src="js/setting.js"></script>
 </head>
@@ -15,7 +16,14 @@
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App images={images} results={results}/>);
+    
+    // Простая функция склонения числительных
+    const getDeclension = (count, words) => {
+      const cases = [2, 0, 1, 1, 1, 2];
+      return words[(count % 100 > 4 && count % 100 < 20) ? 2 : cases[Math.min(count % 10, 5)]];
+    };
+    
+    root.render(<App results={results}/>);
 
     // 🎮 Логика игры в отдельном хуке 
     const useGame = (images) => {
@@ -63,11 +71,13 @@
       };
     };
 
-    function App({images = [], results = []}) {
+    function App({results = []}) {
       // Экраны приложения
-      const [currentScreen, setCurrentScreen] = React.useState(SCREENS.GAME);
+      const [currentScreen, setCurrentScreen] = React.useState(SCREENS.START);
       const [currentResult, setCurrentResult] = React.useState(null);
       const [allResults, setAllResults] = React.useState(results);
+      const [selectedTheme, setSelectedTheme] = React.useState('cats');
+      const [gameImages, setGameImages] = React.useState([]);
 
       // Обработчик завершения игры
       const handleGameFinish = React.useCallback((gameData) => {
@@ -88,13 +98,26 @@
         setCurrentScreen(SCREENS.RESULTS);
       }, [allResults]);
 
+      // Обработчик выбора темы и начала игры
+      const handleThemeSelect = React.useCallback((theme) => {
+        setSelectedTheme(theme);
+        setGameImages(getImages(theme));
+        setCurrentScreen(SCREENS.GAME);
+      }, []);
+
       // Обработчик новой игры
       const handleNewGame = () => {
-        setCurrentScreen(SCREENS.GAME);
+        setCurrentScreen(SCREENS.START);
         setCurrentResult(null);
       };
 
       // Рендерим соответствующий экран
+      if (currentScreen === SCREENS.START) {
+        return (
+          <StartScreen onThemeSelect={handleThemeSelect} />
+        );
+      }
+
       if (currentScreen === SCREENS.RESULTS) {
         return (
           <ResultScreen 
@@ -105,17 +128,24 @@
         );
       }
 
+      // Не показываем игру без карточек
+      if (gameImages.length === 0) {
+        return <StartScreen onThemeSelect={handleThemeSelect} />;
+      }
+
       return (
         <GameScreen 
-          images={images}
+          images={gameImages}
+          selectedTheme={selectedTheme}
           onGameFinish={handleGameFinish}
           onShowResults={() => setCurrentScreen(SCREENS.RESULTS)}
+          onNewGame={handleNewGame}
         />
       );
     }
 
     // Компонент игрового экрана
-    function GameScreen({ images, onGameFinish, onShowResults }) {
+    function GameScreen({ images, selectedTheme, onGameFinish, onShowResults, onNewGame }) {
       const {
         finishedItems,
         handleReset,
@@ -151,27 +181,38 @@
           
           <GameBoard
             images={images}
+            selectedTheme={selectedTheme}
             finishedItems={finishedItems}
             checkItems={checkItems}
             isGameOver={isGameOver}
           />
 
-          {(isGameOver || showVictoryModal) && (
+          {/* Модальное окно поражения */}
+          {isGameOver && !isWin && (
             <GameModal 
-              isWin={isWin}
+              isWin={false}
+              moves={stepsCount}
+              matchedPairs={matchedPairs}
+              onRestart={() => {
+                handleReset();
+              }}
+              onNewGame={onNewGame}
+              onShowResults={onShowResults}
+            />
+          )}
+
+          {/* Модальное окно победы */}
+          {showVictoryModal && isWin && (
+            <GameModal 
+              isWin={true}
               moves={stepsCount}
               matchedPairs={matchedPairs}
               onRestart={() => {
                 setShowVictoryModal(false);
                 handleReset();
               }}
-              onShowResults={() => {
-                onGameFinish({
-                  moves: stepsCount,
-                  errors: errors
-                });
-                onShowResults();
-              }}
+              onNewGame={onNewGame}
+              onShowResults={onShowResults}
             />
           )}
         </section>
@@ -194,7 +235,7 @@
     }
 
     // Компонент игрового поля 
-    function GameBoard({images = [], finishedItems, checkItems, isGameOver}) {
+    function GameBoard({images = [], selectedTheme = 'cats', finishedItems, checkItems, isGameOver}) {
       const [visibleItems, setVisibleItems] = React.useState([]);
 
       const handleCardClick = React.useCallback((id) => {
@@ -226,7 +267,7 @@
       }, [isGameOver, finishedItems, visibleItems, checkItems]);
 
       return (
-        <ul className="cards cards-theme-cars">
+        <ul className={`cards cards-theme-${selectedTheme}`}>
           {images.map((item) => (
             <Card
               key={item.id}
@@ -265,7 +306,7 @@
     }
 
     // Компонент модального окна
-    function GameModal({ isWin, moves, matchedPairs, onRestart, onShowResults }) {
+    function GameModal({ isWin, moves, matchedPairs, onRestart, onNewGame, onShowResults }) {
       return (
         <div className="modal">
           <div className="modal-box">
@@ -275,7 +316,7 @@
             <p className="modal-description">
               {isWin 
                 ? 'Теперь давайте узнаем результаты этой партии'
-                : `Вы собрали ${matchedPairs} пар`
+                : `Вы собрали ${matchedPairs} ${getDeclension(matchedPairs, ['пару', 'пары', 'пар'])}`
               }
             </p>
             <div className="modal-buttons">
@@ -289,7 +330,7 @@
                 </button>
               ) : (
                 <>
-                  <button className="button modal-button" type="button" onClick={onRestart}>
+                  <button className="button modal-button" type="button" onClick={onNewGame}>
                     Новая игра
                   </button>
                   <button 
@@ -329,7 +370,7 @@
           
           {currentResult && (
             <p>
-              Вы завершили игру за <b>{currentResult.stepsCount} шагов</b>, так держать!
+              Вы завершили игру за <b>{currentResult.stepsCount} {getDeclension(currentResult.stepsCount, ['шаг', 'шага', 'шагов'])}</b>, так держать!
             </p>
           )}
           
@@ -370,6 +411,45 @@
               Новая игра
             </button>
           </div>
+        </section>
+      );
+    }
+
+    // Компонент начального экрана
+    function StartScreen({ onThemeSelect }) {
+      return (
+        <section className="rules container">
+          <h2>Добро пожаловать!</h2>
+          <p>Memory — игра для тренировки визуальной памяти</p>
+          <div className="rules-panel">
+            <h3>Правила игры</h3>
+            <ul className="rules-list">
+              <li>В наборе есть множество карточек – по две штуки с одним и тем же рисунком.</li>
+              <li>Нужно разложить карточки «рубашкой» вверх на столе, а затем переворачивать по две.</li>
+              <li>Если они совпадают – игрок забирает их и получает ещё один ход.</li>
+            </ul>
+          </div>
+          <button 
+            className="ico-button ico-button-cats" 
+            type="button"
+            onClick={() => onThemeSelect('cats')}
+          >
+            Котики
+          </button>
+          <button 
+            className="ico-button ico-button-flowers" 
+            type="button"
+            onClick={() => onThemeSelect('flowers')}
+          >
+            Цветочки
+          </button>
+          <button 
+            className="ico-button ico-button-cars" 
+            type="button"
+            onClick={() => onThemeSelect('cars')}
+          >
+            Машины
+          </button>
         </section>
       );
     }

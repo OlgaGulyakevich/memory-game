@@ -7,6 +7,7 @@ const GAME_SETTINGS = {
 
 // Экраны приложения
 const SCREENS = {
+  START: 'start',
   GAME: 'game',
   RESULTS: 'results'
 };

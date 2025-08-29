@@ -1,1 +1,0 @@
-const TIMEOUT = 900;
