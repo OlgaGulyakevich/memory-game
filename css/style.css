@@ -88,15 +88,15 @@ body {
 }
 
 .ico-button-cats {
-  background-image: url("../img/icon-cats.svg");
+  background-image: url("../img/cats/icon-cats.svg");
 }
 
 .ico-button-cars {
-  background-image: url("../img/icon-cars.svg");
+  background-image: url("../img/cars/icon-cars.svg");
 }
 
 .ico-button-flowers {
-  background-image: url("../img/icon-flowers.svg");
+  background-image: url("../img/flowers/icon-flowers.svg");
 }
 
 .rules {
@@ -396,7 +396,7 @@ body {
 }
 
 .modal .button {
-  width: auto;
+  width: 100%;
   min-width: 120px;
 }
 
