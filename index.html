@@ -71,13 +71,13 @@
       };
     };
 
-    function App({results = [], getImages}) {
+    function App({results = []}) {
       // Экраны приложения
       const [currentScreen, setCurrentScreen] = React.useState(SCREENS.START);
       const [currentResult, setCurrentResult] = React.useState(null);
       const [allResults, setAllResults] = React.useState(results);
-      const [selectedTheme, setSelectedTheme] = React.useState(null);
-      const [gameImages, setGameImages] = React.useState(getImages(selectedTheme));
+      const [selectedTheme, setSelectedTheme] = React.useState('cats');
+      const [gameImages, setGameImages] = React.useState([]);
        
 
       // Обработчик завершения игры

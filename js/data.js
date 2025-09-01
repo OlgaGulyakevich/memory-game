@@ -114,5 +114,5 @@ const getImages = (type) => {
   return pairs;
 };
 
-// Инициализируем игру с темой по умолчанию
-// const images = getImages('cats');
+//Инициализируем игру с темой по умолчанию
+const images = getImages('cats');
