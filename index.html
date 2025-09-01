@@ -194,10 +194,13 @@
               moves={stepsCount}
               matchedPairs={matchedPairs}
               onRestart={() => {
+                setShowVictoryModal(false);
                 handleReset();
               }}
               onNewGame={onNewGame}
-              onShowResults={onShowResults}
+              onShowResults={()=> {
+                onGameFinish();
+              }}
             />
           )}
 
@@ -212,7 +215,12 @@
                 handleReset();
               }}
               onNewGame={onNewGame}
-              onShowResults={onShowResults}
+              onShowResults={()=> {
+                onGameFinish({
+                  moves: stepsCount, 
+                  errors: errors
+                });
+              }}
             />
           )}
         </section>
@@ -330,15 +338,9 @@
                 </button>
               ) : (
                 <>
-                  <button className="button modal-button" type="button" onClick={onNewGame}>
+                  <button className="button modal-button" type="button" 
+                  onClick={onNewGame}>
                     Новая игра
-                  </button>
-                  <button 
-                    className="button" 
-                    type="button" 
-                    onClick={onShowResults}
-                  >
-                    Результаты
                   </button>
                 </>
               )}
