@@ -23,7 +23,7 @@
       return words[(count % 100 > 4 && count % 100 < 20) ? 2 : cases[Math.min(count % 10, 5)]];
     };
     
-    root.render(<App results={results}/>);
+    root.render(<App getImages={getImages} results={results}/>);
 
     // 🎮 Логика игры в отдельном хуке 
     const useGame = (images) => {
@@ -71,13 +71,14 @@
       };
     };
 
-    function App({results = []}) {
+    function App({results = [], getImages}) {
       // Экраны приложения
       const [currentScreen, setCurrentScreen] = React.useState(SCREENS.START);
       const [currentResult, setCurrentResult] = React.useState(null);
       const [allResults, setAllResults] = React.useState(results);
-      const [selectedTheme, setSelectedTheme] = React.useState('cats');
-      const [gameImages, setGameImages] = React.useState([]);
+      const [selectedTheme, setSelectedTheme] = React.useState(null);
+      const [gameImages, setGameImages] = React.useState(getImages(selectedTheme));
+       
 
       // Обработчик завершения игры
       const handleGameFinish = React.useCallback((gameData) => {

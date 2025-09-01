@@ -115,4 +115,4 @@ const getImages = (type) => {
 };
 
 // Инициализируем игру с темой по умолчанию
-const images = getImages('cats');
+// const images = getImages('cats');
