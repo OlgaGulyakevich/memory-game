@@ -8,6 +8,7 @@
   <script src="vendor/react-dom.development.js"></script>
   <script src="vendor/babel.min.js"></script>
   <script src="vendor/get-declension.min.umd.js"></script>
+  <script src="vendor/papaparse.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/setting.js"></script>
 </head>
@@ -23,7 +24,7 @@
       return words[(count % 100 > 4 && count % 100 < 20) ? 2 : cases[Math.min(count % 10, 5)]];
     };
     
-    root.render(<App getImages={getImages} results={results}/>);
+    root.render(<App />);
 
     // 🎮 Логика игры в отдельном хуке 
     const useGame = (images) => {
@@ -71,13 +72,14 @@
       };
     };
 
-    function App({results = []}) {
+    function App() {
       // Экраны приложения
       const [currentScreen, setCurrentScreen] = React.useState(SCREENS.START);
       const [currentResult, setCurrentResult] = React.useState(null);
-      const [allResults, setAllResults] = React.useState(results);
+      const [allResults, setAllResults] = React.useState([]);
       const [selectedTheme, setSelectedTheme] = React.useState('cats');
       const [gameImages, setGameImages] = React.useState([]);
+      const [loadError, setLoadError] = React.useState(null);  // Новое состояние для ошибки
        
 
       // Обработчик завершения игры
@@ -112,6 +114,14 @@
         setCurrentResult(null);
       };
 
+      // Загружаем результаты при монтировании
+      React.useEffect(() => {
+        fetch('results.json')
+          .then(response => response.json())
+          .then(data => setAllResults(data))
+          .catch(error => setLoadError(error.message));  // Устанавливаем ошибку
+      }, []);
+
       // Рендерим соответствующий экран
       if (currentScreen === SCREENS.START) {
         return (
@@ -125,6 +135,8 @@
             currentResult={currentResult}
             allResults={allResults}
             onNewGame={handleNewGame}
+            selectedTheme={selectedTheme}
+            loadError={loadError}
           />
         );
       }
@@ -352,24 +364,25 @@
     }
 
     // Компонент экрана результатов
-    function ResultScreen({ currentResult, allResults, onNewGame }) {
-      // Объединяем результаты и сортируем
+    function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
+      // Фильтруем и сортируем по теме
       const combinedResults = React.useMemo(() => {
-        const results = [...allResults];
+        const filteredByTheme = allResults.filter(result => result.theme === selectedTheme);
+        const results = [...filteredByTheme];
         
         if (currentResult) {
-          // Удаляем предыдущий текущий результат, если он есть
-          const filteredResults = results.filter(result => !result.isCurrent);
-          return [currentResult, ...filteredResults].sort((a, b) => a.stepsCount - b.stepsCount);
+          // Добавляем текущий результат (с темой)
+          currentResult.theme = selectedTheme;
+          results.push(currentResult);
         }
         
-        // Сортируем по возрастанию количества ходов
+        // Сортируем по возрастанию шагов
         return results.sort((a, b) => a.stepsCount - b.stepsCount);
-      }, [allResults, currentResult]);
+      }, [allResults, currentResult, selectedTheme]);
 
       return (
         <section className="result container">
-          <h2>Лучшие результаты:</h2>
+          <h2>Лучшие результаты для темы "{themes[selectedTheme].name}":</h2>
           
           {currentResult && (
             <p>
@@ -400,7 +413,7 @@
               </tbody>
             </table>
           ) : (
-            <p>Пока нет сохраненных результатов. Сыграйте игру, чтобы увидеть свой результат!</p>
+            <p>Пока нет результатов для этой темы. Сыграйте, чтобы установить рекорд!</p>
           )}
           
           <p>Хотите попробовать ещё раз?</p>

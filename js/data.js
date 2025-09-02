@@ -1,83 +1,37 @@
-const cats = [{
-  'id': 'YdAqiUkUoWA',
-  'url': 'img/cats/cats-1.jpg',
-  'description': '',
-}, {
-  'id': 'hX_hf2lPpUU',
-  'url': 'img/cats/cats-2.jpg',
-  'description': '',
-}, {
-  'id': 'w1JE5duY62M',
-  'url': 'img/cats/cats-3.jpg',
-  'description': '',
-}, {
-  'id': '3tYZjGSBwbk',
-  'url': 'img/cats/cats-4.jpg',
-  'description': '',
-}, {
-  'id': 'NoXUQ54pDac',
-  'url': 'img/cats/cats-5.jpg',
-  'description': '',
-}, {
-  'id': 'OZhYgZh0bAg',
-  'url': 'img/cats/cats-6.jpg',
-  'description': '',
-}];
-
-const cars = [{
-  'id': 'YdAqiUkUoWA',
-  'url': 'img/cars/cars-1.jpg',
-  'description': '',
-}, {
-  'id': 'hX_hf2lPpUU',
-  'url': 'img/cars/cars-2.jpg',
-  'description': '',
-}, {
-  'id': 'w1JE5duY62M',
-  'url': 'img/cars/cars-3.jpg',
-  'description': '',
-}, {
-  'id': '3tYZjGSBwbk',
-  'url': 'img/cars/cars-4.jpg',
-  'description': '',
-}, {
-  'id': 'NoXUQ54pDac',
-  'url': 'img/cars/cars-5.jpg',
-  'description': '',
-}, {
-  'id': 'OZhYgZh0bAg',
-  'url': 'img/cars/cars-6.jpg',
-  'description': '',
-}];
-
-const flowers = [{
-  'id': 'YdAqiUkUoWA',
-  'url': 'img/flowers/flowers-1.jpg',
-  'description': '',
-}, {
-  'id': 'hX_hf2lPpUU',
-  'url': 'img/flowers/flowers-2.jpg',
-  'description': '',
-}, {
-  'id': 'w1JE5duY62M',
-  'url': 'img/flowers/flowers-3.jpg',
-  'description': '',
-}, {
-  'id': '3tYZjGSBwbk',
-  'url': 'img/flowers/flowers-4.jpg',
-  'description': '',
-}, {
-  'id': 'NoXUQ54pDac',
-  'url': 'img/flowers/flowers-5.jpg',
-  'description': '',
-}, {
-  'id': 'OZhYgZh0bAg',
-  'url': 'img/flowers/flowers-6.jpg',
-  'description': '',
-}];
-
-const imageCollection = {
-  flowers, cats, cars,
+const themes = {
+  'cats': {
+    name: 'Котики',
+    images: [
+      'img/cats/cats-1.jpg',
+      'img/cats/cats-2.jpg',
+      'img/cats/cats-3.jpg',
+      'img/cats/cats-4.jpg',
+      'img/cats/cats-5.jpg',
+      'img/cats/cats-6.jpg'
+    ]
+  },
+  'cars': {
+    name: 'Машины',
+    images: [
+      'img/cars/cars-1.jpg',
+      'img/cars/cars-2.jpg',
+      'img/cars/cars-3.jpg',
+      'img/cars/cars-4.jpg',
+      'img/cars/cars-5.jpg',
+      'img/cars/cars-6.jpg'
+    ]
+  },
+  'flowers': {
+    name: 'Цветочки',
+    images: [
+      'img/flowers/flowers-1.jpg',
+      'img/flowers/flowers-2.jpg',
+      'img/flowers/flowers-3.jpg',
+      'img/flowers/flowers-4.jpg',
+      'img/flowers/flowers-5.jpg',
+      'img/flowers/flowers-6.jpg'
+    ]
+  }
 };
 
 const results = [
@@ -88,18 +42,18 @@ const results = [
 
 const getImages = (type) => {
   // Получаем базовый набор по типу
-  const baseImages = imageCollection[type];
-  if (!baseImages) {
+  const baseImages = themes[type]?.images || [];
+  if (baseImages.length === 0) {
     return [];
   }
 
   // Создаем пары - дублируем каждое изображение с новым ID
   const pairs = [];
-  baseImages.forEach(item => {
+  baseImages.forEach((url, index) => {
     // Первая карточка пары
-    pairs.push({ ...item, id: `${item.id}-1` });
+    pairs.push({ id: `${index}-1`, url, description: '' });
     // Вторая карточка пары
-    pairs.push({ ...item, id: `${item.id}-2` });
+    pairs.push({ id: `${index}-2`, url, description: '' });
   });
 
   // Перемешиваем карточки если включена настройка
@@ -113,6 +67,3 @@ const getImages = (type) => {
 
   return pairs;
 };
-
-//Инициализируем игру с темой по умолчанию
-const images = getImages('cats');

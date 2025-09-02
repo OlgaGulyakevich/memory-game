@@ -1,0 +1,12 @@
+[
+  {"name": "Ольга", "stepsCount": 9, "theme": "cats"},
+  {"name": "Вася", "stepsCount": 12, "theme": "cars"},
+  {"name": "Петя", "stepsCount": 19, "theme": "flowers"},
+  {"name": "Игорь", "stepsCount": 11, "theme": "cats"},
+  {"name": "Мария", "stepsCount": 15, "theme": "cars"},
+  {"name": "Дмитрий", "stepsCount": 17, "theme": "flowers"},
+  {"name": "Петр", "stepsCount": 12, "theme": "flowers"},
+  {"name": "Зоя", "stepsCount": 14, "theme": "cats"},
+  {"name": "Маша", "stepsCount": 15, "theme": "cars"},
+  {"name": "Денис", "stepsCount": 13, "theme": "flowers"}
+]
