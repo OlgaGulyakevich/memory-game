@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Игра Мемори. Игра для тренировки памяти на разных наборах изображений</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="css/style.css">
-  <script src="vendor/react.development.js"></script>
+  <script src="vendor/react.development.js"></script> 
   <script src="vendor/react-dom.development.js"></script>
   <script src="vendor/babel.min.js"></script>
   <script src="vendor/get-declension.min.umd.js"></script>
-  <script src="vendor/papaparse.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/setting.js"></script>
 </head>
@@ -79,7 +82,6 @@
       const [allResults, setAllResults] = React.useState([]);
       const [selectedTheme, setSelectedTheme] = React.useState('cats');
       const [gameImages, setGameImages] = React.useState([]);
-      const [loadError, setLoadError] = React.useState(null);  // Новое состояние для ошибки
        
 
       // Обработчик завершения игры
@@ -99,6 +101,7 @@
         
         // Переходим на экран результатов
         setCurrentScreen(SCREENS.RESULTS);
+        window.history.pushState({ screen: SCREENS.RESULTS }, 'Результаты', '/results');
       }, [allResults]);
 
       // Обработчик выбора темы и начала игры
@@ -106,12 +109,14 @@
         setSelectedTheme(theme);
         setGameImages(getImages(theme));
         setCurrentScreen(SCREENS.GAME);
+        window.history.pushState({ screen: SCREENS.GAME }, 'Игра', '/game');
       }, []);
 
       // Обработчик новой игры
       const handleNewGame = () => {
         setCurrentScreen(SCREENS.START);
         setCurrentResult(null);
+        window.history.pushState({ screen: SCREENS.START }, 'Старт', '/start');
       };
 
       // Загружаем результаты при монтировании
@@ -119,7 +124,20 @@
         fetch('results.json')
           .then(response => response.json())
           .then(data => setAllResults(data))
-          .catch(error => setLoadError(error.message));  // Устанавливаем ошибку
+          .catch(()=> setAllResults(results)); // Fallback на статичный массив
+      }, []);
+
+      // Слушатель для back/forward
+      React.useEffect(() => {
+        const handlePopState = (event) => {
+          if (event.state && event.state.screen) {
+            setCurrentScreen(event.state.screen);
+          } else {
+            setCurrentScreen(SCREENS.START);  // Fallback на старт
+          }
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
       }, []);
 
       // Рендерим соответствующий экран
@@ -136,7 +154,6 @@
             allResults={allResults}
             onNewGame={handleNewGame}
             selectedTheme={selectedTheme}
-            loadError={loadError}
           />
         );
       }
@@ -316,11 +333,12 @@
       };
 
       return (
-        <li onClick={handleClick} className={`card ${className}`}>
+        <li onClick={handleClick} className={`card ${className}`} role="button" tabindex="0" 
+        aria-label={isFinished ? 'Собранная пара' : 'Закрытая карточка, кликните для открытия'}>
           <img
             width="204" height="144"
             src={url}
-            alt={description}
+            alt={description || 'Изображение карточки'}
           />
         </li>
       );
@@ -445,27 +463,20 @@
               <li>Если они совпадают – игрок забирает их и получает ещё один ход.</li>
             </ul>
           </div>
+           {/* Генерируем кнопки для всех доступных тем */}
+      <div className="theme-buttons">
+        {Object.keys(themes).map((themeKey) => (
           <button 
-            className="ico-button ico-button-cats" 
+            key={themeKey}
+            className={`ico-button ico-button-${themeKey}`}
             type="button"
-            onClick={() => onThemeSelect('cats')}
+            onClick={() => onThemeSelect(themeKey)}
+            aria-label={`Выбрать тему ${themes[themeKey].name}`}
           >
-            Котики
+            {themes[themeKey].name}
           </button>
-          <button 
-            className="ico-button ico-button-flowers" 
-            type="button"
-            onClick={() => onThemeSelect('flowers')}
-          >
-            Цветочки
-          </button>
-          <button 
-            className="ico-button ico-button-cars" 
-            type="button"
-            onClick={() => onThemeSelect('cars')}
-          >
-            Машины
-          </button>
+        ))}
+      </div>
         </section>
       );
     }
