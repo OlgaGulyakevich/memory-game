@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Игра Мемори. Игра для тренировки памяти на разных наборах изображений</title>
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -322,24 +323,28 @@
     // Компонент карточки
     function Card({item, isVisible, isFinished, onCardClick}) {
       const {id, url, description} = item;
-      const className = `${
-        isVisible ? 'card-show' : ''
-      } ${
-        isFinished ? 'card-finished' : ''
-      }`;
+      const className = `${isVisible ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
 
-      const handleClick = () => {
-        onCardClick(id);
+      const handleClick = () => onCardClick(id);
+      
+      // Обработчик клавиатуры
+      const handleKeyDown = (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onCardClick(id);
+        }
       };
 
       return (
-        <li onClick={handleClick} className={`card ${className}`} role="button" tabindex="0" 
-        aria-label={isFinished ? 'Собранная пара' : 'Закрытая карточка, кликните для открытия'}>
-          <img
-            width="204" height="144"
-            src={url}
-            alt={description || 'Изображение карточки'}
-          />
+        <li 
+          onClick={handleClick}
+          onKeyDown={handleKeyDown} 
+          className={`card ${className}`} 
+          role="button" 
+          tabIndex={isFinished ? -1 : 0} 
+          aria-label={isFinished ? 'Собранная пара' : 'Закрытая карточка, нажмите Enter для открытия'}
+        >
+          <img width="204" height="144" src={url} alt={description || 'Изображение карточки'} />
         </li>
       );
     }

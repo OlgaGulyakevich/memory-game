@@ -47,15 +47,6 @@ const getImages = (type) => {
     return [];
   }
 
-  // Создаем пары - дублируем каждое изображение с новым ID
-  // const pairs = [];
-  // baseImages.forEach((url, index) => {
-  //   // Первая карточка пары
-  //   pairs.push({ id: `${type}-${index}-1`, url: image.url, description: image.description});
-  //   // Вторая карточка пары
-  //   pairs.push({ id: `${type}-${index}-2`, url: image.url, description: image.description });
-  // });
-
    // Создаем пары - дублируем каждое изображение с новым ID
    const pairs = [];
    baseImages.forEach((image, index) => {

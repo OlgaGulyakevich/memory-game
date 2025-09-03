@@ -37,8 +37,9 @@ body {
 }
 
 .container {
-  width: 940px;
+  width: min(940px, calc(100vw - 32px));
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 .button {
@@ -195,7 +196,8 @@ body {
 
 .progress-wrapper {
   display: flex;
-  width: 460px;
+  width: 100%;
+  max-width: 460px;
   height: 16px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -266,6 +268,9 @@ body {
 
 .card img {
   grid-area: 1 / 1 / 2 / 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 5px;
   transform: rotateY(180deg);
   backface-visibility: hidden;
@@ -276,11 +281,12 @@ body {
 .card::after {
   grid-area: 1 / 1 / 2 / 2;
   content: "";
-  width: 218px;
-  height: 158px;
+  width: 100%;
+  height: 100%;
   background-image: var(--theme-back);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: cover;
   backface-visibility: hidden;
 }
 
@@ -289,13 +295,14 @@ body {
 .card::before {
   content: "";
   grid-area: 1 / 1 / 2 / 2;
-  width: 204px;
-  height: 144px;
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
   background-color: rgba(140, 174, 200, 0.6);
   background-image: url("../img/check.svg");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 24px 24px;
   opacity: 0;
   transition-property: opacity;
   z-index: 1;
@@ -484,4 +491,413 @@ body {
 
 .result .button {
   width: 160px;
+}
+
+/* Mobile Improvements */
+
+/* 1. Адаптивная сетка карточек - только для мобильных */
+@media (max-width: 768px) {
+  body {
+    min-height: 100vh;
+    overflow-x: hidden; /* Убираем горизонтальный скролл */
+  }
+  
+  .container {
+    width: calc(100vw - 32px);
+    padding: 0 16px;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .cards { 
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: clamp(12px, 2vw, 20px);
+    max-width: 100%;
+    margin-bottom: 20px; /* Добавляем отступ снизу */
+  }
+
+  .card {
+    width: 100%;
+    aspect-ratio: 1.375; /* 220/160 */
+    min-height: 120px;
+    max-width: none;
+    height: auto;
+  }
+}
+
+/* Промежуточные экраны 695px-768px - уменьшенные размеры */
+@media (max-width: 768px) and (min-width: 696px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+  }
+  
+  .card {
+    width: 100%;
+    aspect-ratio: 1.375;
+    min-height: 90px;
+    max-height: 130px;
+  }
+  
+  .progress-wrapper {
+    max-width: 400px;
+    height: 14px;
+  }
+  
+  .progress-description {
+    font-size: 14px;
+  }
+  
+  .steps {
+    font-size: 16px;
+    padding: 6px 16px;
+  }
+}
+
+/* Планшеты 601px-695px - еще меньше */
+@media (max-width: 695px) and (min-width: 601px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 520px;
+    margin: 0 auto 20px auto;
+  }
+  
+  .card {
+    width: 100%;
+    aspect-ratio: 1.375;
+    min-height: 80px;
+    max-height: 120px;
+  }
+  
+  .progress-wrapper {
+    max-width: 350px;
+    height: 12px;
+  }
+  
+  .progress-description {
+    font-size: 14px;
+  }
+  
+  .steps {
+    font-size: 15px;
+    padding: 6px 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 40px; /* Больше отступа для прокрутки */
+  }
+  
+  .game {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 0 40px 0; /* Увеличиваем padding-bottom */
+    min-height: auto; /* Убираем ограничение высоты */
+  }
+  
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  .container {
+    min-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Плавная прокрутка на iOS */
+    padding-bottom: 40px; /* Увеличиваем отступ снизу */
+    position: relative;
+  }
+  
+  /* Еще больше сжимаем на очень маленьких экранах */
+  .rules {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .result {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .result-table-row {
+    grid-template-columns: 40px 1fr 50px;
+  }
+  
+  .result-table-row th,
+  .result-table-row td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+
+/* 2. Touch-friendly интерактивность - только для мобильных */
+@media (max-width: 768px) {
+  .card {
+    touch-action: manipulation; /* Отключает zoom на двойной тап */
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  }
+}
+
+.card:not(.card-show):not(.card-finished):hover,
+.card:not(.card-show):not(.card-finished):focus {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(140, 174, 200, 0.4);
+}
+
+/* Touch states */
+.card:not(.card-show):not(.card-finished):active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* Только для touch устройств */
+  .card:not(.card-show):not(.card-finished):hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Улучшенная фокусировка для игры одной рукой */
+/* Визуальный focus indicator */
+.card:focus {
+  outline: 3px solid #00ca51;
+  outline-offset: 2px;
+}
+
+.button:focus, .ico-button:focus {
+  outline: 3px solid #00ca51;
+  outline-offset: 2px;
+}
+
+/* Большие мобильные экраны iPhone Pro Max и подобные */
+@media (max-width: 600px) and (min-width: 400px) {
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  .container {
+    min-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 60px; /* Еще больше отступа для больших экранов */
+  }
+  
+  .game {
+    min-height: auto;
+    padding: 12px 0 50px 0; /* Увеличиваем padding для больших мобильных */
+  }
+  
+  .cards {
+    margin-bottom: 50px; /* Больше отступа снизу */
+  }
+}
+
+/* КРИТИЧЕСКИЙ БРЕЙКПОИНТ: 695px экраны */
+@media (max-width: 695px) and (min-width: 601px) {
+  /* Перезаписываем стили GameHeader для проблемного размера */
+  .game {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 12px 0 !important;
+    margin-bottom: 16px !important;
+  }
+  
+  .progress-wrapper {
+    width: 100% !important;
+    max-width: 350px !important;
+    height: 12px !important;
+    margin: 0 auto !important;
+  }
+  
+  .progress {
+    height: 100% !important;
+    border-radius: 6px !important;
+  }
+  
+  .progress-description {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .steps {
+    font-size: 15px !important;
+    padding: 6px 14px !important;
+  }
+  
+  /* Уменьшаем карточки для экрана 695px */
+  .cards {
+    max-width: 480px !important;
+    margin: 0 auto 20px auto !important;
+    gap: 6px !important;
+  }
+  
+  .card {
+    min-height: 75px !important;
+    max-height: 110px !important;
+  }
+}
+
+/* 3. Модальные окна для мобильных */
+@media (max-width: 768px) {
+  .modal-box {
+    width: calc(100vw - 32px);
+    max-width: 320px;
+    padding: 52px 24px 24px;
+    margin: 16px;
+  }
+  
+  .modal-box::before {
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 110px;
+  }
+  
+  .modal-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .modal-buttons .button {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
+    min-height: 44px; /* Touch target size */
+  }
+}
+
+/* 4. Адаптивная типографика и интерфейс */
+@media (max-width: 768px) {
+  /* Адаптивные размеры текста */
+  .rules h2, .result h2 {
+    font-size: clamp(24px, 5vw, 40px);
+    line-height: 1.2;
+  }
+
+  .button, .ico-button {
+    padding: clamp(12px, 2vw, 16px) clamp(16px, 3vw, 24px);
+    font-size: clamp(14px, 2vw, 16px);
+    min-height: 44px; /* Apple рекомендует минимум 44px для touch */
+  }
+
+  .ico-button {
+    padding-left: clamp(44px, 8vw, 56px);
+    background-size: clamp(16px, 3vw, 24px);
+  }
+
+  /* 1. StartScreen - кнопки тем в колонку */
+  .theme-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
+  .theme-buttons .ico-button {
+    width: 100%;
+    text-align: center;
+    padding-left: clamp(16px, 3vw, 24px);
+    background-position: left 16px center;
+    margin: auto;
+  }
+
+  /* 2. GameHeader - полная ширина и исправление прогресс-бара */
+  .game {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    margin-bottom: 20px;
+    min-height: auto;
+    overflow: visible;
+  }
+  
+  .progress-wrapper {
+    width: 100%;
+    max-width: 400px;
+    height: 16px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  .progress {
+    height: 100%;
+    background-color: #00ca51;
+    border-radius: 8px;
+    transition: width var(--animation-duration);
+  }
+  
+  .progress-description {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
+  .steps {
+    justify-self: center;
+    padding: clamp(6px, 1vw, 8px) clamp(12px, 3vw, 20px);
+    font-size: clamp(16px, 3vw, 20px);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .rules-panel {
+    width: calc(100% - 32px);
+    max-width: 520px;
+    padding: 20px 24px;
+  }
+  
+  /* 3. ResultScreen - адаптивная таблица */
+  .result-table {
+    width: calc(100% - 32px);
+    max-width: 100%;
+    font-size: 14px;
+  }
+  
+  .result-table-row {
+    grid-template-columns: 50px 1fr 60px;
+    gap: 8px;
+  }
+  
+  .result-table-row th,
+  .result-table-row td {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  /* 4. Уменьшаем отступы для экономии места */
+  .rules {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .result {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  /* 5. Карточки - меньше отступы */
+  .cards {
+    gap: 8px;
+  }
 }
