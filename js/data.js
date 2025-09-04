@@ -13,23 +13,23 @@ const themes = {
   'cars': {
     name: 'Машины',
     images: [
-      {url:'img/cars/cars-1.jpg', description: 'Салатовая двухдверная машина с черными колесами'},
-      {url:'img/cars/cars-2.jpg', description: 'Голубая двухдверная машина'},
-      {url:'img/cars/cars-3.jpg', description: 'Машина кэмпер'},
-      {url:'img/cars/cars-4.jpg', description: 'Синяя спортивная машина'},
-      {url:'img/cars/cars-5.jpg', description: 'Белая спортивная машина с черными колесами'},
-      {url:'img/cars/cars-6.jpg', description: 'Красная машина ауди едет по дороге'}
+      {url:'./img/cars/cars-1.jpg', description: 'Салатовая двухдверная машина с черными колесами'},
+      {url:'./img/cars/cars-2.jpg', description: 'Голубая двухдверная машина'},
+      {url:'./img/cars/cars-3.jpg', description: 'Машина кэмпер'},
+      {url:'./img/cars/cars-4.jpg', description: 'Синяя спортивная машина'},
+      {url:'./img/cars/cars-5.jpg', description: 'Белая спортивная машина с черными колесами'},
+      {url:'./img/cars/cars-6.jpg', description: 'Красная машина ауди едет по дороге'}
     ]
   },
   'flowers': {
     name: 'Цветочки',
     images: [
-      {url:'img/flowers/flowers-1.jpg', description: 'Розовый цветок тюльпан'},
-      {url:'img/flowers/flowers-2.jpg', description: 'Белый цветок роза'},
-      {url:'img/flowers/flowers-3.jpg', description: 'Нежно-голубой цветок'},
-      {url:'img/flowers/flowers-4.jpg', description: 'Желтые цветы лилии'},
-      {url:'img/flowers/flowers-5.jpg', description: 'Фиолетовые цветы'},
-      {url:'img/flowers/flowers-6.jpg', description: 'Голубой цветок'}
+      {url:'./img/flowers/flowers-1.jpg', description: 'Розовый цветок тюльпан'},
+      {url:'./img/flowers/flowers-2.jpg', description: 'Белый цветок роза'},
+      {url:'./img/flowers/flowers-3.jpg', description: 'Нежно-голубой цветок'},
+      {url:'./img/flowers/flowers-4.jpg', description: 'Желтые цветы лилии'},
+      {url:'./img/flowers/flowers-5.jpg', description: 'Фиолетовые цветы'},
+      {url:'./img/flowers/flowers-6.jpg', description: 'Голубой цветок'}
     ]
   }
 };  
