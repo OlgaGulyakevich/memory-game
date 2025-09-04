@@ -1,5 +1,5 @@
 :root {
-  --animation-duration: 0.8s;
+  --animation-duration: 0.5s;
 }
 
 @font-face {
@@ -300,6 +300,7 @@ body {
   opacity: 0;
   transition-property: opacity;
   z-index: 1;
+  
 }
 
 .card-show {
@@ -574,7 +575,7 @@ body {
     border: 1px solid #bad6eb !important;
     border-radius: 10px !important;
     background: #ffffff !important;
-    overflow: hidden !important;
+    overflow: visible !important; 
     cursor: pointer !important;
     /* Трансформация как в оригинале */
     transform-style: preserve-3d !important;
@@ -617,13 +618,14 @@ body {
   }
   
   .card::before {
+    content: "" !important; 
     border-radius: 5px !important;
     background-color: rgba(140, 174, 200, 0.6) !important;
     background-image: url("../img/check.svg") !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: clamp(24px, 6vw, 32px) !important;
-    opacity: 0 !important;
+    /* opacity: 1 !important; */
     transition-property: opacity !important;
     z-index: 1 !important;
   }
@@ -644,8 +646,9 @@ body {
     opacity: 1 !important;
     transition-delay: var(--animation-duration) !important;
     transition-duration: var(--animation-duration) !important;
-    transition-timing-function: ease-in-out !important;
+    transition-timing-function: ease-in-out !important
   }
+
   
   /* КНОПКИ ТЕМ В КОЛОНКУ */
   .theme-buttons {
@@ -869,13 +872,13 @@ body {
 
 /* ===== ACCESSIBILITY ===== */
 .card:focus {
-  outline: 3px solid #00ca51 !important;
-  outline-offset: 2px !important;
+  outline: 2px solid #00ca51 !important;
+  outline-offset: 3px !important;
 }
 
 .button:focus, .ico-button:focus {
-  outline: 3px solid #00ca51 !important;
-  outline-offset: 2px !important;
+  outline: 2px solid #00ca51 !important;
+  outline-offset: 3px !important;
 }
 
 /* ===== АНИМАЦИИ ОПТИМИЗАЦИЯ ===== */
