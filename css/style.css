@@ -646,7 +646,7 @@ body {
     opacity: 1 !important;
     transition-delay: var(--animation-duration) !important;
     transition-duration: var(--animation-duration) !important;
-    transition-timing-function: ease-in-out !important
+    transition-timing-function: ease-in-out !important;
   }
 
   
