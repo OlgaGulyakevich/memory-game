@@ -26,6 +26,7 @@
   src: url("../fonts/Nunito-Black.woff2") format("woff2");
 }
 
+/* ===== БАЗОВЫЕ СТИЛИ ===== */
 body {
   margin: 0;
   font-family: "Nunito", sans-serif;
@@ -185,6 +186,7 @@ body {
   margin-right: 10px;
 }
 
+/* ===== ИГРА - БАЗОВЫЕ СТИЛИ ===== */
 .game {
   display: grid;
   grid-template-columns: 460px auto 1fr;
@@ -210,7 +212,7 @@ body {
 }
 
 .progress-description {
-  margin: 0;
+  margin: 0 auto;
   font-size: 16px;
   line-height: 22px;
 }
@@ -226,6 +228,7 @@ body {
   border-radius: 22px;
 }
 
+/* ===== КАРТОЧКИ - БАЗОВЫЕ СТИЛИ ===== */
 .cards {
   grid-column: 1 / -1;
   display: grid;
@@ -234,13 +237,9 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
-
-  perspective: 1000px; /* Для анимации */
-
+  perspective: 1000px;
   --theme-back: url("../img/cats/back-cats.svg");
 }
-
-/* класс для смены рубашки карточек, добавляется списку .cards */
 
 .cards-theme-flowers {
   --theme-back: url("../img/flowers/back-flowers.svg");
@@ -261,36 +260,8 @@ body {
   box-sizing: border-box;
   border: 1px solid #bad6eb;
   cursor: pointer;
-
   transition: transform var(--animation-duration);
   transform-style: preserve-3d;
-}
-
-/* КРИТИЧЕСКОЕ ПЕРЕОПРЕДЕЛЕНИЕ: Адаптивные размеры карточек для мобильных */
-@media (max-width: 768px) {
-  .card {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 100px !important;
-    max-height: 120px !important; /* 150px*/
-    aspect-ratio: 1.3 !important;  
-    /* Принудительные отступы для предотвращения наложения */
-    margin: 2px !important;
-    box-sizing: border-box !important;
-  }
-  
-  /* Исправляем размеры изображений внутри карточек */
-  .card img {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
-    max-height: none !important;
-  }
-  
-  /* Увеличиваем размер check иконки на мобильных */
-  .card::before {
-    background-size: clamp(24px, 8vw, 40px) !important;
-  }
 }
 
 .card img {
@@ -303,8 +274,6 @@ body {
   backface-visibility: hidden;
 }
 
-/* Рубашка */
-
 .card::after {
   grid-area: 1 / 1 / 2 / 2;
   content: "";
@@ -313,11 +282,9 @@ body {
   background-image: var(--theme-back);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain; /* Вместо cover*/
+  background-size: contain;
   backface-visibility: hidden;
 }
-
-/* Финальная отметка */
 
 .card::before {
   content: "";
@@ -329,14 +296,10 @@ body {
   background-image: url("../img/check.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: clamp(20px, 6vw, 32px); /* Адаптивный размер иконки */
+  background-size: clamp(20px, 6vw, 32px);
   opacity: 0;
   transition-property: opacity;
   z-index: 1;
-}
-
-.card:not(.card-show):not(.card-finished):hover {
-  box-shadow: 0 6px 16px rgba(140, 174, 200, 0.6);
 }
 
 .card-show {
@@ -356,6 +319,7 @@ body {
   transition-timing-function: ease-in-out;
 }
 
+/* ===== МОДАЛЬНЫЕ ОКНА ===== */
 .modal {
   position: fixed;
   top: 0;
@@ -363,29 +327,21 @@ body {
   bottom: 0;
   left: 0;
   z-index: 1000;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-color: rgba(140, 174, 200, 0.8);
   overflow-y: hidden;
   overscroll-behavior: contain;
   pointer-events: auto;
-
-  /* visibility: hidden; */
-  /* opacity: 0; */
   animation: fadeIn calc(var(--animation-duration) + 0.1s) calc(2 * var(--animation-duration)) both;
 }
 
 @keyframes fadeIn {
   from {
-    /* visibility: hidden; */
     opacity: 0;
   }
-
   to {
-    /* visibility: visible; */
     opacity: 1;
   }
 }
@@ -437,7 +393,6 @@ body {
 .modal-buttons {
   display: flex;
   gap: 16px;
-  /* margin-top: 24px; */
   justify-content: center;
   flex-wrap: nowrap;
 }
@@ -456,6 +411,7 @@ body {
   color: #333333;
 }
 
+/* ===== РЕЗУЛЬТАТЫ ===== */
 .result {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -520,415 +476,425 @@ body {
   width: 160px;
 }
 
-/* Mobile Improvements */
-
-/* КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ ВМЕСТО VIEWPORT */
-@media (max-width: 768px) {
-  /* Принудительное отключение zoom и scroll */
-  html {
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    touch-action: manipulation;
-  }
-  
+/* ===== SAFE AREA SUPPORT ДЛЯ iPhone ===== */
+@supports (padding: max(0px)) {
   body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-    /* Предотвращаем масштабирование */
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-  }
-  
-  .container {
-    width: calc(100vw - 16px); /* Меньше отступы */
-    padding: 0 8px; /* Меньше паддинг */
-    min-height: 100vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-
-  /* Базовые стили карточек - НЕ переопределяем размеры здесь */
-  .cards { 
-    max-width: 100%;
-    margin-bottom: 20px;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 8px !important; /* Принудительный gap */
-    padding: 4px !important; /* Дополнительный внутренний отступ */
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
   }
 }
 
-/* Промежуточные экраны 695px-768px - уменьшенные размеры */
-@media (max-width: 768px) and (min-width: 696px) {
+/* ===== ПЛАНШЕТЫ: 769px - 1024px ===== */
+@media (max-width: 1024px) and (min-width: 769px) {
   .cards {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    max-width: 600px;
-    margin: 0 auto 20px auto;
+    grid-template-columns: repeat(3, 200px) !important;
+    gap: 16px !important;
+    justify-content: center !important;
   }
   
-  /* Размеры карточек наследуются от базового медиа-запроса */
-  
-  .progress-wrapper {
-    max-width: 400px;
-    height: 14px;
-  }
-  
-  .progress-description {
-    font-size: 14px;
-  }
-  
-  .steps {
-    font-size: 16px;
-    padding: 6px 16px;
-  }
-}
-
-
-/* Маленькие мобильные экраны ≤400px */
-@media (max-width: 400px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px !important; /* Увеличиваем gap для маленьких экранов */
-    margin-bottom: 30px;
-    max-width: 100%;
-    padding: 6px !important;
-  }
-  
-  /* Размеры карточек наследуются от базового медиа-запроса */
-  
-  .game {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 10px 0 30px 0;
-    min-height: auto;
-  }
-  
-  body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-  
-  .container {
-    min-height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 30px;
-    position: relative;
-  }
-  
-  /* Еще больше сжимаем на очень маленьких экранах */
-  .rules {
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-  
-  .result {
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-  
-  .result-table-row {
-    grid-template-columns: 40px 1fr 50px;
-  }
-  
-  .result-table-row th,
-  .result-table-row td {
-    padding: 6px 8px;
-    font-size: 12px;
-  }
-}
-
-/* 2. Touch-friendly интерактивность - только для мобильных */
-@media (max-width: 768px) {
   .card {
-    touch-action: manipulation; /* Отключает zoom на двойной тап */
-    -webkit-tap-highlight-color: transparent;
-    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    width: 200px !important;
+    height: 140px !important;
   }
 }
 
-/* ИСПРАВЛЯЕМ КОНФЛИКТ TRANSFORM НА МОБИЛЬНЫХ */
-@media (hover: hover) and (pointer: fine) {
-  /* Только для desktop - hover эффекты с scale */
-  .card:not(.card-show):not(.card-finished):hover,
-  .card:not(.card-show):not(.card-finished):focus {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(140, 174, 200, 0.4);
-  }
-}
-
-/* Touch устройства - БЕЗ scale transform чтобы не конфликтовать с rotateY */
-@media (hover: none) and (pointer: coarse) {
-  .card:not(.card-show):not(.card-finished):active {
-    box-shadow: 0 4px 12px rgba(140, 174, 200, 0.6);
-    transition-duration: 0.1s;
-    /* НЕ используем transform: scale() - оставляем rotateY работать */
-  }
+/* ===== МОБИЛЬНЫЕ УСТРОЙСТВА: ≤768px ===== */
+@media (max-width: 768px) {
   
-  .card:not(.card-show):not(.card-finished):hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-/* Улучшенная фокусировка для игры одной рукой */
-/* Визуальный focus indicator */
-.card:focus {
-  outline: 3px solid #00ca51;
-  outline-offset: 2px;
-}
-
-.button:focus, .ico-button:focus {
-  outline: 3px solid #00ca51;
-  outline-offset: 2px;
-}
-
-/* Большие мобильные экраны iPhone 14, Pro Max и подобные */
-@media (max-width: 600px) and (min-width: 401px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px !important; /* Увеличиваем gap для iPhone */
-    margin-bottom: 40px;
-    max-width: 100%;
-    padding: 8px !important;
-  }
-  
-  /* Размеры карточек наследуются от базового медиа-запроса */
-  
-  .game {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 12px 0 40px 0;
-    min-height: auto;
+  /* КРИТИЧЕСКИЕ iOS ФИКСЫ */
+  html {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
   
   body {
+    font-size: 18px !important;
+    line-height: 24px !important;
+    overflow-x: hidden !important;
     min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
+    min-height: -webkit-fill-available;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   .container {
+    width: calc(100vw - 32px) !important;
+    max-width: 100vw !important;
+    padding: 0 16px !important;
     min-height: 100vh;
-    overflow-y: auto;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 50px;
-    position: relative;
+    overscroll-behavior-y: contain;
   }
-}
-
-/* КРИТИЧЕСКИЙ БРЕЙКПОИНТ: 695px экраны - ПОЛНОЕ ПЕРЕОПРЕДЕЛЕНИЕ */
-@media (max-width: 695px) and (min-width: 601px) {
-  /* Перезаписываем стили GameHeader для проблемного размера */
+  
+  /* ИГРОВАЯ ОБЛАСТЬ */
   .game {
     grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    padding: 12px 0 !important;
-    margin-bottom: 16px !important;
+    gap: 16px !important;
+    padding: 20px 0 !important;
+    margin-bottom: 40px !important;
+    min-height: 0 !important;
   }
   
   .progress-wrapper {
     width: 100% !important;
-    max-width: 350px !important;
-    height: 12px !important;
+    max-width: 400px !important;
+    height: 16px !important;
     margin: 0 auto !important;
   }
   
-  .progress {
-    height: 100% !important;
-    border-radius: 6px !important;
-  }
-  
-  .progress-description {
-    font-size: 14px !important;
-    margin-bottom: 6px !important;
-  }
-  
   .steps {
-    font-size: 15px !important;
-    padding: 6px 14px !important;
+    justify-self: center !important;
+    padding: 8px 16px !important;
+    font-size: 18px !important;
   }
   
-  /* ПРИНУДИТЕЛЬНОЕ ОТОБРАЖЕНИЕ КАРТОЧЕК 695px */
+  /* КАРТОЧКИ - PADDING TRICK ВМЕСТО ASPECT-RATIO */
   .cards {
-    max-width: 480px !important;
-    margin: 0 auto 20px auto !important;
-    gap: 8px !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    grid-auto-rows: minmax(120px, auto) !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 30px 0 !important;
+    padding: 0 !important;
   }
   
   .card {
-    min-height: 120px !important;
-    max-height: 140px !important;
-  }
-}
-
-/* 3. Модальные окна для мобильных */
-@media (max-width: 768px) {
-  .modal-box {
-    width: calc(100vw - 32px);
-    max-width: 320px;
-    padding: 52px 24px 24px;
-    margin: 16px;
-  }
-  
-  .modal-box::before {
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 110px;
-  }
-  
-  .modal-buttons {
-    flex-direction: column;
-    gap: 12px;
+    /* PADDING TRICK для стабильных размеров */
+    width: 100% !important;
+    height: 0 !important;
+    padding-bottom: 71.43% !important;
+    position: relative !important;
+    margin: 0 !important;
+    border: 1px solid #bad6eb !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    /* Трансформация как в оригинале */
+    transform-style: preserve-3d !important;
+    will-change: transform;
+    backface-visibility: hidden;
+    /* Анимации */
+    transition: transform var(--animation-duration) !important;
+    /* Touch оптимизация */
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
   
-  .modal-buttons .button {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 14px;
-    min-height: 44px; /* Touch target size */
+  /* Все содержимое карточки позиционируем абсолютно */
+  .card img,
+  .card::after,
+  .card::before {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
-}
-
-/* 4. Адаптивная типографика и интерфейс */
-@media (max-width: 768px) {
-  /* Адаптивные размеры текста */
-  .rules h2, .result h2 {
-    font-size: clamp(24px, 5vw, 40px);
-    line-height: 1.2;
+  
+  .card img {
+    object-fit: cover !important;
+    border-radius: 5px !important;
+    transform: rotateY(180deg) !important;
+    backface-visibility: hidden !important;
   }
-
-  .button, .ico-button {
-    padding: clamp(12px, 2vw, 16px) clamp(16px, 3vw, 24px);
-    font-size: clamp(14px, 2vw, 16px);
-    min-height: 44px; /* Apple рекомендует минимум 44px для touch */
+  
+  .card::after {
+    background-image: var(--theme-back) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+    backface-visibility: hidden !important;
   }
-
-  .ico-button {
-    padding-left: clamp(44px, 8vw, 56px);
-    background-size: clamp(16px, 3vw, 24px);
+  
+  .card::before {
+    border-radius: 5px !important;
+    background-color: rgba(140, 174, 200, 0.6) !important;
+    background-image: url("../img/check.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: clamp(24px, 6vw, 32px) !important;
+    opacity: 0 !important;
+    transition-property: opacity !important;
+    z-index: 1 !important;
   }
-
-  /* 1. StartScreen - кнопки тем в колонку */
+  
+  /* Состояния карточек */
+  .card-show {
+    transform: rotateY(180deg) !important;
+    cursor: default !important;
+  }
+  
+  .card-finished {
+    transform: rotateY(180deg) !important;
+    cursor: default !important;
+  }
+  
+  
+  .card-finished::before {
+    opacity: 1 !important;
+    transition-delay: var(--animation-duration) !important;
+    transition-duration: var(--animation-duration) !important;
+    transition-timing-function: ease-in-out !important;
+  }
+  
+  /* КНОПКИ ТЕМ В КОЛОНКУ */
   .theme-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 280px;
-    margin: 0 auto;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
   }
   
   .theme-buttons .ico-button {
-    width: 100%;
-    text-align: center;
-    padding-left: clamp(16px, 3vw, 24px);
-    background-position: left 16px center;
-    margin: auto;
-  }
-
-  /* 2. GameHeader - полная ширина и исправление прогресс-бара */
-  .game {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 16px 0;
-    margin-bottom: 20px;
-    min-height: auto;
-    overflow: visible;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 12px 16px !important;
+    padding-left: 24px !important;
+    background-position: left 16px center !important;
+    margin: auto !important;
+    min-height: 48px !important;
+    font-size: 14px !important;
   }
   
-  .progress-wrapper {
-    width: 100%;
-    max-width: 400px;
-    height: 16px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 0 auto;
+  /* МОДАЛЬНЫЕ ОКНА */
+  .modal-box {
+    width: calc(100vw - 32px) !important;
+    max-width: 320px !important;
+    padding: 52px 24px 24px !important;
+    margin: 16px !important;
   }
   
-  .progress {
-    height: 100%;
-    background-color: #00ca51;
-    border-radius: 8px;
-    transition: width var(--animation-duration);
+  .modal-box::before {
+    top: -60px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 300px !important;
+    height: 110px !important;
   }
   
-  .progress-description {
-    text-align: center;
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
-
-  .steps {
-    justify-self: center;
-    padding: clamp(6px, 1vw, 8px) clamp(12px, 3vw, 20px);
-    font-size: clamp(16px, 3vw, 20px);
-    white-space: nowrap;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    font-size: 18px;
-    line-height: 24px;
+  .modal-buttons {
+    flex-direction: column !important;
+    gap: 12px !important;
   }
   
-  .rules-panel {
-    width: calc(100% - 32px);
-    max-width: 520px;
-    padding: 20px 24px;
+  .modal-buttons .button {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    min-height: 44px !important;
   }
   
-  /* 3. ResultScreen - адаптивная таблица */
+  /* РЕЗУЛЬТАТЫ */
   .result-table {
-    width: calc(100% - 32px);
-    max-width: 100%;
-    font-size: 14px;
+    width: calc(100% - 32px) !important;
+    max-width: 100% !important;
+    font-size: 14px !important;
   }
   
   .result-table-row {
-    grid-template-columns: 50px 1fr 60px;
-    gap: 8px;
+    grid-template-columns: 60px 1fr 80px !important;
+    gap: 8px !important;
   }
   
   .result-table-row th,
   .result-table-row td {
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
   }
   
-  /* 4. Уменьшаем отступы для экономии места */
+  /* ОБЩИЕ ОТСТУПЫ */
   .rules {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px 0 !important;
   }
   
   .result {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px 0 !important;
   }
   
-  /* 5. Карточки - меньше отступы + ПРИНУДИТЕЛЬНОЕ ОТОБРАЖЕНИЕ */
-  .cards {
-    gap: 8px !important;
-    display: grid !important;
-    grid-auto-rows: minmax(100px, auto) !important;
-    align-items: stretch !important;
-    justify-items: stretch !important;
+  .rules-panel {
+    width: calc(100% - 32px) !important;
+    max-width: 520px !important;
+    padding: 20px 24px !important;
   }
   
-  /* ПРИНУДИТЕЛЬНОЕ ОТОБРАЖЕНИЕ КАРТОЧЕК */
-  .card {
-    display: grid !important;
-    place-items: center !important;
-    border: 2px solid #bad6eb !important; /* Увеличиваем border для видимости */
-    background-color: #ffffff !important;
+  /* АДАПТИВНЫЕ ЗАГОЛОВКИ */
+  .rules h2,
+  .result h2 {
+    font-size: clamp(28px, 8vw, 40px) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .rules h3 {
+    font-size: clamp(20px, 5vw, 24px) !important;
+    line-height: 1.3 !important;
   }
 }
+
+/* ===== iPhone 14 Pro Max (428px) ===== */
+@media (min-width: 415px) and (max-width: 767px) {
+  .cards {
+    gap: 14px !important;
+    margin-bottom: 36px !important;
+    max-width: 400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  .card {
+    padding-bottom: 70% !important;
+  }
+}
+
+/* ===== МАЛЕНЬКИЕ МОБИЛЬНЫЕ: ≤414px ===== */
+@media (max-width: 414px) {
+  .cards {
+    gap: 10px !important;
+  }
+  
+  .card {
+    padding-bottom: 71.43% !important;
+  }
+}
+
+/* ===== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ: ≤360px ===== */
+@media (max-width: 360px) {
+  .container {
+    width: calc(100vw - 16px) !important;
+    padding: 0 8px !important;
+  }
+  
+  .cards {
+    gap: 8px !important;
+  }
+  
+  .game {
+    gap: 8px !important;
+    padding: 12px 0 !important;
+  }
+}
+
+/* ===== LANDSCAPE ORIENTATION ===== */
+@media (max-width: 768px) and (orientation: landscape) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+  
+  .card {
+    /* СОХРАНЯЕМ ТОТ ЖЕ padding-bottom для стабильности анимаций */
+    padding-bottom: 71.43% !important;
+    /* Но уменьшаем общий размер через transform */
+    transform: scale(0.85) translateZ(0) !important;
+  }
+  
+  /* Корректируем состояния карточек в landscape */
+  .card-show {
+    transform: rotateY(180deg) scale(0.85) translateZ(0) !important;
+    cursor: default !important;
+  }
+  
+  .card-finished {
+    transform: rotateY(180deg) scale(0.85) translateZ(0) !important;
+    cursor: default !important;
+  }
+  
+  .game {
+    gap: 8px !important;
+    padding: 12px 0 !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .progress-wrapper {
+    height: 12px !important;
+    max-width: 300px !important;
+  }
+  
+  .steps {
+    font-size: 16px !important;
+    padding: 6px 12px !important;
+  }
+}
+
+
+/* ===== DESKTOP HOVER ЭФФЕКТЫ (только для больших экранов) ===== */
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+  .card:not(.card-show):not(.card-finished):hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 8px 24px rgba(140, 174, 200, 0.4) !important;
+  }
+}
+
+/* ===== МОБИЛЬНЫЕ TOUCH ЭФФЕКТЫ ===== */
+@media (max-width: 768px) {
+  /* Portrait режим (2 колонки) - базовые эффекты */
+  .card:not(.card-show):not(.card-finished):hover {
+    transform: scale(1.02) !important;
+    box-shadow: 0 6px 18px rgba(140, 174, 200, 0.4) !important;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out !important;
+  }
+  
+  .card:not(.card-show):not(.card-finished):active {
+    transform: scale(0.98) !important;
+    box-shadow: 0 4px 12px rgba(140, 174, 200, 0.6) !important;
+    transition-duration: 0.1s !important;
+  }
+  
+  /* Landscape режим (3 колонки) - переопределяем hover/touch */
+  @media (orientation: landscape) {
+    .card:not(.card-show):not(.card-finished):hover {
+      transform: scale(0.9) !important;
+      box-shadow: 0 6px 18px rgba(140, 174, 200, 0.4) !important;
+    }
+    
+    .card:not(.card-show):not(.card-finished):active {
+      transform: scale(0.8) !important;
+      box-shadow: 0 3px 8px rgba(140, 174, 200, 0.6) !important;
+      transition-duration: 0.1s !important;
+    }
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+.card:focus {
+  outline: 3px solid #00ca51 !important;
+  outline-offset: 2px !important;
+}
+
+.button:focus, .ico-button:focus {
+  outline: 3px solid #00ca51 !important;
+  outline-offset: 2px !important;
+}
+
+/* ===== АНИМАЦИИ ОПТИМИЗАЦИЯ ===== */
+@media (max-width: 768px) {
+  .card,
+  .card::before,
+  .card::after {
+    transition-duration: 0.3s !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+}
+
+/* ===== ОТКЛЮЧЕНИЕ АНИМАЦИЙ ПРИ НИЗКОЙ ПРОИЗВОДИТЕЛЬНОСТИ ===== */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::before,
+  .card::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
