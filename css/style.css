@@ -128,7 +128,7 @@ body {
 }
 
 .rules-panel {
-  width: 520px;
+  width: min(520px, 100%);
   margin: 36px auto 40px;
   padding: 24px 32px 36px;
   background-color: #ffffff;
@@ -189,7 +189,7 @@ body {
 /* ===== ИГРА - БАЗОВЫЕ СТИЛИ ===== */
 .game {
   display: grid;
-  grid-template-columns: 460px auto 1fr;
+  grid-template-columns: minmax(280px, 460px) auto 1fr;
   align-items: center;
   gap: 40px 20px;
   padding-top: 40px;
@@ -232,7 +232,7 @@ body {
 .cards {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(4, 220px);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
   gap: 20px;
   margin: 0;
   padding: 0;
@@ -253,8 +253,8 @@ body {
   display: grid;
   align-items: center;
   justify-items: center;
-  width: 220px;
-  height: 160px;
+  width: 100%;
+  aspect-ratio: 1.375 / 1; /* 220:160 = 1.375:1 */
   background-color: #ffffff;
   border-radius: 10px;
   box-sizing: border-box;
@@ -300,6 +300,7 @@ body {
   opacity: 0;
   transition-property: opacity;
   z-index: 1;
+  pointer-events: none;
   
 }
 
@@ -349,7 +350,7 @@ body {
 
 .modal-box {
   position: relative;
-  width: 320px;
+  width: min(320px, 90%);
   min-height: 285px;
   max-height: calc(100vh - 60px);
   padding: 72px 40px 36px;
@@ -364,8 +365,10 @@ body {
   content: "";
   position: absolute;
   top: -75px;
-  left: -30px;
-  width: 376px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 376px;
   height: 130px;
   background-image: url("../img/ribbon-with-stars.svg");
   background-position: top center;
@@ -433,7 +436,7 @@ body {
 }
 
 .result-table {
-  width: 520px;
+  width: min(520px, 100%);
   margin: 36px auto 32px;
   font-size: 16px;
   line-height: 22px;
@@ -445,7 +448,7 @@ body {
 
 .result-table-row {
   display: grid;
-  grid-template-columns: 120px 260px 140px;
+  grid-template-columns: minmax(80px, 120px) minmax(180px, 260px) minmax(80px, 140px);
   align-items: center;
 }
 
@@ -474,7 +477,7 @@ body {
 }
 
 .result .button {
-  width: 160px;
+  width: min(160px, 100%);
 }
 
 /* ===== SAFE AREA SUPPORT ДЛЯ iPhone ===== */
@@ -495,8 +498,8 @@ body {
   }
   
   .card {
-    width: 200px !important;
-    height: 140px !important;
+    width: 100% !important;
+    aspect-ratio: 1.429 / 1 !important; /* 200:140 = 1.429:1 */
   }
 }
 
@@ -566,10 +569,10 @@ body {
   }
   
   .card {
-    /* PADDING TRICK для стабильных размеров */
+    /* Используем aspect-ratio вместо padding trick */
     width: 100% !important;
-    height: 0 !important;
-    padding-bottom: 71.43% !important;
+    aspect-ratio: 1.4 / 1 !important; /* 100:71.43 = 1.4:1 */
+    height: auto !important;
     position: relative !important;
     margin: 0 !important;
     border: 1px solid #bad6eb !important;
@@ -756,7 +759,7 @@ body {
   }
   
   .card {
-    padding-bottom: 70% !important;
+    aspect-ratio: 1.429 / 1 !important; /* ~1.43:1 */
   }
 }
 
@@ -767,7 +770,7 @@ body {
   }
   
   .card {
-    padding-bottom: 71.43% !important;
+    aspect-ratio: 1.4 / 1 !important; /* 100:71.43 = 1.4:1 */
   }
 }
 
@@ -797,15 +800,13 @@ body {
   }
   
   .card {
-    /* СОХРАНЯЕМ ТОТ ЖЕ padding-bottom для стабильности анимаций */
     padding-bottom: 71.43% !important;
-    /* Но уменьшаем общий размер через transform */
     transform: scale(0.85) translateZ(0) !important;
   }
   
   /* Корректируем состояния карточек в landscape */
   .card-show {
-    transform: rotateY(180deg) scale(0.85) translateZ(0) !important;
+    transform: rotateY(180deg) scale(0.85)!important;
     cursor: default !important;
   }
   
