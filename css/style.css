@@ -238,7 +238,6 @@ body {
   padding: 0;
   list-style: none;
   perspective: 1000px;
-  --theme-back: url("../img/cats/back-cats.svg");
 }
 
 .cards-theme-flowers {
@@ -247,6 +246,10 @@ body {
 
 .cards-theme-cars {
   --theme-back: url("../img/cars/back-cars.svg");
+}
+
+.cards-theme-cats {
+  --theme-back: url("../img/cats/back-cats.svg");
 }
 
 .card {
@@ -279,10 +282,9 @@ body {
   content: "";
   width: 100%;
   height: 100%;
-  background-image: var(--theme-back);
+  background-image: var(--theme-back, url("../img/cats/back-cats.svg"));
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
   backface-visibility: hidden;
 }
 
@@ -613,10 +615,9 @@ body {
   }
   
   .card::after {
-    background-image: var(--theme-back) !important;
+    background-image: var(--theme-back, url("../img/cats/back-cats.svg")) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
-    background-size: cover !important;
     backface-visibility: hidden !important;
   }
   
