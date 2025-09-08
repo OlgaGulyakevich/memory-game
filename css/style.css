@@ -282,7 +282,7 @@ body {
   background-image: var(--theme-back);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   backface-visibility: hidden;
 }
 
@@ -616,7 +616,7 @@ body {
     background-image: var(--theme-back) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
-    background-size: contain !important;
+    background-size: cover !important;
     backface-visibility: hidden !important;
   }
   
@@ -628,7 +628,6 @@ body {
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: clamp(24px, 6vw, 32px) !important;
-    /* opacity: 1 !important; */
     transition-property: opacity !important;
     z-index: 1 !important;
   }
