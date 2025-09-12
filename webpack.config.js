@@ -1,0 +1,56 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    clean: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-react'],
+          },
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff2?)$/,
+        type: 'asset/resource',
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public/img', to: 'img' },
+        { from: 'public/data', to: 'data' },
+        { from: 'public/fonts', to: 'fonts' },
+        { from: 'public/favicon*.png', to: '[name][ext]' },
+        { from: 'public/favicon.ico', to: 'favicon.ico' },
+      ],
+    }),
+  ],
+  devServer: {
+    static: './public',
+    historyApiFallback: true,
+    port: 3000,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+};
