@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import { GAME_SETTINGS } from '../utils/settings';
 
 const useGame = (images) => {
-  const [finishedItems, setFinishedItems] = React.useState([]);
-  const [stepsCount, setStepsCount] = React.useState(0);
-  const [errors, setErrors] = React.useState(0);
+  const [finishedItems, setFinishedItems] = useState([]);
+  const [stepsCount, setStepsCount] = useState(0);
+  const [errors, setErrors] = useState(0);
 
   // Проверка пары карточек 
   const checkItems = (firstItem, secondItem) => {

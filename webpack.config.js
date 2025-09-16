@@ -34,6 +34,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      filename: 'index.html'  
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -46,9 +47,13 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: './public',
+    static: [
+      { directory: './public' },
+      { directory: './public/data', publicPath: '/data' }
+    ],
     historyApiFallback: true,
-    port: 3000,
+    port: 3001,
+    open: true,
   },
   resolve: {
     extensions: ['.js', '.jsx'],

@@ -1,3 +1,10 @@
+// Функция для склонения числительных
+export const getWordDeclension = (count, words) => {
+  const cases = [2, 0, 1, 1, 1, 2];
+  return words[(count % 100 > 4 && count % 100 < 20) ? 2 : cases[Math.min(count % 10, 5)]];
+};
+
+
 // Функция перемешивания массива (Fisher-Yates)
 export const shuffleArray = (array) => {
   const shuffled = [...array];
@@ -35,4 +42,9 @@ export const setToStorage = (key, value) => {
 // Функция для вычисления прогресса игры
 export const calculateProgress = (matchedPairs, totalPairs) => {
   return totalPairs > 0 ? (matchedPairs / totalPairs) * 100 : 0;
+};
+
+// Функция сортировки результатов по возрастанию шагов
+export const sortResults = (results) => {
+  return results.sort((a, b) => a.stepsCount - b.stepsCount);
 };
