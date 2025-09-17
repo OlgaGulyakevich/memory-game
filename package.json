@@ -8,7 +8,8 @@
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "deploy": "git subtree push --prefix dist origin gh-pages",
-    "deploy-full": "git add . && npm run build && git add dist -f && git commit -m 'Build for deployment' && git push origin main && npm run deploy"
+    "deploy-source": "git add . && git commit -m 'Update source code' && git push origin main",
+    "deploy-build": "npm run build && git subtree push --prefix dist origin gh-pages"
   },
   "keywords": ["react", "game", "memory", "cards", "webpack"],
   "author": "Olga Gulyakevich <olga.gulyakevich@gmail.com>",
