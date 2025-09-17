@@ -1,0 +1,95 @@
+
+import React, { useState, useEffect } from 'react';
+import GameHeader from '../ui/GameHeader';
+import GameBoard from '../ui/GameBoard';
+import GameModal from '../ui/GameModal';
+import useGame from '../../hooks/useGame';
+import { GAME_SETTINGS } from '../../utils/settings';
+import { calculateProgress } from '../../utils/helpers';
+
+
+
+function GameScreen({ images, selectedTheme, onShowResults, onNewGame, onGameFinish}) {
+  const {
+    finishedItems,
+    handleReset,
+    stepsCount,
+    errors,
+    checkItems,
+    isWin,
+    isGameOver
+  } = useGame(images);
+   // Управляем показом модального окна победы
+  const [showVictoryModal, setShowVictoryModal] = useState(false);
+
+  useEffect(() => {
+    if (isWin) {
+      const timerId = setTimeout(() => setShowVictoryModal(true), 100);
+      return () => clearTimeout(timerId);
+    }
+  }, [isWin]);
+
+  // Вычисляем производные значения
+  const totalPairs = images.length / 2;
+  const matchedPairs = finishedItems.length / 2;
+  const remainingLives = GAME_SETTINGS.LIVES_COUNT - errors;
+
+  return (
+    <section className="game container">
+      <GameHeader 
+        moves={stepsCount}
+        progress={calculateProgress(matchedPairs, totalPairs)}
+        remainingLives={remainingLives}
+        matchedPairs={matchedPairs}
+        totalPairs={totalPairs}
+      />
+      
+      <GameBoard
+        images={images}
+        selectedTheme={selectedTheme}
+        finishedItems={finishedItems}
+        checkItems={checkItems}
+        isGameOver={isGameOver}
+      />
+
+      {/* Модальное окно поражения */}
+      {isGameOver && !isWin && (
+        <GameModal 
+          isWin={false}
+          moves={stepsCount}
+          matchedPairs={matchedPairs}
+          onRestart={() => {
+            setShowVictoryModal(false);
+            handleReset();
+          }}
+          onNewGame={onNewGame}
+          onShowResults={()=> {
+            onGameFinish();
+          }}
+        />
+      )}
+
+      {/* Модальное окно победы */}
+      {showVictoryModal && isWin && (
+        <GameModal 
+          isWin={true}
+          moves={stepsCount}
+          matchedPairs={matchedPairs}
+          onRestart={() => {
+            setShowVictoryModal(false);
+            handleReset();
+          }}
+          onNewGame={onNewGame}
+          onShowResults={()=> {
+            onGameFinish({
+              moves: stepsCount, 
+              errors: errors
+            });
+          }}
+        />
+      )}
+    </section>
+  );
+}
+
+export default GameScreen;
