@@ -10,10 +10,13 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
     
     if (currentResult) {
       // Добавляем текущий результат (с темой)
-      currentResult.theme = selectedTheme;
-      results.push(currentResult);
+      // Создаем копию вместо мутации
+    const currentResultWithTheme = {
+      ...currentResult,
+      theme: selectedTheme
+    };
+    results.push(currentResultWithTheme);
     }
-    
     return sortResults(results);
   }, [allResults, currentResult, selectedTheme]);
 
