@@ -4,7 +4,6 @@ import GameHeader from '../ui/GameHeader';
 import GameBoard from '../ui/GameBoard';
 import GameModal from '../ui/GameModal';
 import useGame from '../../hooks/useGame';
-import { useNavigate } from 'react-router-dom';
 import { GAME_SETTINGS } from '../../utils/settings';
 import { calculateProgress } from '../../utils/helpers';
 
@@ -92,7 +91,5 @@ function GameScreen({ images, selectedTheme, onShowResults, onNewGame, onGameFin
     </section>
   );
 }
-
-
 
 export default GameScreen;

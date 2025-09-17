@@ -2,7 +2,6 @@ import React from 'react';
 import { themes } from '../../data/themes';
 
 
-  // Компонент начального экрана
   function StartScreen({ onThemeSelect }) {
     return (
       <section className="rules container">

@@ -38,6 +38,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
+        { from: 'public/404.html', to: '404.html' },
         { from: 'public/img', to: 'img' },
         { from: 'public/data', to: 'data' },
         { from: 'public/fonts', to: 'fonts' },
