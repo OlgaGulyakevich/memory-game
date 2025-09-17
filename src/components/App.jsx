@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import StartScreen from './pages/StartScreen';
 import GameScreen from './pages/GameScreen';
 import ResultScreen from './pages/ResultScreen';
-import { getImages, themes } from '../data/themes';
+import { getImages } from '../data/themes';
 import { getFromStorage, setToStorage } from '../utils/helpers';
 
 function App() {

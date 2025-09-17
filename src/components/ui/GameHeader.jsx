@@ -11,6 +11,8 @@ import React from 'react';
         Открыто <span>{matchedPairs}</span> / <span>{totalPairs}</span>
       </p>
       <div className="steps">Шаг {moves}</div>
+      {/* TODO: Добавить отображение жизней в будущем */}
+      {/* <div className="lives">❤️ Жизни: {remainingLives}</div> */}
     </>
   );
 }

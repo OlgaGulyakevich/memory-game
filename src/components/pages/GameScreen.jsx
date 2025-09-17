@@ -9,7 +9,7 @@ import { calculateProgress } from '../../utils/helpers';
 
 
 
-function GameScreen({ images, selectedTheme, onShowResults, onNewGame, onGameFinish}) {
+function GameScreen({ images, selectedTheme, onNewGame, onGameFinish}) {
   const {
     finishedItems,
     handleReset,
@@ -63,9 +63,7 @@ function GameScreen({ images, selectedTheme, onShowResults, onNewGame, onGameFin
             handleReset();
           }}
           onNewGame={onNewGame}
-          onShowResults={()=> {
-            onGameFinish();
-          }}
+          onShowResults={onGameFinish}
         />
       )}
 
@@ -80,12 +78,10 @@ function GameScreen({ images, selectedTheme, onShowResults, onNewGame, onGameFin
             handleReset();
           }}
           onNewGame={onNewGame}
-          onShowResults={()=> {
-            onGameFinish({
-              moves: stepsCount, 
-              errors: errors
-            });
-          }}
+          onShowResults={() => onGameFinish({
+            moves: stepsCount, 
+            errors: errors
+          })}
         />
       )}
     </section>
