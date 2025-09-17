@@ -63,17 +63,4 @@ module.exports = {
     maxAssetSize: 300000,
     maxEntrypointSize: 300000
   },
-  
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-  },
 };
