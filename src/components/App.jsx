@@ -22,7 +22,7 @@ function App() {
       setAllResults(savedResults);
     } else {
       // Если в localStorage ничего нет, загружаем с сервера
-      fetch('/data/results.json')
+      fetch(`${process.env.PUBLIC_URL || ''}/data/results.json`)
         .then(response => response.json())
         .then(data => {
           setAllResults(data);
