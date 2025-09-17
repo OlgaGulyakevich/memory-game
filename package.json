@@ -13,7 +13,7 @@
   "author": "Olga Gulyakevich <olga.gulyakevich@gmail.com>",
   "license": "MIT",
   "dependencies": {
-np    "react": "^19.1.1",
+  "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.0"
   },
