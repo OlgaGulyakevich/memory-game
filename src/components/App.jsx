@@ -1,3 +1,4 @@
+import { getAssetPath } from '../utils/paths';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import StartScreen from './pages/StartScreen';
@@ -17,12 +18,12 @@ function App() {
   useEffect(() => {
     // Сначала пытаемся загрузить из localStorage
     const savedResults = getFromStorage('gameResults', []);
-
+  
     if (savedResults.length > 0) {
       setAllResults(savedResults);
     } else {
       // Если в localStorage ничего нет, загружаем с сервера
-      fetch('/memory-game/data/results.json')
+      fetch(getAssetPath('data/results.json'))
         .then(response => response.json())
         .then(data => {
           setAllResults(data);

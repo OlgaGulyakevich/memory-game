@@ -7,8 +7,11 @@ import './styles/style.css';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
+// Определяем basename в зависимости от окружения
+const basename = process.env.PUBLIC_URL || '';
+
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename={basename}>
     <App />
   </BrowserRouter>
 );
