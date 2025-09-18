@@ -1,11 +1,97 @@
+/* ===== CSS CUSTOM PROPERTIES (Design Tokens) ===== */
 :root {
+  /* === Анимации === */
   --animation-duration: 0.5s;
+  --animation-duration-fast: 0.3s;
+  --animation-duration-slow: 0.9s;
+  --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* === Цветовая палитра === */
+  /* Основные цвета */
+  --color-primary: #ffbf20;
+  --color-primary-hover: #ffd97c;
+  --color-success: #00ca51;
+  --color-text: #333333;
+  --color-white: #ffffff;
+  
+  /* Фоновые цвета */
+  --color-bg-gradient-start: #c2e5fe;
+  --color-bg-gradient-end: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-border: #bad6eb;
+  
+  /* Семантические цвета */
+  --color-overlay: rgba(140, 174, 200, 0.6);
+  --color-modal-overlay: rgba(140, 174, 200, 0.8);
+  --color-shadow: rgba(140, 174, 200, 0.25);
+  --color-shadow-hover: rgba(140, 174, 200, 0.4);
+  --color-table-header: #8caec8;
+  
+  /* === Типографика === */
+  --font-family: "Nunito", sans-serif;
+  
+  /* Размеры шрифтов */
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-base: 20px;
+  --font-size-lg: 24px;
+  --font-size-xl: 32px;
+  --font-size-2xl: 40px;
+  
+  /* Высота строки */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.5;
+  
+  /* Вес шрифта */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+  
+  /* === Spacing (отступы) === */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 40px;
+  --space-4xl: 48px;
+  --space-5xl: 56px;
+  --space-6xl: 72px;
+  
+  /* === Размеры === */
+  --container-max-width: 940px;
+  --modal-width: 320px;
+  --button-height: 48px;
+  --card-width: 220px;
+  --card-min-width: 200px;
+  --progress-height: 16px;
+  
+  /* === Border Radius === */
+  --radius-sm: 5px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 22px;
+  
+  /* === Z-index === */
+  --z-card-overlay: 1;
+  --z-modal: 1000;
+  
+  
+  /* === Игровые настройки === */
+  --game-card-aspect-ratio: 1.375; /* 220:160 */
+  --game-card-gap: 20px;
+  --game-grid-columns: 3;
 }
 
+
+/* ===== ШРИФТЫ ===== */
 @font-face {
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-display: swap;
   src: url("../../public/fonts/Nunito-Regular.woff2") format("woff2");
 }
@@ -13,7 +99,7 @@
 @font-face {
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   font-display: swap;
   src: url("../../public/fonts/Nunito-Bold.woff2") format("woff2");
 }
@@ -21,7 +107,7 @@
 @font-face {
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--font-weight-black);
   font-display: swap;
   src: url("../../public/fonts/Nunito-Black.woff2") format("woff2");
 }
@@ -29,66 +115,65 @@
 /* ===== БАЗОВЫЕ СТИЛИ ===== */
 body {
   margin: 0;
-  font-family: "Nunito", sans-serif;
-  font-size: 20px;
-  line-height: 28px;
-  color: #333333;
-  background: url("../../public/img/clouds.svg") no-repeat top 40px center,
-    linear-gradient(180deg, #c2e5fe 0%, #ffffff 50%) no-repeat;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background: 
+    url("../../public/img/clouds.svg") no-repeat top var(--space-3xl) center,
+    linear-gradient(180deg, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-end) 50%) no-repeat;
 }
 
 .container {
-  width: min(940px, calc(100vw - 32px));
+  width: min(var(--container-max-width), calc(100vw - var(--space-2xl)));
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 var(--space-base);
 }
 
+/* ===== КОМПОНЕНТЫ: Кнопки ===== */
 .button {
-  padding: 16px 24px;
+  padding: var(--space-base) var(--space-xl);
   font-family: inherit;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  color: #333333;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
   border: none;
-  background-color: #ffbf20;
-  border-radius: 10px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-md);
   cursor: pointer;
   box-sizing: border-box;
+  transition: background-color var(--animation-duration-fast) var(--animation-easing);
 }
 
-.button:hover {
-  background-color: #ffd97c;
-}
-
+.button:hover,
 .button:active {
-  background-color: #ffd97c;
+  background-color: var(--color-primary-hover);
 }
 
 .ico-button {
-  padding: 16px 24px 16px 56px;
+  padding: var(--space-base) var(--space-xl) var(--space-base) var(--space-5xl);
   font-family: inherit;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  color: #333333;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
   border: none;
-  background-color: #ffbf20;
-  border-radius: 10px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-md);
   cursor: pointer;
   box-sizing: border-box;
-  background-position: left 24px center;
+  background-position: left var(--space-xl) center;
   background-repeat: no-repeat;
+  transition: background-color var(--animation-duration-fast) var(--animation-easing);
 }
 
-.ico-button:hover {
-  background-color: #ffd97c;
-}
-
+.ico-button:hover,
 .ico-button:active {
-  background-color: #ffd97c;
+  background-color: var(--color-primary-hover);
 }
 
+/* Иконки тем */
 .ico-button-cats {
   background-image: url("../../public/img/cats/icon-cats.svg");
 }
@@ -101,47 +186,48 @@ body {
   background-image: url("../../public/img/flowers/icon-flowers.svg");
 }
 
+/* ===== РАЗДЕЛ: Правила игры ===== */
 .rules {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
   text-align: center;
 }
 
 .rules h2 {
   margin: 0;
-  margin-bottom: 12px;
-  font-weight: 900;
-  font-size: 40px;
-  line-height: 56px;
+  margin-bottom: var(--space-md);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-normal);
 }
 
 .rules h3 {
   margin: 0;
-  margin-bottom: 16px;
-  font-size: 24px;
-  line-height: 32px;
+  margin-bottom: var(--space-base);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-tight);
 }
 
 .rules p {
   margin: 0;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-xl);
 }
 
 .rules-panel {
   width: min(520px, 100%);
-  margin: 36px auto 40px;
-  padding: 24px 32px 36px;
-  background-color: #ffffff;
-  box-shadow: 0 5px 20px rgba(140, 174, 200, 0.25);
-  border-radius: 10px;
+  margin: calc(var(--space-2xl) + var(--space-xs)) auto var(--space-3xl);
+  padding: var(--space-xl) var(--space-2xl) calc(var(--space-2xl) + var(--space-xs));
+  background-color: var(--color-white);
+  box-shadow: 0 5px 20px var(--color-shadow);
+  border-radius: var(--radius-md);
   box-sizing: border-box;
 }
 
 .rules-list {
   margin: 0;
   padding: 0;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: var(--font-size-sm);
+  line-height: calc(var(--font-size-sm) * 1.375);
   list-style: none;
   text-align: left;
 }
@@ -149,20 +235,21 @@ body {
 .rules-list li {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-base);
 }
 
 .rules-list li:not(:last-child) {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-lg);
 }
 
 .rules-list li::before {
   content: "";
-  width: 40px;
-  height: 36px;
+  width: var(--space-3xl);
+  height: calc(var(--space-2xl) + var(--space-xs));
   flex: none;
 }
 
+/* Иконки правил */
 .rules-list li:nth-child(1)::before {
   background-image: url("../../public/img/icon-rules-1.svg");
   background-position: center;
@@ -182,8 +269,8 @@ body {
 }
 
 .rules .ico-button {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: var(--space-md);
+  margin-right: var(--space-md);
 }
 
 /* ===== ИГРА - БАЗОВЫЕ СТИЛИ ===== */
@@ -191,8 +278,8 @@ body {
   display: grid;
   grid-template-columns: minmax(280px, 460px) auto 1fr;
   align-items: center;
-  gap: 40px 20px;
-  padding-top: 40px;
+  gap: var(--space-3xl) var(--space-lg);
+  padding-top: var(--space-3xl);
   margin-bottom: 155px;
 }
 
@@ -200,46 +287,47 @@ body {
   display: flex;
   width: 100%;
   max-width: 460px;
-  height: 16px;
-  background-color: #ffffff;
-  border-radius: 8px;
+  height: var(--progress-height);
+  background-color: var(--color-white);
+  border-radius: var(--radius-base);
 }
 
 .progress {
-  background-color: #00ca51;
-  border-radius: 8px;
+  background-color: var(--color-success);
+  border-radius: var(--radius-base);
   transition: width var(--animation-duration);
 }
 
 .progress-description {
   margin: 0 auto;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: var(--font-size-sm);
+  line-height: calc(var(--font-size-sm) * 1.375);
 }
 
 .steps {
   justify-self: end;
-  padding: 8px 20px;
-  font-weight: 900;
-  font-size: 20px;
-  line-height: 28px;
-  color: #ffffff;
-  background-color: #00ca51;
-  border-radius: 22px;
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-white);
+  background-color: var(--color-success);
+  border-radius: var(--radius-lg);
 }
 
 /* ===== КАРТОЧКИ - БАЗОВЫЕ СТИЛИ ===== */
 .cards {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), var(--card-width)));
+  gap: var(--game-card-gap);
   margin: 0;
   padding: 0;
   list-style: none;
   perspective: 1000px;
 }
 
+/* Темы карточек */
 .cards-theme-flowers {
   --theme-back: url("../../public/img/flowers/back-flowers.svg");
 }
@@ -257,11 +345,11 @@ body {
   align-items: center;
   justify-items: center;
   width: 100%;
-  aspect-ratio: 1.375 / 1; /* 220:160 = 1.375:1 */
-  background-color: #ffffff;
-  border-radius: 10px;
+  aspect-ratio: var(--game-card-aspect-ratio) / 1;
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-md);
   box-sizing: border-box;
-  border: 1px solid #bad6eb;
+  border: 1px solid var(--color-border);
   cursor: pointer;
   transition: transform var(--animation-duration);
   transform-style: preserve-3d;
@@ -272,7 +360,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   transform: rotateY(180deg);
   backface-visibility: hidden;
 }
@@ -293,24 +381,20 @@ body {
   grid-area: 1 / 1 / 2 / 2;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-  background-color: rgba(140, 174, 200, 0.6);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-overlay);
   background-image: url("../../public/img/check.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: clamp(20px, 6vw, 32px);
   opacity: 0;
   transition-property: opacity;
-  z-index: 1;
+  z-index: var(--z-card-overlay);
   pointer-events: none;
-  
 }
 
-.card-show {
-  transform: rotateY(180deg);
-  cursor: default;
-}
-
+/* Состояния карточек */
+.card-show,
 .card-finished {
   transform: rotateY(180deg);
   cursor: default;
@@ -330,11 +414,11 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(140, 174, 200, 0.8);
+  background-color: var(--color-modal-overlay);
   overflow-y: hidden;
   overscroll-behavior: contain;
   pointer-events: auto;
@@ -342,23 +426,19 @@ body {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-box {
   position: relative;
-  width: min(320px, 90%);
+  width: min(var(--modal-width), 90%);
   min-height: 285px;
   max-height: calc(100vh - 60px);
-  padding: 72px 40px 36px;
-  background-color: rgb(255, 255, 255);
+  padding: var(--space-6xl) var(--space-3xl) calc(var(--space-2xl) + var(--space-xs));
+  background-color: var(--color-white);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   box-sizing: border-box;
   text-align: center;
 }
@@ -379,16 +459,16 @@ body {
 
 .modal-caption {
   margin: 0;
-  margin-bottom: 12px;
-  font-size: 24px;
-  line-height: 32px;
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-tight);
 }
 
 .modal-description {
   margin: 0;
-  margin-bottom: 32px;
-  font-size: 16px;
-  line-height: 22px;
+  margin-bottom: var(--space-2xl);
+  font-size: var(--font-size-sm);
+  line-height: calc(var(--font-size-sm) * 1.375);
 }
 
 .modal .button {
@@ -398,53 +478,45 @@ body {
 
 .modal-buttons {
   display: flex;
-  gap: 16px;
+  gap: var(--space-base);
   justify-content: center;
   flex-wrap: nowrap;
 }
 
 .modal-buttons .button {
   flex: 0 0 auto;
-}
-
-.modal-buttons .button.modal-button {
-  background-color: #ffbf20;
-  color: #333333;
-}
-
-.modal-buttons .button:last-child {
-  background-color: #ffbf20;
-  color: #333333;
+  background-color: var(--color-primary);
+  color: var(--color-text);
 }
 
 /* ===== РЕЗУЛЬТАТЫ ===== */
 .result {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
   text-align: center;
 }
 
 .result h2 {
   margin: 0;
-  margin-bottom: 12px;
-  font-weight: 900;
-  font-size: 40px;
-  line-height: 56px;
+  margin-bottom: var(--space-md);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-normal);
 }
 
 .result p {
   margin: 0;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-xl);
 }
 
 .result-table {
   width: min(520px, 100%);
-  margin: 36px auto 32px;
-  font-size: 16px;
-  line-height: 22px;
-  background-color: #ffffff;
-  box-shadow: 0 5px 20px rgba(140, 174, 200, 0.25);
-  border-radius: 10px;
+  margin: calc(var(--space-2xl) + var(--space-xs)) auto var(--space-2xl);
+  font-size: var(--font-size-sm);
+  line-height: calc(var(--font-size-sm) * 1.375);
+  background-color: var(--color-white);
+  box-shadow: 0 5px 20px var(--color-shadow);
+  border-radius: var(--radius-md);
   border-collapse: collapse;
 }
 
@@ -455,27 +527,27 @@ body {
 }
 
 .result-table-row th {
-  padding: 18px 32px 8px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  color: #8caec8;
+  padding: calc(var(--space-base) + 2px) var(--space-2xl) var(--space-sm);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-table-header);
   text-align: left;
 }
 
 .result-table-row td {
-  padding: 8px 32px;
+  padding: var(--space-sm) var(--space-2xl);
   text-align: left;
 }
 
 .result-table tbody tr:last-child {
-  padding-bottom: 10px;
+  padding-bottom: var(--space-md);
 }
 
 .result-table-row.active {
-  font-weight: 900;
-  color: #ffffff;
-  background-color: #00ca51;
+  font-weight: var(--font-weight-black);
+  color: var(--color-white);
+  background-color: var(--color-success);
 }
 
 .result .button {
@@ -491,24 +563,30 @@ body {
   }
 }
 
-/* ===== ПЛАНШЕТЫ: 769px - 1024px ===== */
+/* ===== МЕДИА-ЗАПРОСЫ ===== */
+/* Планшеты: 769px - 1024px */
 @media (max-width: 1024px) and (min-width: 769px) {
   .cards {
-    grid-template-columns: repeat(3, 200px) !important;
-    gap: 16px !important;
-    justify-content: center !important;
+    grid-template-columns: repeat(3, var(--card-min-width));
+    gap: var(--space-base);
+    justify-content: center;
   }
   
   .card {
-    width: 100% !important;
-    aspect-ratio: 1.429 / 1 !important; /* 200:140 = 1.429:1 */
+    width: 100%;
+    aspect-ratio: 1.429 / 1;
   }
 }
 
-/* ===== МОБИЛЬНЫЕ УСТРОЙСТВА: ≤768px ===== */
+/* Мобильные устройства: ≤768px */
 @media (max-width: 768px) {
+  :root {
+    /* Переопределяем переменные для мобильных */
+    --font-size-base: 18px;
+    --game-card-gap: 12px;
+  }
   
-  /* КРИТИЧЕСКИЕ iOS ФИКСЫ */
+  /* iOS фиксы */
   html {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
@@ -516,9 +594,9 @@ body {
   }
   
   body {
-    font-size: 18px !important;
-    line-height: 24px !important;
-    overflow-x: hidden !important;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-tight);
+    overflow-x: hidden;
     min-height: 100vh;
     min-height: -webkit-fill-available;
     -webkit-font-smoothing: antialiased;
@@ -526,71 +604,67 @@ body {
   }
   
   .container {
-    width: calc(100vw - 32px) !important;
-    max-width: 100vw !important;
-    padding: 0 16px !important;
+    width: calc(100vw - var(--space-2xl));
+    max-width: 100vw;
+    padding: 0 var(--space-base);
     min-height: 100vh;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    box-sizing: border-box !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
   }
   
-  /* ИГРОВАЯ ОБЛАСТЬ */
+  /* Игровая область */
   .game {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-    padding: 20px 0 !important;
-    margin-bottom: 40px !important;
-    min-height: 0 !important;
+    grid-template-columns: 1fr;
+    gap: var(--space-base);
+    padding: var(--space-lg) 0;
+    margin-bottom: var(--space-3xl);
+    min-height: 0;
   }
   
   .progress-wrapper {
-    width: 100% !important;
-    max-width: 400px !important;
-    height: 16px !important;
-    margin: 0 auto !important;
+    width: 100%;
+    max-width: 400px;
+    height: var(--progress-height);
+    margin: 0 auto;
   }
   
   .steps {
-    justify-self: center !important;
-    padding: 8px 16px !important;
-    font-size: 18px !important;
+    justify-self: center;
+    padding: var(--space-sm) var(--space-base);
+    font-size: var(--font-size-base);
   }
   
-  /* КАРТОЧКИ - PADDING TRICK ВМЕСТО ASPECT-RATIO */
+  /* Карточки */
   .cards {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 12px !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 0 30px 0 !important;
-    padding: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--game-card-gap);
+    width: 100%;
+    max-width: none;
+    margin: 0 0 30px 0;
+    padding: 0;
   }
   
   .card {
-    /* Используем aspect-ratio вместо padding trick */
-    width: 100% !important;
-    aspect-ratio: 1.4 / 1 !important; /* 100:71.43 = 1.4:1 */
-    height: auto !important;
-    position: relative !important;
-    margin: 0 !important;
-    border: 1px solid #bad6eb !important;
-    border-radius: 10px !important;
-    background: #ffffff !important;
-    overflow: visible !important; 
-    cursor: pointer !important;
-    /* Трансформация как в оригинале */
-    transform-style: preserve-3d !important;
+    width: 100%;
+    aspect-ratio: 1.4 / 1;
+    height: auto;
+    position: relative;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    overflow: visible; 
+    cursor: pointer;
+    transform-style: preserve-3d;
     will-change: transform;
     backface-visibility: hidden;
-    /* Анимации */
-    transition: transform var(--animation-duration) !important;
-    /* Touch оптимизация */
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important;
+    transition: transform var(--animation-duration);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     -webkit-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
@@ -600,305 +674,296 @@ body {
   .card img,
   .card::after,
   .card::before {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
   
   .card img {
-    object-fit: cover !important;
-    border-radius: 5px !important;
-    transform: rotateY(180deg) !important;
-    backface-visibility: hidden !important;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
   }
   
   .card::after {
-    background-image: var(--theme-back, url("../../public/img/cats/back-cats.svg")) !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    backface-visibility: hidden !important;
+    background-image: var(--theme-back, url("../../public/img/cats/back-cats.svg"));
+    background-repeat: no-repeat;
+    background-position: center;
+    backface-visibility: hidden;
   }
   
   .card::before {
-    content: "" !important; 
-    border-radius: 5px !important;
-    background-color: rgba(140, 174, 200, 0.6) !important;
-    background-image: url("../../public/img/check.svg") !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: clamp(24px, 6vw, 32px) !important;
-    transition-property: opacity !important;
-    z-index: 1 !important;
+    content: ""; 
+    border-radius: var(--radius-sm);
+    background-color: var(--color-overlay);
+    background-image: url("../../public/img/check.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: clamp(24px, 6vw, 32px);
+    transition-property: opacity;
+    z-index: var(--z-card-overlay);
   }
   
   /* Состояния карточек */
-  .card-show {
-    transform: rotateY(180deg) !important;
-    cursor: default !important;
-  }
-  
+  .card-show,
   .card-finished {
-    transform: rotateY(180deg) !important;
-    cursor: default !important;
+    transform: rotateY(180deg);
+    cursor: default;
   }
-  
   
   .card-finished::before {
-    opacity: 1 !important;
-    transition-delay: var(--animation-duration) !important;
-    transition-duration: var(--animation-duration) !important;
-    transition-timing-function: ease-in-out !important;
+    opacity: 1;
+    transition-delay: var(--animation-duration);
+    transition-duration: var(--animation-duration);
+    transition-timing-function: ease-in-out;
   }
-
   
-  /* КНОПКИ ТЕМ В КОЛОНКУ */
+  /* Кнопки тем в колонку */
   .theme-buttons {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    max-width: 280px !important;
-    margin: 0 auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 280px;
+    margin: 0 auto;
   }
   
   .theme-buttons .ico-button {
-    width: 100% !important;
-    text-align: center !important;
-    padding: 12px 16px !important;
-    padding-left: 24px !important;
-    background-position: left 16px center !important;
-    margin: auto !important;
-    min-height: 48px !important;
-    font-size: 14px !important;
+    width: 100%;
+    text-align: center;
+    padding: var(--space-md) var(--space-base);
+    padding-left: var(--space-xl);
+    background-position: left var(--space-base) center;
+    margin: auto;
+    min-height: var(--button-height);
+    font-size: var(--font-size-xs);
   }
   
-  /* МОДАЛЬНЫЕ ОКНА */
+  /* Модальные окна */
   .modal-box {
-    width: calc(100vw - 32px) !important;
-    max-width: 320px !important;
-    padding: 52px 24px 24px !important;
-    margin: 16px !important;
+    width: calc(100vw - var(--space-2xl));
+    max-width: var(--modal-width);
+    padding: 52px var(--space-xl) var(--space-xl);
+    margin: var(--space-base);
   }
   
   .modal-box::before {
-    top: -60px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 300px !important;
-    height: 110px !important;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 110px;
   }
   
   .modal-buttons {
-    flex-direction: column !important;
-    gap: 12px !important;
+    flex-direction: column;
+    gap: var(--space-md);
   }
   
   .modal-buttons .button {
-    width: 100% !important;
-    padding: 12px 16px !important;
-    font-size: 14px !important;
-    min-height: 44px !important;
+    width: 100%;
+    padding: var(--space-md) var(--space-base);
+    font-size: var(--font-size-xs);
+    min-height: 44px;
   }
   
-  /* РЕЗУЛЬТАТЫ */
+  /* Результаты */
   .result-table {
-    width: calc(100% - 32px) !important;
-    max-width: 100% !important;
-    font-size: 14px !important;
+    width: calc(100% - var(--space-2xl));
+    max-width: 100%;
+    font-size: var(--font-size-xs);
   }
   
   .result-table-row {
-    grid-template-columns: 60px 1fr 80px !important;
-    gap: 8px !important;
+    grid-template-columns: 60px 1fr 80px;
+    gap: var(--space-sm);
   }
   
   .result-table-row th,
   .result-table-row td {
-    padding: 8px 12px !important;
-    font-size: 14px !important;
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-xs);
   }
   
-  /* ОБЩИЕ ОТСТУПЫ */
-  .rules {
-    padding: 20px 0 !important;
-  }
-  
+  /* Общие отступы */
+  .rules,
   .result {
-    padding: 20px 0 !important;
+    padding: var(--space-lg) 0;
   }
   
   .rules-panel {
-    width: calc(100% - 32px) !important;
-    max-width: 520px !important;
-    padding: 20px 24px !important;
+    width: calc(100% - var(--space-2xl));
+    max-width: 520px;
+    padding: var(--space-lg) var(--space-xl);
   }
   
-  /* АДАПТИВНЫЕ ЗАГОЛОВКИ */
+  /* Адаптивные заголовки */
   .rules h2,
   .result h2 {
-    font-size: clamp(28px, 8vw, 40px) !important;
-    line-height: 1.2 !important;
-    margin-bottom: 12px !important;
+    font-size: clamp(28px, 8vw, var(--font-size-2xl));
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--space-md);
   }
   
   .rules h3 {
-    font-size: clamp(20px, 5vw, 24px) !important;
-    line-height: 1.3 !important;
+    font-size: clamp(20px, 5vw, var(--font-size-lg));
+    line-height: var(--line-height-tight);
   }
 }
 
-/* ===== iPhone 14 Pro Max (428px) ===== */
+/* iPhone 14 Pro Max (428px) */
 @media (min-width: 415px) and (max-width: 767px) {
   .cards {
-    gap: 14px !important;
-    margin-bottom: 36px !important;
-    max-width: 400px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    gap: 14px;
+    margin-bottom: 36px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .card {
-    aspect-ratio: 1.429 / 1 !important; /* ~1.43:1 */
+    aspect-ratio: 1.429 / 1;
   }
 }
 
-/* ===== МАЛЕНЬКИЕ МОБИЛЬНЫЕ: ≤414px ===== */
+/* Маленькие мобильные: ≤414px */
 @media (max-width: 414px) {
   .cards {
-    gap: 10px !important;
+    gap: var(--space-md);
   }
   
   .card {
-    aspect-ratio: 1.4 / 1 !important; /* 100:71.43 = 1.4:1 */
+    aspect-ratio: 1.4 / 1;
   }
 }
 
-/* ===== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ: ≤360px ===== */
+/* Очень маленькие экраны: ≤360px */
 @media (max-width: 360px) {
   .container {
-    width: calc(100vw - 16px) !important;
-    padding: 0 8px !important;
+    width: calc(100vw - var(--space-base));
+    padding: 0 var(--space-sm);
   }
   
   .cards {
-    gap: 8px !important;
+    gap: var(--space-sm);
   }
   
   .game {
-    gap: 8px !important;
-    padding: 12px 0 !important;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
   }
 }
 
-/* ===== LANDSCAPE ORIENTATION ===== */
+/* Landscape orientation */
 @media (max-width: 768px) and (orientation: landscape) {
   .cards {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-    margin-bottom: 16px !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-base);
   }
   
   .card {
-    padding-bottom: 71.43% !important;
-    transform: scale(0.85) translateZ(0) !important;
+    padding-bottom: 71.43%;
+    transform: scale(0.85) translateZ(0);
   }
   
   /* Корректируем состояния карточек в landscape */
   .card-show {
-    transform: rotateY(180deg) scale(0.85)!important;
-    cursor: default !important;
+    transform: rotateY(180deg) scale(0.85);
+    cursor: default;
   }
   
   .card-finished {
-    transform: rotateY(180deg) scale(0.85) translateZ(0) !important;
-    cursor: default !important;
+    transform: rotateY(180deg) scale(0.85) translateZ(0);
+    cursor: default;
   }
   
   .game {
-    gap: 8px !important;
-    padding: 12px 0 !important;
-    margin-bottom: 20px !important;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+    margin-bottom: var(--space-lg);
   }
   
   .progress-wrapper {
-    height: 12px !important;
-    max-width: 300px !important;
+    height: 12px;
+    max-width: 300px;
   }
   
   .steps {
-    font-size: 16px !important;
-    padding: 6px 12px !important;
+    font-size: var(--font-size-sm);
+    padding: 6px var(--space-md);
   }
 }
 
-
-/* ===== DESKTOP HOVER ЭФФЕКТЫ (только для больших экранов) ===== */
+/* ===== ИНТЕРАКТИВНОСТЬ ===== */
+/* Desktop hover эффекты */
 @media (hover: hover) and (pointer: fine) and (min-width: 769px) {
   .card:not(.card-show):not(.card-finished):hover {
-    transform: scale(1.05) !important;
-    box-shadow: 0 8px 24px rgba(140, 174, 200, 0.4) !important;
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px var(--color-shadow-hover);
   }
 }
 
-/* ===== МОБИЛЬНЫЕ TOUCH ЭФФЕКТЫ ===== */
+/* Мобильные touch эффекты */
 @media (max-width: 768px) {
-  /* Portrait режим (2 колонки) - базовые эффекты */
+  /* Portrait режим */
   .card:not(.card-show):not(.card-finished):hover {
-    transform: scale(1.02) !important;
-    box-shadow: 0 6px 18px rgba(140, 174, 200, 0.4) !important;
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out !important;
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px var(--color-shadow-hover);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   }
   
   .card:not(.card-show):not(.card-finished):active {
-    transform: scale(0.98) !important;
-    box-shadow: 0 4px 12px rgba(140, 174, 200, 0.6) !important;
-    transition-duration: 0.1s !important;
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(140, 174, 200, 0.6);
+    transition-duration: 0.1s;
   }
   
-  /* Landscape режим (3 колонки) - переопределяем hover/touch */
+  /* Landscape режим */
   @media (orientation: landscape) {
     .card:not(.card-show):not(.card-finished):hover {
-      transform: scale(0.9) !important;
-      box-shadow: 0 6px 18px rgba(140, 174, 200, 0.4) !important;
+      transform: scale(0.9);
+      box-shadow: 0 6px 18px var(--color-shadow-hover);
     }
     
     .card:not(.card-show):not(.card-finished):active {
-      transform: scale(0.8) !important;
-      box-shadow: 0 3px 8px rgba(140, 174, 200, 0.6) !important;
-      transition-duration: 0.1s !important;
+      transform: scale(0.8);
+      box-shadow: 0 3px 8px rgba(140, 174, 200, 0.6);
+      transition-duration: 0.1s;
     }
   }
 }
 
 /* ===== ACCESSIBILITY ===== */
 .card:focus {
-  outline: 2px solid #00ca51 !important;
-  outline-offset: 3px !important;
+  outline: 2px solid var(--color-success);
+  outline-offset: 3px;
 }
 
-.button:focus, .ico-button:focus {
-  outline: 2px solid #00ca51 !important;
-  outline-offset: 3px !important;
+.button:focus,
+.ico-button:focus {
+  outline: 2px solid var(--color-success);
+  outline-offset: 3px;
 }
 
-/* ===== АНИМАЦИИ ОПТИМИЗАЦИЯ ===== */
+/* Анимации оптимизация для мобильных */
 @media (max-width: 768px) {
   .card,
   .card::before,
   .card::after {
-    transition-duration: 0.3s !important;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition-duration: var(--animation-duration-fast);
+    transition-timing-function: var(--animation-easing);
   }
 }
 
-/* ===== ОТКЛЮЧЕНИЕ АНИМАЦИЙ ПРИ НИЗКОЙ ПРОИЗВОДИТЕЛЬНОСТИ ===== */
+/* Отключение анимаций при низкой производительности */
 @media (prefers-reduced-motion: reduce) {
   .card,
   .card::before,
   .card::after {
-    transition: none !important;
-    animation: none !important;
+    transition: none;
+    animation: none;
   }
 }
-
