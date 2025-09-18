@@ -1,41 +1,54 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Card from './Card';
 import { GAME_SETTINGS } from '../../utils/settings';
-
 
 function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGameOver}) {
   const [visibleItems, setVisibleItems] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleCardClick = useCallback((id) => {
-    // Игнорируем клики если игра окончена, карточка отгадана или уже видима
-    if (isGameOver || finishedItems.includes(id) || visibleItems.includes(id) || isProcessing) {
-      return;
-    }
+  // Мемоизируем Set для быстрой проверки 
+  const finishedItemsSet = useMemo(
+    () => new Set(finishedItems),
+    [finishedItems]
+  );
+  
+  const visibleItemsSet = useMemo(
+    () => new Set(visibleItems),
+    [visibleItems]
+  );
 
-    // Логика клика по карточкам
-    switch (visibleItems.length) {
-      case 0:
-        // Первая карточка - просто показываем
-        setVisibleItems([id]);
-        break;
-      case 1:
-        // Вторая карточка - показываем и проверяем пару
-        setVisibleItems((items) => [...items, id]);
-        checkItems(visibleItems[0], id);
+  // Оптимизированный обработчик клика на карточку
+  const handleCardClick = useCallback((id) => {
+    // Ранний выход - быстрые проверки через Set
+    if (isGameOver || isProcessing) return;
+    if (finishedItemsSet.has(id) || visibleItemsSet.has(id)) return;
+
+    setVisibleItems(prev => {
+      switch (prev.length) {
+        case 0:
+          // Первая карточка
+          return [id];
         
-        // Ставим таймер для очистки видимых карточек
-        setIsProcessing(true);
-        setTimeout(() => {
-          setVisibleItems([]);
-          setIsProcessing(false);
-        }, GAME_SETTINGS.FLIP_DELAY);
-        break;
-      default:
-        // Третья карточка и больше - просто очищаем видимые
-        setVisibleItems([]);
-    }
-  }, [isGameOver, finishedItems, visibleItems, checkItems, isProcessing]);
+        case 1:
+          // Вторая карточка - проверяем пару
+          const firstId = prev[0];
+          checkItems(firstId, id);
+          
+          // Запускаем таймер очистки
+          setIsProcessing(true);
+          setTimeout(() => {
+            setVisibleItems([]);
+            setIsProcessing(false);
+          }, GAME_SETTINGS.FLIP_DELAY);
+          
+          return [...prev, id];
+        
+        default:
+          // Сброс при третьем клике
+          return [];
+      }
+    });
+  }, [isGameOver, isProcessing, finishedItemsSet, visibleItemsSet, checkItems]);
 
   return (
     <ul className={`cards cards-theme-${selectedTheme}`}>
@@ -43,8 +56,8 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
         <Card
           key={item.id}
           item={item}
-          isVisible={visibleItems.includes(item.id)}
-          isFinished={finishedItems.includes(item.id)}
+          isVisible={visibleItemsSet.has(item.id)}
+          isFinished={finishedItemsSet.has(item.id)}
           onCardClick={handleCardClick}
         />
       ))}
@@ -52,4 +65,5 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
   );
 }
 
-export default GameBoard;
+// Выполняем мемоизацию компонента
+export default React.memo(GameBoard);
