@@ -14,7 +14,7 @@
     "lighthouse": "lighthouse http://localhost:3000 --output html --view"
   },
   "keywords": ["react", "game", "memory", "cards", "webpack"],
-  "author": "Olga Gulyakevich <olga.gulyakevich@gmail.com>",
+  "author": "Olga Gulyakevich <olga.gulyakevi4@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "react": "^19.1.1",
