@@ -1,3 +1,4 @@
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
@@ -17,10 +18,8 @@ module.exports = (env, argv) => {
       publicPath: publicPath,
     },
     
-    // Простая оптимизация только для production
     optimization: isProduction ? {
       minimize: true,
-      // Простое разделение vendors от app кода
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
@@ -32,7 +31,7 @@ module.exports = (env, argv) => {
         },
       },
     } : {
-      moduleIds: 'named', // Лучше для отладки
+      moduleIds: 'named',
     },
     
     module: {
@@ -45,10 +44,9 @@ module.exports = (env, argv) => {
             options: {
               presets: [
                 ['@babel/preset-react', {
-                  runtime: 'automatic' // Уменьшает размер bundle
+                  runtime: 'automatic'
                 }]
               ],
-              // Кеширование для ускорения сборки
               cacheDirectory: true,
             },
           },
@@ -58,22 +56,10 @@ module.exports = (env, argv) => {
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/,
-          type: 'asset',
-          parser: {
-            dataUrlCondition: {
-              maxSize: 8 * 1024, // Inline маленькие изображения (8kb)
-            }
-          },
-          generator: {
-            filename: 'assets/img/[name].[hash:8][ext]'
-          }
-        },
-        {
-          test: /\.(woff|woff2)$/,
+          test: /\.(png|jpe?g|gif|svg|woff2?)$/,
           type: 'asset/resource',
           generator: {
-            filename: 'assets/fonts/[name].[hash:8][ext]'
+            filename: 'assets/[name].[hash:8][ext]' 
           }
         },
       ],
@@ -89,7 +75,6 @@ module.exports = (env, argv) => {
         filename: 'index.html',
         inject: true,
         publicPath: publicPath,
-        // Минификация HTML только в production
         ...(isProduction && {
           minify: {
             removeComments: true,
@@ -125,7 +110,6 @@ module.exports = (env, argv) => {
       open: true,
       hot: true,
       compress: true,
-      // Улучшенные настройки для стабильности
       client: {
         overlay: {
           errors: true,
@@ -137,7 +121,6 @@ module.exports = (env, argv) => {
     
     resolve: {
       extensions: ['.js', '.jsx'],
-      // Простые алиасы для удобства
       alias: {
         '@': path.resolve(__dirname, 'src'),
       }
@@ -149,7 +132,6 @@ module.exports = (env, argv) => {
       hints: isProduction ? 'warning' : false
     },
     
-    // Source maps для отладки
     devtool: isDevelopment ? 'eval-cheap-module-source-map' : 'source-map',
   };
 };
