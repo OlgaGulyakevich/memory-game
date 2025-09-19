@@ -1,6 +1,7 @@
 import React from 'react';
 
-function Card({item, isVisible, isFinished, onCardClick}) {
+// Мемоизируем компонент для предотвращения лишних ре-рендеров
+const Card = React.memo(({item, isVisible, isFinished, onCardClick}) => {
   const {id, url, description} = item;
   const className = `${isVisible ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
 
@@ -23,9 +24,16 @@ function Card({item, isVisible, isFinished, onCardClick}) {
       tabIndex={isFinished ? -1 : 0} 
       aria-label={isFinished ? 'Собранная пара' : 'Закрытая карточка, нажмите Enter для открытия'}
     >
-      <img src={url} alt={description || 'Изображение карточки'} />
+      <img 
+        src={url} 
+        alt={description || 'Изображение карточки'} 
+        loading="lazy"
+        decoding="async"
+      />
     </li>
   );
-}
+});
+
+Card.displayName = 'Card';
 
 export default Card;

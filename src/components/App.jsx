@@ -1,4 +1,3 @@
-import { getAssetPath } from '../utils/paths';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import StartScreen from './pages/StartScreen';
@@ -6,6 +5,7 @@ import GameScreen from './pages/GameScreen';
 import ResultScreen from './pages/ResultScreen';
 import { getImages } from '../data/themes';
 import { getFromStorage, setToStorage } from '../utils/helpers';
+import { getAssetPath } from '../utils/paths';
 
 function App() {
   const navigate = useNavigate();
@@ -16,13 +16,13 @@ function App() {
   
   // Загружаем результаты при монтировании
   useEffect(() => {
-    // Сначала пытаемся загрузить из localStorage
+    // Сначала проверяем в localStorage
     const savedResults = getFromStorage('gameResults', []);
   
     if (savedResults.length > 0) {
       setAllResults(savedResults);
+      // Если данных нет, то загружаем из файла
     } else {
-      // Если в localStorage ничего нет, загружаем с сервера
       fetch(getAssetPath('data/results.json'))
         .then(response => response.json())
         .then(data => {
@@ -33,12 +33,26 @@ function App() {
     }
   }, []);
 
+  // Предзагрузка изображений выбранной темы
+  const preloadThemeImages = useCallback((theme) => {
+    const images = getImages(theme);
+    images.forEach(image => {
+      const img = new Image();
+      img.src = image.url;
+    });
+  }, []);
+
   // Обработчик выбора темы и начала игры
   const handleThemeSelect = useCallback((theme) => {
     setSelectedTheme(theme);
-    setGameImages(getImages(theme)); 
+    const images = getImages(theme);
+    setGameImages(images);
+    
+    // Предзагружаем изображения для плавности игры
+    preloadThemeImages(theme);
+    
     navigate('/game');
-  }, [navigate]);
+  }, [navigate, preloadThemeImages]);
 
   // Обработчик завершения игры
   const handleGameFinish = useCallback((gameData) => {

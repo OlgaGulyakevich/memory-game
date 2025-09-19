@@ -7,15 +7,17 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "serve": "npx serve -s dist -l 3000",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "deploy-source": "git add . && git commit -m 'Update source code' && git push origin main",
-    "deploy-build": "npm run build && git subtree push --prefix dist origin gh-pages"
+    "deploy-build": "npm run build && git subtree push --prefix dist origin gh-pages",
+    "lighthouse": "lighthouse http://localhost:3000 --output html --view"
   },
   "keywords": ["react", "game", "memory", "cards", "webpack"],
   "author": "Olga Gulyakevich <olga.gulyakevich@gmail.com>",
   "license": "MIT",
   "dependencies": {
-  "react": "^19.1.1",
+    "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.0"
   },
@@ -42,5 +44,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "sideEffects": false
 }
