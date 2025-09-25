@@ -4,12 +4,21 @@ import { getWordDeclension } from '../../utils/helpers';
 
 function GameModal({ isWin, matchedPairs, onNewGame, onShowResults }) {
   return (
-    <div className="modal">
+    <div 
+    className="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    aria-describedby="modal-description">
       <div className="modal-box">
-        <h3 className="modal-caption">
+        <h3 
+        id="modal-title"
+        className="modal-caption">
           {isWin ? 'Победа!' : 'Игра окончена'}
         </h3>
-        <p className="modal-description">
+        <p 
+        id="modal-description"
+        className="modal-description">
           {isWin 
             ? 'Теперь давайте узнаем результаты этой партии'
             : `Вы собрали ${matchedPairs} ${getWordDeclension(matchedPairs, ['пару', 'пары', 'пар'])}`

@@ -51,7 +51,12 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
   }, [isGameOver, isProcessing, finishedItemsSet, visibleItemsSet, checkItems]);
 
   return (
-    <ul className={`cards cards-theme-${selectedTheme}`}>
+    <ul 
+    className={`cards cards-theme-${selectedTheme}`}
+    role="group"
+    aria-label={`Игровое поле с ${images.length} карточками темы ${selectedTheme}`}
+    aria-live="polite"
+    aria-atomic="false">
       {images.map((item) => (
         <Card
           key={item.id}
