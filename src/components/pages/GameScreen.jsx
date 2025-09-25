@@ -35,15 +35,19 @@ function GameScreen({ images, selectedTheme, onNewGame, onGameFinish}) {
   const remainingLives = GAME_SETTINGS.LIVES_COUNT - errors;
 
   return (
-    <section className="game container">
-      <GameHeader 
+    <main className="game container" role="main" aria-label="Игровой экран">
+      <header className="game-header">
+        <GameHeader 
         moves={stepsCount}
         progress={calculateProgress(matchedPairs, totalPairs)}
         remainingLives={remainingLives}
         matchedPairs={matchedPairs}
         totalPairs={totalPairs}
-      />
-      
+         />
+      </header>
+
+      <section className="game-board-section" aria-label="Игровое поле" aria-labelledby='board-heading'>
+        <h2 id="board-heading" className="visually-hidden">Игровое поле</h2>
       <GameBoard
         images={images}
         selectedTheme={selectedTheme}
@@ -51,6 +55,8 @@ function GameScreen({ images, selectedTheme, onNewGame, onGameFinish}) {
         checkItems={checkItems}
         isGameOver={isGameOver}
       />
+      </section>
+  
 
       {/* Модальное окно поражения */}
       {isGameOver && !isWin && (
@@ -84,7 +90,7 @@ function GameScreen({ images, selectedTheme, onNewGame, onGameFinish}) {
           })}
         />
       )}
-    </section>
+    </main>
   );
 }
 

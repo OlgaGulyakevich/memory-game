@@ -66,7 +66,7 @@
   --modal-width: 320px;
   --button-height: 48px;
   --card-width: 220px;
-  --card-min-width: 200px;
+  --card-min-width: 180px;
   --progress-height: 16px;
   
   /* === Border Radius === */
@@ -276,12 +276,32 @@ body {
 /* ===== ИГРА - БАЗОВЫЕ СТИЛИ ===== */
 .game {
   display: grid;
-  grid-template-columns: minmax(280px, 460px) auto 1fr;
-  align-items: center;
-  gap: var(--space-3xl) var(--space-lg);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-lg);
   padding-top: var(--space-3xl);
   margin-bottom: 155px;
 }
+
+.game-header {
+  display: grid;
+  grid-template-columns: minmax(280px, 460px) auto 1fr;
+  align-items: center;
+  gap: var(--space-3xl) var(--space-lg);
+}
+
+.game-board-section {
+  width: 100%;
+}
+
+.game-board-section .cards {
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), var(--card-width)));
+  gap: var(--game-card-gap);
+  justify-content: center;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
 
 .progress-wrapper {
   display: flex;
@@ -554,6 +574,17 @@ body {
   width: min(160px, 100%);
 }
 
+.result-footer {
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.result-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
+
 /* ===== SAFE AREA SUPPORT ДЛЯ iPhone ===== */
 @supports (padding: max(0px)) {
   body {
@@ -623,6 +654,31 @@ body {
     margin-bottom: var(--space-3xl);
     min-height: 0;
   }
+
+  .game-board-section {
+    min-height: 0;
+    overflow-y: auto;
+  }
+  
+  .game-header {
+    grid-template-columns: 1fr;
+    gap: var(--space-base);
+    text-align: center;
+  }
+  
+  .game-header .progress-wrapper {
+    order: 1;
+  }
+  
+  .game-header .progress-description {
+    order: 2;
+  }
+  
+  .game-header .steps {
+    order: 3;
+    justify-self: center;
+  }
+
   
   .progress-wrapper {
     width: 100%;
@@ -640,7 +696,8 @@ body {
   /* Карточки */
   .cards {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: auto;
     gap: var(--game-card-gap);
     width: 100%;
     max-width: none;
@@ -650,6 +707,7 @@ body {
   
   .card {
     width: 100%;
+    min-width: 0;
     aspect-ratio: 1.4 / 1;
     height: auto;
     position: relative;
@@ -865,18 +923,18 @@ body {
   }
   
   .card {
-    padding-bottom: 71.43%;
-    transform: scale(0.85) translateZ(0);
+    aspect-ratio: 1.2 / 1;
+    transform: scale(0.9) translateZ(0);
   }
   
   /* Корректируем состояния карточек в landscape */
   .card-show {
-    transform: rotateY(180deg) scale(0.85);
+    transform: rotateY(180deg) scale(0.9);
     cursor: default;
   }
   
   .card-finished {
-    transform: rotateY(180deg) scale(0.85) translateZ(0);
+    transform: rotateY(180deg) scale(0.9) translateZ(0);
     cursor: default;
   }
   
@@ -946,6 +1004,18 @@ body {
 .ico-button:focus {
   outline: 2px solid var(--color-success);
   outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 /* Анимации оптимизация для мобильных */
