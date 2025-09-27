@@ -11,7 +11,7 @@
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "deploy-source": "git add . && git commit -m 'Update source code' && git push origin main",
     "deploy-build": "npm run build && git subtree push --prefix dist origin gh-pages",
-    "lighthouse": "lighthouse http://localhost:3000 --output html --view"
+    "lighthouse": "npx lighthouse http://localhost:3000 --output html --view"
   },
   "keywords": ["react", "game", "memory", "cards", "webpack"],
   "author": "Olga Gulyakevich <olga.gulyakevi4@gmail.com>",

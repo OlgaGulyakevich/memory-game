@@ -175,7 +175,7 @@ npm run deploy     # Deploy to GitHub Pages
 
 ### **Testing Documentation**
 - 📋 **[Manual Testing Checklist](public/docs/testing/manual-testing-checklist.md)** - Comprehensive testing scenarios
-- ♿ **[Accessibility Audi](public/docs/testing/accessibility-checklist.md)t** - WCAG AA compliance verification
+- ♿ **[Accessibility Audit](public/docs/testing/accessibility-checklist.md)** - WCAG AA compliance verification
 - ⚡ **[Performance Benchmarks](public/docs/testing/performance-benchmarks.md)** - Core Web Vitals tracking
 
 ### **Quality Assurance Process**
