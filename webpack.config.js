@@ -7,7 +7,9 @@ const path = require('path');
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
   const isDevelopment = !isProduction;
-  const publicPath = isProduction ? '/memory-game/' : '/';
+  const publicPath = isProduction 
+    ? (process.env.GITHUB_PAGES ? '/memory-game/' : '/') 
+    : '/';
   
   return {
     entry: './src/index.js',
@@ -20,16 +22,8 @@ module.exports = (env, argv) => {
     
     optimization: isProduction ? {
       minimize: true,
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            priority: 10,
-          },
-        },
-      },
+      usedExports: true,
+      sideEffects: false, 
     } : {
       moduleIds: 'named',
     },
@@ -57,7 +51,12 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(png|jpe?g|gif|svg|woff2?)$/,
-          type: 'asset/resource',
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+              maxSize: 8 * 1024, // 8kb
+            },
+          },
           generator: {
             filename: 'assets/[name].[hash:8][ext]' 
           }
@@ -98,6 +97,25 @@ module.exports = (env, argv) => {
           { from: 'public/favicon.ico', to: 'favicon.ico' },
         ],
       }),
+
+      // Bundle analyzer для анализа размера
+      ...(env && env.analyze ? [
+        new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
+      ] : []),
+      
+      // Простая оптимизация изображений для production
+      ...(isProduction ? [
+        new (require('imagemin-webpack-plugin').default)({
+          test: /\.(jpe?g|png|gif|svg)$/i,
+          pngquant: {
+            quality: '65-80'  // ← Строка вместо массива!
+          },
+          mozjpeg: {
+            quality: 75,
+            progressive: true,
+          },
+        })
+      ] : []),
     ],
     
     devServer: {
@@ -127,8 +145,8 @@ module.exports = (env, argv) => {
     },
     
     performance: {
-      maxAssetSize: isProduction ? 250000 : 500000,
-      maxEntrypointSize: isProduction ? 250000 : 500000,
+      maxAssetSize: isProduction ? 200000 : 500000,
+      maxEntrypointSize: isProduction ? 200000 : 500000,
       hints: isProduction ? 'warning' : false
     },
     

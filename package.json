@@ -7,13 +7,18 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "build:deploy": "GITHUB_PAGES=true webpack --mode production",
     "serve": "npx serve -s dist -l 3000",
-    "deploy": "git subtree push --prefix dist origin gh-pages",
-    "deploy-source": "git add . && git commit -m 'Update source code' && git push origin main",
-    "deploy-build": "npm run build && git subtree push --prefix dist origin gh-pages",
-    "lighthouse": "npx lighthouse http://localhost:3000 --output html --view"
+    "lighthouse": "npx lighthouse http://localhost:3000 --output html --view",
+    "analyze": "webpack --mode production --analyze"
   },
-  "keywords": ["react", "game", "memory", "cards", "webpack"],
+  "keywords": [
+    "react",
+    "game",
+    "memory",
+    "cards",
+    "webpack"
+  ],
   "author": "Olga Gulyakevich <olga.gulyakevi4@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -28,8 +33,12 @@
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.4",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-webpack-plugin": "^2.4.2",
     "style-loader": "^4.0.0",
     "webpack": "^5.101.3",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
   },
