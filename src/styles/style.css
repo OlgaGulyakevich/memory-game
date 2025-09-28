@@ -84,6 +84,34 @@
   --game-card-aspect-ratio: 1.375; /* 220:160 */
   --game-card-gap: 20px;
   --game-grid-columns: 3;
+  
+  /* === Mobile Optimization === */
+  /* ✅ Responsive шрифты через clamp() */
+  --font-size-xs-responsive: clamp(12px, 2.5vw, 14px);
+  --font-size-sm-responsive: clamp(14px, 3vw, 16px);
+  --font-size-base-responsive: clamp(16px, 4vw, 20px);
+  --font-size-lg-responsive: clamp(18px, 4.5vw, 24px);
+  --font-size-xl-responsive: clamp(24px, 6vw, 32px);
+  --font-size-2xl-responsive: clamp(28px, 7vw, 40px);
+
+  /* ✅ Адаптивные отступы */
+  --space-mobile-sm: clamp(8px, 2vw, 12px);
+  --space-mobile-base: clamp(12px, 3vw, 16px);
+  --space-mobile-lg: clamp(16px, 4vw, 24px);
+
+  /* ✅ Safe area переменные для iPhone */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  
+  /* ✅ Viewport height исправление */
+  --viewport-height: 100vh; /* Fallback */
+  
+  /* ✅ Touch targets */
+  --touch-target-min: 44px;
+  
+  /* ✅ Улучшенная типографика */
+  --line-height-mobile: 1.4; /* Вместо слишком плотного 1.2 */
+  --line-height-mobile-tight: 1.3;
 }
 
 
@@ -112,13 +140,24 @@
   src: url("../../public/fonts/Nunito-Black.woff2") format("woff2");
 }
 
+/* ===== MOBILE VIEWPORT FIXES ===== */
+/* ✅ Dynamic Viewport Height поддержка для современных браузеров */
+@supports (height: 100dvh) {
+  :root {
+    --viewport-height: 100dvh; /* Исправляет проблемы с mobile browsers */
+  }
+}
+
 /* ===== БАЗОВЫЕ СТИЛИ ===== */
 body {
   margin: 0;
   font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
+  /* ✅ Responsive размер шрифта вместо статичного */
+  font-size: var(--font-size-base-responsive);
+  line-height: 1.5; /* ✅ Улучшенная читаемость */
   color: var(--color-text);
+  /* ✅ Исправленная высота viewport с fallback */
+  min-height: var(--viewport-height);
   background: 
     url("../../public/img/clouds.svg") no-repeat top var(--space-3xl) center,
     linear-gradient(180deg, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-end) 50%) no-repeat;
@@ -128,6 +167,10 @@ body {
   width: min(var(--container-max-width), calc(100vw - var(--space-2xl)));
   margin: 0 auto;
   padding: 0 var(--space-base);
+  /* ✅ Safe area для iPhone с fallback */
+  min-height: calc(var(--viewport-height) - var(--safe-area-top) - var(--safe-area-bottom));
+  padding-top: var(--safe-area-top);
+  padding-bottom: var(--safe-area-bottom);
 }
 
 /* ===== КОМПОНЕНТЫ: Кнопки ===== */
@@ -625,20 +668,40 @@ body {
   }
   
   body {
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-tight);
+    /* ✅ Responsive размер для мобильных */
+    font-size: var(--font-size-base-responsive);
+    line-height: var(--line-height-mobile); /* ✅ 1.4 вместо слишком плотного 1.2 */
     overflow-x: hidden;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+    /* ✅ Используем новую переменную вместо старых фиксов */
+    min-height: var(--viewport-height);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* ✅ Заголовки с улучшенной типографикой */
+  h1, h2, h3 {
+    line-height: var(--line-height-mobile-tight); /* ✅ 1.3 для заголовков */
+    margin-bottom: var(--space-mobile-sm);
+  }
+  
+  h1 {
+    font-size: var(--font-size-xl-responsive);
+  }
+  
+  h2 {
+    font-size: var(--font-size-lg-responsive);
+  }
+  
+  h3 {
+    font-size: var(--font-size-base-responsive);
   }
   
   .container {
     width: calc(100vw - var(--space-2xl));
     max-width: 100vw;
     padding: 0 var(--space-base);
-    min-height: 100vh;
+    /* ✅ Исправлена высота для мобильных с учетом safe-area */
+    min-height: calc(var(--viewport-height) - var(--safe-area-top) - var(--safe-area-bottom));
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
@@ -660,10 +723,19 @@ body {
     overflow-y: auto;
   }
   
+  /* ✅ Игровой экран оптимизация для мобильных */
+  .game-screen {
+    min-height: calc(var(--viewport-height) - 120px); /* Место для header */
+    padding: var(--space-mobile-sm);
+  }
+  
   .game-header {
     grid-template-columns: 1fr;
-    gap: var(--space-base);
+    /* ✅ Адаптивные отступы */
+    gap: var(--space-mobile-base);
+    padding: var(--space-mobile-base);
     text-align: center;
+    margin-bottom: var(--space-mobile-sm);
   }
   
   .game-header .progress-wrapper {
@@ -689,16 +761,18 @@ body {
   
   .steps {
     justify-self: center;
-    padding: var(--space-sm) var(--space-base);
-    font-size: var(--font-size-base);
+    padding: var(--space-mobile-sm) var(--space-mobile-base);
+    /* ✅ Responsive размер шрифта */
+    font-size: var(--font-size-sm-responsive);
   }
   
-  /* Карточки */
+  /* ✅ Карточки с responsive оптимизацией */
   .cards {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     grid-auto-rows: auto;
-    gap: var(--game-card-gap);
+    /* ✅ Адаптивный gap для лучшего touch опыта */
+    gap: clamp(4px, 1vw, 8px);
     width: 100%;
     max-width: none;
     margin: 0 0 30px 0;
@@ -708,7 +782,10 @@ body {
   .card {
     width: 100%;
     min-width: 0;
-    aspect-ratio: 1.4 / 1;
+    /* ✅ Квадратные карточки лучше для мобильных touch */
+    aspect-ratio: 1;
+    /* ✅ Touch friendly минимальный размер */
+    min-height: clamp(60px, 12vw, 120px);
     height: auto;
     position: relative;
     margin: 0;
@@ -721,7 +798,7 @@ body {
     will-change: transform;
     backface-visibility: hidden;
     transition: transform var(--animation-duration);
-    touch-action: manipulation;
+    touch-action: manipulation; /* ✅ Уже есть - отлично! */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     -webkit-user-select: none;
     user-select: none;
@@ -791,12 +868,14 @@ body {
   .theme-buttons .ico-button {
     width: 100%;
     text-align: center;
-    padding: var(--space-md) var(--space-base);
+    /* ✅ Адаптивные отступы для touch */
+    padding: var(--space-mobile-base) var(--space-mobile-base);
     padding-left: var(--space-xl);
     background-position: left var(--space-base) center;
     margin: auto;
-    min-height: var(--button-height);
-    font-size: var(--font-size-xs);
+    /* ✅ Touch friendly высота */
+    min-height: var(--touch-target-min);
+    font-size: var(--font-size-xs-responsive);
   }
   
   /* Модальные окна */
@@ -822,9 +901,11 @@ body {
   
   .modal-buttons .button {
     width: 100%;
-    padding: var(--space-md) var(--space-base);
-    font-size: var(--font-size-xs);
-    min-height: 44px;
+    /* ✅ Адаптивные отступы для touch */
+    padding: var(--space-mobile-sm) var(--space-mobile-base);
+    font-size: var(--font-size-xs-responsive);
+    /* ✅ Touch friendly высота */
+    min-height: var(--touch-target-min);
   }
   
   /* Результаты */
@@ -860,14 +941,16 @@ body {
   /* Адаптивные заголовки */
   .rules h2,
   .result h2 {
-    font-size: clamp(28px, 8vw, var(--font-size-2xl));
-    line-height: var(--line-height-tight);
-    margin-bottom: var(--space-md);
+    /* ✅ Используем responsive переменную вместо clamp */
+    font-size: var(--font-size-2xl-responsive);
+    line-height: var(--line-height-mobile-tight); /* ✅ 1.3 вместо 1.2 */
+    margin-bottom: var(--space-mobile-base);
   }
   
   .rules h3 {
-    font-size: clamp(20px, 5vw, var(--font-size-lg));
-    line-height: var(--line-height-tight);
+    /* ✅ Используем responsive переменную */
+    font-size: var(--font-size-lg-responsive);
+    line-height: var(--line-height-mobile-tight); /* ✅ 1.3 вместо 1.2 */
   }
 }
 
@@ -918,8 +1001,11 @@ body {
 @media (max-width: 768px) and (orientation: landscape) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-sm);
-    margin-bottom: var(--space-base);
+    /* ✅ Адаптивный gap для landscape */
+    gap: var(--space-mobile-sm);
+    margin-bottom: var(--space-mobile-base);
+    /* ✅ Компактные отступы для landscape */
+    padding: var(--space-mobile-sm);
   }
   
   .card {
@@ -950,8 +1036,9 @@ body {
   }
   
   .steps {
-    font-size: var(--font-size-sm);
-    padding: 6px var(--space-md);
+    /* ✅ Responsive размер для маленьких экранов */
+    font-size: var(--font-size-xs-responsive);
+    padding: 6px var(--space-mobile-sm);
   }
 }
 

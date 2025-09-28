@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "homepage": "https://olgagulyakevich.github.io/memory-game",
   "scripts": {
-    "start": "webpack serve --mode development",
+    "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "build:deploy": "GITHUB_PAGES=true webpack --mode production",
     "serve": "npx serve -s dist -l 3000",
@@ -29,7 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-react": "^7.27.1",
-    "babel-loader": "^10.0.0",
+    "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.4",
