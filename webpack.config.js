@@ -100,6 +100,8 @@ module.exports = (env, argv) => {
           { from: 'public/fonts', to: 'fonts' },
           { from: 'public/favicon*.png', to: '[name][ext]' },
           { from: 'public/favicon.ico', to: 'favicon.ico' },
+          { from: 'public/robots.txt', to: 'robots.txt' },        // Добавить
+          { from: 'public/sitemap.xml', to: 'sitemap.xml' },
         ],
       }),
 
