@@ -9,14 +9,22 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
     const results = [...filteredByTheme];
     
     if (currentResult) {
-      // Добавляем текущий результат (с темой)
+
+      // Проверяем по timestamp - если такого результата нет, добавляем
+    const alreadyExists = filteredByTheme.some(
+      result => result.timestamp === currentResult.timestamp
+    );
+    if (!alreadyExists) {
+      // Добавляем текущий результат (с темой) только если его еще нет
       // Создаем копию вместо мутации
     const currentResultWithTheme = {
       ...currentResult,
       theme: selectedTheme
     };
-    results.push(currentResultWithTheme);
+    filteredByTheme.push(currentResultWithTheme);
     }
+  } 
+  
     return sortResults(results);
   }, [allResults, currentResult, selectedTheme]);
 
@@ -47,7 +55,7 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
           <tbody>
             {combinedResults.map((result, index) => (
               <tr 
-                key={`${result.name}-${result.stepsCount}-${index}`}
+                key={result.timestamp || `fallback-${index}`}
                 className={`result-table-row ${result.isCurrent ? 'active' : ''}`}
               >
                 <td>{index + 1}</td>
