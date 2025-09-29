@@ -4,13 +4,15 @@
   "description": "Memory card game with React and Webpack",
   "main": "src/index.js",
   "homepage": "https://olgagulyakevich.github.io/memory-game",
-  "scripts": {
+"scripts": {
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "build:deploy": "GITHUB_PAGES=true webpack --mode production",
+    "deploy": "npm run build:deploy && gh-pages -d dist",
     "serve": "npx serve -s dist -l 3000",
     "lighthouse": "npx lighthouse http://localhost:3000 --output html --view",
-    "analyze": "webpack --mode production --analyze"
+    "analyze": "webpack --mode production --analyze",
+    "clean": "rm -rf dist node_modules package-lock.json && npm install"
   },
   "keywords": [
     "react",
@@ -33,10 +35,8 @@
     "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.4",
-    "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^10.0.0",
-    "imagemin-webpack-plugin": "^2.4.2",
     "style-loader": "^4.0.0",
     "webpack": "^5.101.3",
     "webpack-bundle-analyzer": "^4.10.2",
