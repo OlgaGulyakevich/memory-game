@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import Card from './Card';
 import { GAME_SETTINGS } from '../../utils/settings';
+import { useCardSize } from '../../utils/helpers';  
 
 function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGameOver}) {
   const [visibleItems, setVisibleItems] = useState([]);
@@ -50,9 +51,12 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
     });
   }, [isGameOver, isProcessing, finishedItemsSet, visibleItemsSet, checkItems]);
 
+  const cardSize = useCardSize();
+
   return (
     <ul 
     className={`cards cards-theme-${selectedTheme}`}
+    style={{ '--card-size': `${cardSize}px` }}
     role="group"
     aria-label={`Игровое поле с ${images.length} карточками темы ${selectedTheme}`}
     aria-live="polite"

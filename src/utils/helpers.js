@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react';
+
+
 // Функция для склонения числительных
 export const getWordDeclension = (count, words) => {
   const cases = [2, 0, 1, 1, 1, 2];
@@ -47,4 +50,56 @@ export const calculateProgress = (matchedPairs, totalPairs) => {
 // Функция сортировки результатов по возрастанию шагов
 export const sortResults = (results) => {
   return results.sort((a, b) => a.stepsCount - b.stepsCount);
+};
+
+// Функция для вычисления размера карточки
+export const useCardSize = () => {
+  const [cardSize, setCardSize] = useState(null);
+  
+  useEffect(() => {
+    const calculateCardSize = () => {
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
+      
+      // Применяем только для мобильных устройств
+      if (vw <= 768) {
+        // Более точные расчеты для мобильных устройств
+        const headerHeight = 90; // Реальная высота header
+        const bottomMargin = 20;
+        const topPadding = 15;
+        const gapSize = Math.min(8, vw * 0.01); // Адаптивный gap
+        const totalGaps = 5 * gapSize; // 5 gaps между 6 рядами
+        
+        const availableHeight = vh - headerHeight - bottomMargin - topPadding - totalGaps;
+        const maxCardHeight = availableHeight / 6; // 6 рядов карточек
+        
+        const sidePadding = 20;
+        const horizontalGap = gapSize;
+        const availableWidth = vw - (sidePadding * 2) - horizontalGap;
+        const maxCardWidth = availableWidth / 2; // 2 колонки
+        
+        // Выбираем меньшее значение для квадратных карточек
+        const size = Math.min(maxCardHeight, maxCardWidth);
+        
+        // Минимум 45px, максимум 110px для мобильных
+        const finalSize = Math.max(Math.min(size, 110), 45);
+        
+        setCardSize(finalSize);
+      } else {
+        // Десктоп - не используем динамический размер
+        setCardSize(null);
+      }
+    };
+    
+    calculateCardSize();
+    window.addEventListener('resize', calculateCardSize);
+    window.addEventListener('orientationchange', calculateCardSize);
+    
+    return () => {
+      window.removeEventListener('resize', calculateCardSize);
+      window.removeEventListener('orientationchange', calculateCardSize);
+    };
+  }, []);
+  
+  return cardSize;
 };

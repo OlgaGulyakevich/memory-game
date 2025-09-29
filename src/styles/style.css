@@ -381,8 +381,9 @@ body {
 .cards {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), var(--card-width)));
-  gap: var(--game-card-gap);
+  /* Используем динамический размер карточки для мобильных, fallback для десктопа */
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-size, var(--card-min-width)), var(--card-size, var(--card-width))));
+  gap: min(2vw, 10px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -416,6 +417,7 @@ body {
   transition: transform var(--animation-duration);
   transform-style: preserve-3d;
 }
+
 
 .card img {
   grid-area: 1 / 1 / 2 / 2;
@@ -767,24 +769,23 @@ body {
   /* Карточки с responsive оптимизацией */
   .cards {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-auto-rows: auto;
-    /* Адаптивный gap для лучшего touch опыта */
+    /* Используем точный вычисленный размер карточки */
+    grid-template-columns: repeat(3, var(--card-size, 150px)) !important;
+    grid-auto-rows: var(--card-size, 150px);
+    justify-content: center;
     gap: clamp(4px, 1vw, 8px);
     width: 100%;
     max-width: none;
-    margin: 0 0 30px 0;
+    margin: 0 0 20px 0;
     padding: 0;
   }
   
   .card {
-    width: 100%;
+    width: var(--card-size, 150px);
+    height: var(--card-size, 150px);
     min-width: 0;
-    /* Квадратные карточки лучше для мобильных touch */
     aspect-ratio: 1;
-    /* Touch friendly минимальный размер */
-    min-height: clamp(60px, 12vw, 120px);
-    height: auto;
+    min-height: unset;
     position: relative;
     margin: 0;
     border: 1px solid var(--color-border);
