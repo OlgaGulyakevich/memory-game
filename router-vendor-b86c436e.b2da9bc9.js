@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmemory_game=self.webpackChunkmemory_game||[]).push([[443],{946:(e,m,n)=>{n.d(m,{Kd:()=>p.Kd,C5:()=>p.C5,qh:()=>p.qh,BV:()=>p.BV,Zp:()=>p.Zp});var p=n(868),s=n(540),a=n.t(s,2);n(232),n(635),n(961),p.RF,s.Component,(0,p.q6)(),new TextEncoder,a.use}}]);
