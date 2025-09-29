@@ -16,6 +16,7 @@ module.exports = (env, argv) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: isProduction ? '[name].[contenthash:8].js' : '[name].js',
+      chunkFilename: isProduction ? 'js/[name].[contenthash:8].chunk.js' : '[name].chunk.js',
       clean: true,
       publicPath: publicPath,
     },
@@ -24,6 +25,40 @@ module.exports = (env, argv) => {
       minimize: true,
       usedExports: true,
       sideEffects: false, 
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
+        cacheGroups: {
+          // React отдельно
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+            name: 'react-vendor',
+            priority: 20,
+            enforce: true,
+          },
+          // React Router отдельно
+          router: {
+            test: /[\\/]node_modules[\\/](react-router|react-router-dom|@remix-run)[\\/]/,
+            name: 'router-vendor',
+            priority: 15,
+            enforce: true,
+          },
+          // Остальные vendor библиотеки
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            priority: 10,
+          },
+         // Общий код приложения
+          common: {
+            minChunks: 2,
+            priority: 5,
+            reuseExistingChunk: true,
+          },
+        },
+      },
     } : {
       moduleIds: 'named',
     },
@@ -38,15 +73,15 @@ module.exports = (env, argv) => {
             options: {
               presets: [
                 ['@babel/preset-env', {
-                  targets: {
-                    browsers: ['last 2 versions', 'ie >= 11']
-                  }
+                  targets: '> 0.25%, not dead', 
+                  modules: false,                   
                 }],
                 ['@babel/preset-react', {
                   runtime: 'automatic'
                 }]
               ],
               cacheDirectory: true,
+              cacheCompression: false,
             },
           },
         },
@@ -55,15 +90,34 @@ module.exports = (env, argv) => {
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.(png|jpe?g|gif|svg|woff2?)$/,
+          test: /\.(png|jpe?g|gif)$/i,
           type: 'asset',
           parser: {
             dataUrlCondition: {
-              maxSize: 8 * 1024, // 8kb
+              maxSize: 10 * 1024, 
             },
           },
           generator: {
-            filename: 'assets/[name].[hash:8][ext]' 
+            filename: 'assets/images/[name].[hash:8][ext]'
+          }
+        },
+        {
+          test: /\.svg$/i,
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+              maxSize: 4 * 1024, 
+            },
+          },
+          generator: {
+            filename: 'assets/icons/[name].[hash:8][ext]'
+          }
+        },
+        {
+          test: /\.(woff|woff2)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'assets/fonts/[name].[hash:8][ext]'
           }
         },
       ],
@@ -95,33 +149,26 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           { from: 'public/404.html', to: '404.html' },
-          { from: 'public/img', to: 'img' },
-          { from: 'public/data', to: 'data' },
-          { from: 'public/fonts', to: 'fonts' },
+          { from: 'public/robots.txt', to: 'robots.txt' },     
+          { from: 'public/sitemap.xml', to: 'sitemap.xml' },
+          { 
+            from: 'public/img', 
+            to: 'img',
+            noErrorOnMissing: true,
+          },
+          { 
+            from: 'public/data', 
+            to: 'data',
+            noErrorOnMissing: true,
+          },
           { from: 'public/favicon*.png', to: '[name][ext]' },
           { from: 'public/favicon.ico', to: 'favicon.ico' },
-          { from: 'public/robots.txt', to: 'robots.txt' },        // Добавить
-          { from: 'public/sitemap.xml', to: 'sitemap.xml' },
         ],
       }),
 
       // Bundle analyzer для анализа размера
       ...(env && env.analyze ? [
         new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
-      ] : []),
-      
-      // Простая оптимизация изображений для production
-      ...(isProduction ? [
-        new (require('imagemin-webpack-plugin').default)({
-          test: /\.(jpe?g|png|gif|svg)$/i,
-          pngquant: {
-            quality: '65-80'  // ← Строка вместо массива!
-          },
-          mozjpeg: {
-            quality: 75,
-            progressive: true,
-          },
-        })
       ] : []),
     ],
     
@@ -140,7 +187,6 @@ module.exports = (env, argv) => {
           errors: true,
           warnings: false,
         },
-        reconnect: true,
       },
     },
     
@@ -150,13 +196,13 @@ module.exports = (env, argv) => {
         '@': path.resolve(__dirname, 'src'),
       }
     },
-    
+
     performance: {
-      maxAssetSize: isProduction ? 200000 : 500000,
-      maxEntrypointSize: isProduction ? 200000 : 500000,
-      hints: isProduction ? 'warning' : false
+      maxAssetSize: 244000, 
+      maxEntrypointSize: 244000,
+      hints: isProduction ? 'warning' : false,
     },
     
-    devtool: isDevelopment ? 'eval-cheap-module-source-map' : 'source-map',
+    devtool: isDevelopment ? 'eval-cheap-module-source-map' : false,
   };
 };
