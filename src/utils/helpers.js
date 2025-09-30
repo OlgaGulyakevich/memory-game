@@ -68,28 +68,28 @@ export const useCardSize = () => {
         const isLandscape = vw > vh;
         
         if (isLandscape) {
-          // LANDSCAPE: 4 колонки × 3 ряда
-          const headerHeight = 60;
+          // LANDSCAPE: 6 колонок × 2 ряда
+          const headerHeight = 80;
           const bottomMargin = 10;
-          const topPadding = 5;
-          const gapSize = Math.min(4, vw * 0.006);
-          const verticalGaps = 2 * gapSize; // 2 gaps между 3 рядами
-          const horizontalGaps = 3 * gapSize; // 3 gaps между 4 колонками
+          const topPadding = 10;
+          const gapSize = Math.min(6, vw * 0.015);
+          const verticalGaps = 1 * gapSize; // 1 gaps между 2 рядами
+          const horizontalGaps = 5 * gapSize; // 5 gaps между 6 колонками
           
           const availableHeight = vh - headerHeight - bottomMargin - topPadding - verticalGaps;
-          const maxCardHeight = availableHeight / 3; // 3 ряда
+          const maxCardHeight = availableHeight / 2; // 2 ряда
           
-          const sidePadding = 10;
+          const sidePadding = 15;
           const availableWidth = vw - (sidePadding * 2) - horizontalGaps;
-          const maxCardWidth = availableWidth / 4; // 4 колонки
+          const maxCardWidth = availableWidth / 6; // 6 колонки
           
           const size = Math.min(maxCardHeight, maxCardWidth);
           // const finalSize = Math.max(Math.min(size, 80), 50);
-          const finalSize = Math.max(Math.min(size, 80), 50);
+          const finalSize = Math.max(Math.min(size, 120), 70);
           
           setLayoutConfig({
             cardSize: finalSize,
-            columns: 4,
+            columns: 6,
             isLandscape: true
           });
         } else {
