@@ -766,11 +766,11 @@ body {
     font-size: var(--font-size-sm-responsive);
   }
   
-  /* Карточки с responsive оптимизацией */
+  /* Карточки с responsive оптимизацией - PORTRAIT */
   .cards {
     display: grid;
-    /* Используем точный вычисленный размер карточки */
-    grid-template-columns: repeat(3, var(--card-size, 150px)) !important;
+    /* По умолчанию - 3 колонки для portrait */
+    grid-template-columns: repeat(3, var(--card-size, 150px));
     grid-auto-rows: var(--card-size, 150px);
     justify-content: center;
     gap: clamp(4px, 1vw, 8px);
@@ -854,6 +854,7 @@ body {
     transition-duration: var(--animation-duration);
     transition-timing-function: ease-in-out;
   }
+
   
   /* Кнопки тем в колонку */
   .theme-buttons {
@@ -996,48 +997,38 @@ body {
   }
 }
 
-/* Landscape orientation */
+/* Карточки с responsive оптимизацией - LANDSCAPE */
 @media (max-width: 768px) and (orientation: landscape) {
+ 
   .cards {
-    grid-template-columns: repeat(3, 1fr);
-    /* Адаптивный gap для landscape */
-    gap: var(--space-mobile-sm);
-    margin-bottom: var(--space-mobile-base);
-    /* Компактные отступы для landscape */
-    padding: var(--space-mobile-sm);
+    /* Управление через inline style из React */
+    justify-content: center;
+    margin: 0 0 10px 0;
+    padding: 0 10px;
+    max-width: 100%;
+    width: 100%;
   }
   
   .card {
-    aspect-ratio: 1.2 / 1;
-    transform: scale(0.9) translateZ(0);
+    /* Размер управляется через CSS переменную из React */
+    width: var(--card-size, 80px);
+    height: var(--card-size, 80px);
+    aspect-ratio: 1;
+    min-width: unset;
+    min-height: unset;
   }
   
-  /* Корректируем состояния карточек в landscape */
-  .card-show {
-    transform: rotateY(180deg) scale(0.9);
-    cursor: default;
+  /* Компактный header для landscape */
+  .game-header {
+    gap: var(--space-mobile-sm);
+    padding: var(--space-mobile-sm) 15px;
   }
-  
-  .card-finished {
-    transform: rotateY(180deg) scale(0.9) translateZ(0);
-    cursor: default;
-  }
-  
+
+  /* Компактная игровая область */
   .game {
     gap: var(--space-sm);
-    padding: var(--space-md) 0;
-    margin-bottom: var(--space-lg);
-  }
-  
-  .progress-wrapper {
-    height: 12px;
-    max-width: 300px;
-  }
-  
-  .steps {
-    /* Responsive размер для маленьких экранов */
-    font-size: var(--font-size-xs-responsive);
-    padding: 6px var(--space-mobile-sm);
+    padding: var(--space-sm) 0;
+    margin-bottom: var(--space-base);
   }
 }
 
@@ -1068,12 +1059,12 @@ body {
   /* Landscape режим */
   @media (orientation: landscape) {
     .card:not(.card-show):not(.card-finished):hover {
-      transform: scale(0.9);
+      transform: scale(1.02);
       box-shadow: 0 6px 18px var(--color-shadow-hover);
     }
     
     .card:not(.card-show):not(.card-finished):active {
-      transform: scale(0.8);
+      transform: scale(0.98);
       box-shadow: 0 3px 8px rgba(140, 174, 200, 0.6);
       transition-duration: 0.1s;
     }

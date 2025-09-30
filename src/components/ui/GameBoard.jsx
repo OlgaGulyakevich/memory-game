@@ -51,16 +51,30 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
     });
   }, [isGameOver, isProcessing, finishedItemsSet, visibleItemsSet, checkItems]);
 
-  const cardSize = useCardSize();
+  // Получаем полную конфигурацию layout
+  const { cardSize, columns, isLandscape } = useCardSize();
+
+  // Вычисляем inline стили для grid
+  const gridStyles = useMemo(() => {
+    if (!cardSize) return {}; // Десктоп - используем CSS
+    
+    return {
+      '--card-size': `${cardSize}px`,
+      gridTemplateColumns: `repeat(${columns}, ${cardSize}px)`,
+      gridAutoRows: `${cardSize}px`,
+      gap: isLandscape ? 'clamp(3px, 0.8vw, 6px)' : 'clamp(4px, 1vw, 8px)'
+    };
+  }, [cardSize, columns, isLandscape]);
 
   return (
     <ul 
-    className={`cards cards-theme-${selectedTheme}`}
-    style={{ '--card-size': `${cardSize}px` }}
-    role="group"
-    aria-label={`Игровое поле с ${images.length} карточками темы ${selectedTheme}`}
-    aria-live="polite"
-    aria-atomic="false">
+      className={`cards cards-theme-${selectedTheme}`}
+      style={gridStyles}
+      role="group"
+      aria-label={`Игровое поле с ${images.length} карточками темы ${selectedTheme}`}
+      aria-live="polite"
+      aria-atomic="false"
+    >
       {images.map((item) => (
         <Card
           key={item.id}
