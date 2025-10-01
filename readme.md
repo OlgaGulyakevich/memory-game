@@ -24,7 +24,7 @@ Experience the full application with all features:
 
 ## 📖 About
 
-**Memory** is an multilingualinteractive memory training application that challenges users to match pairs of cards across different themes. Built with modern React patterns, the game demonstrates professional frontend development practices including *component architecture*, *state management*, *responsive design*, and *accessibility compliance*.
+**Memory** is an multilingual interactive memory training application that challenges users to match pairs of cards across different themes. Built with modern React patterns, the game demonstrates professional frontend development practices including *component architecture*, *state management*, *responsive design*, and *accessibility compliance*.
 
 ### 🎯 Core Gameplay
 - **Find Pairs**: Match identical cards by flipping them two at a time
@@ -54,6 +54,13 @@ Experience the full application with all features:
 - **Babel** - JSX transformation and ES6+ compilation  
 - **CSS3** - Custom properties, Grid, Flexbox, animations
 - **Hot Module Replacement** - Fast development workflow 
+
+### Internationalization
+- 3 languages: Russian, English, French
+- localStorage persistence
+- Responsive language switcher
+- Full keyboard navigation
+- WCAG AA compliant
 
 ### **Code Quality & Performance**
 - **React.memo** - Component memoization for performance

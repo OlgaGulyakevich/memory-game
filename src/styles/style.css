@@ -1108,3 +1108,327 @@ body {
     animation: none;
   }
 }
+
+/* ====================================
+   Language Switcher Component Styles
+   ==================================== */
+
+   .language-switcher {
+    position: relative;
+    display: inline-block;
+    z-index: 1000;
+  }
+  
+  /* ====================================
+     Button Styles
+     ==================================== */
+  
+  .language-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #bad6eb;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(140, 174, 200, 0.15);
+    cursor: pointer;
+    transition: all 150ms ease;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333333;
+  }
+  
+  .language-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 12px rgba(140, 174, 200, 0.25);
+    transform: translateY(-1px);
+  }
+  
+  .language-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(140, 174, 200, 0.2);
+  }
+  
+  .language-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 202, 81, 0.3);
+  }
+  
+  .language-button:focus-visible {
+    outline: 2px solid #00ca51;
+    outline-offset: 2px;
+  }
+  
+  .language-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  
+  .language-code {
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  
+  /* ====================================
+     Dropdown Menu Styles
+     ==================================== */
+  
+  .language-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 120px;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(8px);
+    border: 1px solid #bad6eb;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(140, 174, 200, 0.25);
+    animation: dropdownFadeIn 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* ====================================
+     Menu Item Styles
+     ==================================== */
+  
+  .language-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333333;
+    user-select: none;
+  }
+  
+  .language-item:hover,
+  .language-item.focused {
+    background-color: rgba(255, 191, 32, 0.08);
+  }
+  
+  .language-item:active {
+    background-color: rgba(255, 191, 32, 0.15);
+  }
+  
+  .language-item.active {
+    font-weight: 700;
+    background-color: rgba(255, 191, 32, 0.1);
+  }
+  
+  .language-item:focus {
+    outline: none;
+    background-color: rgba(255, 191, 32, 0.08);
+  }
+  
+  .language-item:focus-visible {
+    outline: 2px solid #00ca51;
+    outline-offset: -2px;
+  }
+  
+  /* ====================================
+     Active Indicator
+     ==================================== */
+  
+  .language-indicator {
+    font-size: 6px;
+    color: #ffbf20;
+    line-height: 1;
+  }
+  
+  .language-label {
+    flex: 1;
+  }
+  
+  /* ====================================
+     Responsive Breakpoints
+     ==================================== */
+  
+  /* Desktop (>1024px) - Default styles above */
+  
+  /* Tablet (769px - 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .language-button {
+      width: 44px;
+      height: 44px;
+    }
+    
+    .language-icon {
+      font-size: 20px;
+    }
+    
+    .language-code {
+      font-size: 16px;
+    }
+  }
+  
+  /* Mobile Portrait (≤768px) */
+  @media (max-width: 768px) and (orientation: portrait) {
+    .language-button {
+      width: 40px;
+      height: 40px;
+      gap: 4px;
+    }
+    
+    .language-icon {
+      font-size: 18px;
+    }
+    
+    .language-code {
+      font-size: 14px;
+    }
+    
+    .language-dropdown {
+      width: 100px;
+    }
+    
+    .language-item {
+      height: 40px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Mobile Landscape (≤768px) */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .language-button {
+      width: 36px;
+      height: 36px;
+      gap: 0;
+    }
+    
+    .language-icon {
+      font-size: 20px;
+    }
+    
+    /* Скрываем код языка на мобильном landscape */
+    .language-code {
+      display: none;
+    }
+    
+    .language-dropdown {
+      width: 80px;
+    }
+    
+    .language-item {
+      height: 36px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+  }
+  
+  /* ====================================
+     Accessibility Enhancements
+     ==================================== */
+  
+  /* Высококонтрастный режим */
+  @media (prefers-contrast: high) {
+    .language-button {
+      border: 2px solid #333333;
+    }
+    
+    .language-dropdown {
+      border: 2px solid #333333;
+    }
+    
+    .language-item.active {
+      background-color: rgba(255, 191, 32, 0.3);
+    }
+  }
+  
+  /* Режим уменьшенной анимации */
+  @media (prefers-reduced-motion: reduce) {
+    .language-button,
+    .language-item {
+      transition: none;
+    }
+    
+    .language-dropdown {
+      animation: none;
+    }
+    
+    .language-button:hover {
+      transform: none;
+    }
+  }
+  
+  /* Touch device optimization */
+  @media (hover: none) and (pointer: coarse) {
+    .language-button:hover {
+      transform: none;
+    }
+    
+    .language-item:hover {
+      background-color: transparent;
+    }
+    
+    /* Увеличиваем touch targets для touch devices */
+    .language-item {
+      min-height: 44px;
+    }
+  }
+
+  /* ====================================
+   StartScreen Header with Language Switcher
+   ==================================== */
+
+.start-screen-header {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 100;
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .start-screen-header {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 768px) and (orientation: portrait) {
+  .start-screen-header {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .start-screen-header {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+/* Убедитесь, что .rules container имеет position: relative */
+.rules.container {
+  position: relative;
+  /* остальные стили */
+}

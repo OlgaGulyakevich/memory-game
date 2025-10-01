@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import Card from './Card';
 import { GAME_SETTINGS } from '../../utils/settings';
 import { useCardSize } from '../../utils/helpers';  
 
-function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGameOver}) {
+function GameBoard({ images = [], selectedTheme, finishedItems, checkItems, isGameOver }) {
+  const { t } = useTranslation();
   const [visibleItems, setVisibleItems] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Мемоизируем Set для быстрой проверки 
   const finishedItemsSet = useMemo(
     () => new Set(finishedItems),
     [finishedItems]
@@ -18,24 +19,19 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
     [visibleItems]
   );
 
-  // Оптимизированный обработчик клика на карточку
   const handleCardClick = useCallback((id) => {
-    // Ранний выход - быстрые проверки через Set
     if (isGameOver || isProcessing) return;
     if (finishedItemsSet.has(id) || visibleItemsSet.has(id)) return;
 
     setVisibleItems(prev => {
       switch (prev.length) {
         case 0:
-          // Первая карточка
           return [id];
         
         case 1:
-          // Вторая карточка - проверяем пару
           const firstId = prev[0];
           checkItems(firstId, id);
           
-          // Запускаем таймер очистки
           setIsProcessing(true);
           setTimeout(() => {
             setVisibleItems([]);
@@ -45,18 +41,15 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
           return [...prev, id];
         
         default:
-          // Сброс при третьем клике
           return [];
       }
     });
   }, [isGameOver, isProcessing, finishedItemsSet, visibleItemsSet, checkItems]);
 
-  // Получаем полную конфигурацию layout
   const { cardSize, columns, isLandscape } = useCardSize();
 
-  // Вычисляем inline стили для grid
   const gridStyles = useMemo(() => {
-    if (!cardSize) return {}; // Десктоп - используем CSS
+    if (!cardSize) return {};
     
     return {
       '--card-size': `${cardSize}px`,
@@ -66,12 +59,14 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
     };
   }, [cardSize, columns, isLandscape]);
 
+  const themeName = t(`startScreen.themes.${selectedTheme}`);
+
   return (
     <ul 
       className={`cards cards-theme-${selectedTheme}`}
       style={gridStyles}
       role="group"
-      aria-label={`Игровое поле с ${images.length} карточками темы ${selectedTheme}`}
+      aria-label={t('gameScreen.boardAriaLabel', { count: images.length, theme: themeName })}
       aria-live="polite"
       aria-atomic="false"
     >
@@ -88,5 +83,4 @@ function GameBoard({images = [], selectedTheme, finishedItems, checkItems, isGam
   );
 }
 
-// Выполняем мемоизацию компонента
 export default React.memo(GameBoard);

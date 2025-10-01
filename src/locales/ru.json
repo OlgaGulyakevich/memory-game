@@ -1,0 +1,80 @@
+{
+  "startScreen": {
+    "welcome": "Добро пожаловать!",
+    "subtitle": "Memory — игра для тренировки визуальной памяти",
+    "rulesHeading": "Правила игры",
+    "rule1": "В наборе есть множество карточек – по две штуки с одним и тем же рисунком.",
+    "rule2": "Нужно разложить карточки «рубашкой» вверх на столе, а затем переворачивать по две.",
+    "rule3": "Если они совпадают – игрок забирает их и получает ещё один ход.",
+    "themesHeading": "Выберите тему карточек",
+    "themesAriaLabel": "Выбор темы игры",
+    "themeAriaLabel": "Играть с темой: {{theme}}",
+    "themes": {
+      "cats": "Котики",
+      "cars": "Машины",
+      "flowers": "Цветочки"
+    }
+  },
+  "gameScreen": {
+    "ariaLabel": "Игровой экран",
+    "boardHeading": "Игровое поле",
+    "boardAriaLabel": "Игровое поле с {{count}} карточками темы {{theme}}",
+    "progress": {
+      "ariaLabel": "Прогресс игры: {{progress}}%",
+      "description": "Открыто",
+      "of": "/"
+    },
+    "steps": "Шаг {{count}}",
+    "lives": "❤️ Жизни: {{count}}"
+  },
+  "gameModal": {
+    "victory": {
+      "title": "Победа!",
+      "description": "Теперь давайте узнаем результаты этой партии",
+      "button": "Показать результаты"
+    },
+    "gameOver": {
+      "title": "Игра окончена",
+      "description": "Вы собрали {{count}} {{pairs}}",
+      "button": "Новая игра"
+    },
+    "pairs": {
+      "one": "пару",
+      "few": "пары",
+      "many": "пар"
+    }
+  },
+  "resultScreen": {
+    "ariaLabel": "Экран результатов",
+    "heading": "Лучшие результаты для темы \"{{theme}}\":",
+    "completedIn": "Вы завершили игру за",
+    "steps": "{{count}} {{word}}",
+    "stepsWords": {
+      "one": "шаг",
+      "few": "шага",
+      "many": "шагов"
+    },
+    "encouragement": "так держать!",
+    "tableHeading": "Таблица результатов",
+    "tableHeaders": {
+      "place": "Место",
+      "name": "Имя",
+      "steps": "Шаги"
+    },
+    "noResults": "Пока нет результатов для этой темы. Сыграйте, чтобы установить рекорд!",
+    "yourResult": "Ваш результат",
+    "tryAgain": "Хотите попробовать ещё раз?",
+    "newGameButton": "Новая игра"
+  },
+  "card": {
+    "finished": "Собранная пара",
+    "closed": "Закрытая карточка, нажмите Enter для открытия",
+    "altText": "Изображение карточки"
+  },
+  "languageSwitcher": {
+    "ariaLabel": "Выбрать язык",
+    "ariaExpanded": "Меню выбора языка {{state}}",
+    "opened": "открыто",
+    "closed": "закрыто"
+  }
+}

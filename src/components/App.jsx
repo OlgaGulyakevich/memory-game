@@ -6,9 +6,11 @@ import ResultScreen from './pages/ResultScreen';
 import { getImages } from '../data/themes';
 import { getFromStorage, setToStorage } from '../utils/helpers';
 import { getAssetPath } from '../utils/paths';
+import { useTranslation } from 'react-i18next';
 
 function App() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [currentResult, setCurrentResult] = useState(null);
   const [allResults, setAllResults] = useState([]);
   const [gameImages, setGameImages] = useState([]);
@@ -57,7 +59,7 @@ function App() {
   // Обработчик завершения игры
   const handleGameFinish = useCallback((gameData) => {
     const newResult = {
-      name: 'Ваш результат',
+      name: t('resultScreen.yourResult'),
       stepsCount: gameData.moves,
       errors: gameData.errors,
       timestamp: new Date().toISOString(),

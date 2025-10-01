@@ -1,35 +1,44 @@
 import React from 'react';
 import { themes } from '../../data/themes';
+import { useTranslation } from 'react-i18next';
 
 function StartScreen({ onThemeSelect }) {
+  const { t } = useTranslation();
+  
   return (
     <main className="rules container">
       <header>
-        <h1>Добро пожаловать!</h1>
-        <p>Memory — игра для тренировки визуальной памяти</p>
+        <h1>{t('startScreen.welcome')}</h1>
+        <p>{t('startScreen.subtitle')}</p>
       </header>
       
       <section className="rules-panel" aria-labelledby="rules-heading">
-        <h2 id="rules-heading">Правила игры</h2>
+        <h2 id="rules-heading">{t('startScreen.rulesHeading')}</h2>
         <ol className="rules-list" role="list">
-          <li>В наборе есть множество карточек – по две штуки с одним и тем же рисунком.</li>
-          <li>Нужно разложить карточки «рубашкой» вверх на столе, а затем переворачивать по две.</li>
-          <li>Если они совпадают – игрок забирает их и получает ещё один ход.</li>
+          <li>{t('startScreen.rule1')}</li>
+          <li>{t('startScreen.rule2')}</li>
+          <li>{t('startScreen.rule3')}</li>
         </ol>
       </section>
-      
+
       <section className="themes-selection" aria-labelledby="themes-heading">
-        <h3 id="themes-heading">Выберите тему карточек</h3>
-        <nav className="theme-buttons" role="navigation" aria-label="Выбор темы игры">
+        <h3 id="themes-heading">{t('startScreen.themesHeading')}</h3>
+        <nav 
+          className="theme-buttons" 
+          role="navigation" 
+          aria-label={t('startScreen.themesAriaLabel')}
+        >
           {Object.entries(themes).map(([key, theme]) => (
             <button
               key={key}
               onClick={() => onThemeSelect(key)}
               className={`ico-button ico-button-${key}`}
-              aria-label={`Играть с темой: ${theme.name}`}
+              aria-label={t('startScreen.themeAriaLabel', { 
+                theme: t(`startScreen.themes.${key}`) 
+              })}
               type="button"
             >
-              {theme.name}
+              {t(`startScreen.themes.${key}`)}
             </button>
           ))}
         </nav>

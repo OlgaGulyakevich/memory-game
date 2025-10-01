@@ -1,0 +1,80 @@
+{
+  "startScreen": {
+    "welcome": "Welcome!",
+    "subtitle": "Memory — a game to train your visual memory",
+    "rulesHeading": "Game Rules",
+    "rule1": "The set contains many cards – two pieces with the same picture.",
+    "rule2": "You need to lay out the cards face down on the table, and then flip two at a time.",
+    "rule3": "If they match – the player takes them and gets another turn.",
+    "themesHeading": "Choose a card theme",
+    "themesAriaLabel": "Choose a game theme",
+    "themeAriaLabel": "Play with the theme: {{theme}}",
+    "themes": {
+      "cats": "Cats",
+      "cars": "Cars",
+      "flowers": "Flowers"
+    }
+  },
+  "gameScreen": {
+    "ariaLabel": "Game screen",
+    "boardHeading": "Game board",
+    "boardAriaLabel": "Game board with {{count}} cards of {{theme}} theme",
+    "progress": {
+      "ariaLabel": "Game progress: {{progress}}%",
+      "description": "Opened",
+      "of": "/"
+    },
+    "steps": "Move {{count}}",
+    "lives": "❤️ Lives: {{count}}"
+  },
+  "gameModal": {
+    "victory": {
+      "title": "Victory!",
+      "description": "Now let's see the results of this game",
+      "button": "Show results"
+    },
+    "gameOver": {
+      "title": "Game Over",
+      "description": "You collected {{count}} {{pairs}}",
+      "button": "New game"
+    },
+    "pairs": {
+      "one": "pair",
+      "few": "pairs",
+      "many": "pairs"
+    }
+  },
+  "resultScreen": {
+    "ariaLabel": "Results screen",
+    "heading": "Best results for \"{{theme}}\" theme:",
+    "completedIn": "You completed the game in",
+    "steps": "{{count}} {{word}}",
+    "stepsWords": {
+      "one": "move",
+      "few": "moves",
+      "many": "moves"
+    },
+    "encouragement": "keep it up!",
+    "tableHeading": "Results table",
+    "tableHeaders": {
+      "place": "Place",
+      "name": "Name",
+      "steps": "Moves"
+    },
+    "noResults": "No results yet for this theme. Play to set a record!",
+    "yourResult": "Your result",
+    "tryAgain": "Want to try again?",
+    "newGameButton": "New game"
+  },
+  "card": {
+    "finished": "Matched pair",
+    "closed": "Closed card, press Enter to open",
+    "altText": "Card image"
+  },
+  "languageSwitcher": {
+    "ariaLabel": "Select language",
+    "ariaExpanded": "Language selection menu {{state}}",
+    "opened": "opened",
+    "closed": "closed"
+  }
+}
