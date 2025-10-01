@@ -731,7 +731,6 @@ body {
   
   .game-header {
     grid-template-columns: 1fr;
-    /* Адаптивные отступы */
     gap: var(--space-mobile-base);
     padding: var(--space-mobile-base);
     text-align: center;
@@ -762,7 +761,6 @@ body {
   .steps {
     justify-self: center;
     padding: var(--space-mobile-sm) var(--space-mobile-base);
-    /* Responsive размер шрифта */
     font-size: var(--font-size-sm-responsive);
   }
   
@@ -868,12 +866,10 @@ body {
   .theme-buttons .ico-button {
     width: 100%;
     text-align: center;
-    /* Адаптивные отступы для touch */
     padding: var(--space-mobile-base) var(--space-mobile-base);
     padding-left: var(--space-xl);
     background-position: left var(--space-base) center;
     margin: auto;
-    /* Touch friendly высота */
     min-height: var(--touch-target-min);
     font-size: var(--font-size-xs-responsive);
   }
@@ -901,10 +897,8 @@ body {
   
   .modal-buttons .button {
     width: 100%;
-    /* Адаптивные отступы для touch */
     padding: var(--space-mobile-sm) var(--space-mobile-base);
     font-size: var(--font-size-xs-responsive);
-    /* Touch friendly высота */
     min-height: var(--touch-target-min);
   }
   
