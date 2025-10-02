@@ -1127,52 +1127,55 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    width: 44px;
-    height: 44px;
+    gap: var(--space-xs);
+    width: 60px;
+    height: var(--touch-target-min);
     padding: 0;
-    background-color: rgba(255, 255, 255, 0.95);
-    border: 1px solid #bad6eb;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(140, 174, 200, 0.15);
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all 150ms ease;
-    font-family: 'Nunito', Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #333333;
+    transition: background-color var(--animation-duration-fast) var(--animation-easing);
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: #6B7280;
+  }
+
+  .language-button::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background-image: url("../../public/img/icon-globe.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: invert(47%) sepia(8%) saturate(531%) hue-rotate(182deg) brightness(92%) contrast(88%);
+    /* Фильтр создает цвет #6B7280 */
   }
   
   .language-button:hover {
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 4px 12px rgba(140, 174, 200, 0.25);
-    transform: translateY(-1px);
+    background-color: rgba(255, 255, 255, 0.6);
   }
   
   .language-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(140, 174, 200, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
   }
   
   .language-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 202, 81, 0.3);
+    background-color: rgba(255, 255, 255, 0.6);
   }
   
   .language-button:focus-visible {
-    outline: 2px solid #00ca51;
+    outline: 2px solid var(--color-success);
     outline-offset: 2px;
   }
   
-  .language-icon {
-    font-size: 20px;
-    line-height: 1;
-  }
-  
   .language-code {
-    font-size: 16px;
-    line-height: 1;
-    letter-spacing: 0.02em;
+    font-size: var(--font-size-xs-responsive);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
   }
   
   /* ====================================
@@ -1181,18 +1184,18 @@ body {
   
   .language-dropdown {
     position: absolute;
-    top: calc(100% + 8px);
+    top: 100%;
     right: 0;
     width: 120px;
     margin: 0;
-    padding: 8px 0;
+    padding: 0px;
     list-style: none;
-    background-color: rgba(255, 255, 255, 0.98);
+    background-color: var(--color-white);
     backdrop-filter: blur(8px);
-    border: 1px solid #bad6eb;
-    border-radius: 10px;
-    box-shadow: 0 4px 24px rgba(140, 174, 200, 0.25);
-    animation: dropdownFadeIn 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 24px var(--color-shadow);
+    animation: dropdownFadeIn var(--animation-duration-fast) var(--animation-easing);
     overflow: hidden;
   }
   
@@ -1214,55 +1217,42 @@ body {
   .language-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    height: 44px;
-    padding: 12px 16px;
+    justify-content: center;
+    min-height: var(--touch-target-min);
+    padding: var(--space-md) var(--space-base);
     cursor: pointer;
-    transition: background-color 150ms ease;
-    font-family: 'Nunito', Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: #333333;
+    transition: background-color var(--animation-duration-fast) var(--animation-easing);
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    color: #6B7280;;
     user-select: none;
   }
   
   .language-item:hover,
   .language-item.focused {
-    background-color: rgba(255, 191, 32, 0.08);
+    background-color: rgba(0, 202, 81, 0.08);
+    /* --color-success с прозрачностью */
   }
   
   .language-item:active {
-    background-color: rgba(255, 191, 32, 0.15);
+    background-color: rgba(0, 202, 81, 0.15);
   }
   
   .language-item.active {
-    font-weight: 700;
-    background-color: rgba(255, 191, 32, 0.1);
+    color: var(--color-success);
   }
   
   .language-item:focus {
     outline: none;
-    background-color: rgba(255, 191, 32, 0.08);
+    background-color: rgba(0, 202, 81, 0.08);
   }
   
   .language-item:focus-visible {
-    outline: 2px solid #00ca51;
+    outline: 2px solid var(--color-success);
     outline-offset: -2px;
   }
   
-  /* ====================================
-     Active Indicator
-     ==================================== */
-  
-  .language-indicator {
-    font-size: 6px;
-    color: #ffbf20;
-    line-height: 1;
-  }
-  
-  .language-label {
-    flex: 1;
-  }
   
   /* ====================================
      Responsive Breakpoints
@@ -1273,33 +1263,25 @@ body {
   /* Tablet (769px - 1024px) */
   @media (min-width: 769px) and (max-width: 1024px) {
     .language-button {
-      width: 44px;
-      height: 44px;
-    }
-    
-    .language-icon {
-      font-size: 20px;
+      width: var(--touch-target-min);
+      height: var(--touch-target-min);
     }
     
     .language-code {
-      font-size: 16px;
+      font-size: var(--font-size-sm);
     }
   }
   
   /* Mobile Portrait (≤768px) */
-  @media (max-width: 768px) and (orientation: portrait) {
+  @media (max-width: 768px) {
     .language-button {
       width: 40px;
       height: 40px;
-      gap: 4px;
-    }
-    
-    .language-icon {
-      font-size: 18px;
+      gap: var(--space-xs);
     }
     
     .language-code {
-      font-size: 14px;
+      font-size: var(--font-size-xs);
     }
     
     .language-dropdown {
@@ -1307,37 +1289,32 @@ body {
     }
     
     .language-item {
-      height: 40px;
-      padding: 10px 12px;
-      font-size: 14px;
+      min-height: 40px;
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--font-size-sm);
     }
   }
   
   /* Mobile Landscape (≤768px) */
   @media (max-width: 768px) and (orientation: landscape) {
     .language-button {
-      width: 36px;
-      height: 36px;
-      gap: 0;
+      width: 40px;
+      height: 40px;
+      gap: var(--space-xs);
     }
     
-    .language-icon {
-      font-size: 20px;
-    }
-    
-    /* Скрываем код языка на мобильном landscape */
     .language-code {
-      display: none;
+      font-size: var(--font-size-xs);
     }
     
     .language-dropdown {
-      width: 80px;
+      width: 100px;
     }
     
     .language-item {
-      height: 36px;
-      padding: 8px 10px;
-      font-size: 14px;
+      min-height: 40px;
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--font-size-xs);
     }
   }
   
@@ -1348,15 +1325,15 @@ body {
   /* Высококонтрастный режим */
   @media (prefers-contrast: high) {
     .language-button {
-      border: 2px solid #333333;
+      outline: 2px solid #6B7280;
     }
     
     .language-dropdown {
-      border: 2px solid #333333;
+      outline: 2px solid var(--color-border);
     }
     
     .language-item.active {
-      background-color: rgba(255, 191, 32, 0.3);
+      background-color: rgba(0, 202, 81, 0.2);
     }
   }
   
@@ -1397,10 +1374,9 @@ body {
    ==================================== */
 
 .start-screen-header {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Tablet */
@@ -1412,7 +1388,7 @@ body {
 }
 
 /* Mobile Portrait */
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
   .start-screen-header {
     top: 16px;
     right: 16px;
@@ -1431,4 +1407,34 @@ body {
 .rules.container {
   position: relative;
   /* остальные стили */
+}
+
+  /* ====================================
+   LOGO
+   ==================================== */
+
+.logo {
+  color: #8CAEC8;
+  background: linear-gradient(135deg, #8CAEC8 0%, #6B7280 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 20px; /* Desktop */
+  font-weight: 700; /* Bold для узнаваемости */
+  letter-spacing: 0.02em; /* Небольшой трекинг */
+  line-height: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .logo {
+    font-size: 18px; /* Mobile */
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .logo {
+    font-size: 16px; /* Mobile landscape */
+  }
 }

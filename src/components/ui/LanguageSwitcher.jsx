@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import './LanguageSwitcher.css';
+import '../../styles/style.css';
+
 
 const LANGUAGES = [
   { code: 'ru', label: 'RU' },
@@ -139,7 +140,6 @@ const LanguageSwitcher = React.memo(() => {
         aria-expanded={isOpen}
         aria-controls="language-menu"
       >
-        <span className="language-icon" aria-hidden="true">🌐</span>
         <span className="language-code">{currentLanguage.toUpperCase()}</span>
       </button>
 
@@ -166,9 +166,6 @@ const LanguageSwitcher = React.memo(() => {
                 onMouseEnter={() => handleMenuItemMouseEnter(index)}
                 onKeyDown={handleKeyDown}
               >
-                {isActive && (
-                  <span className="language-indicator" aria-hidden="true">●</span>
-                )}
                 <span className="language-label">{lang.label}</span>
               </li>
             );

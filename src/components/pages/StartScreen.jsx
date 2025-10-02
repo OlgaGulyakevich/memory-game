@@ -1,24 +1,29 @@
 import React from 'react';
 import { themes } from '../../data/themes';
 import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
+import Logo from '../ui/Logo';
 
 function StartScreen({ onThemeSelect }) {
   const { t } = useTranslation();
   
   return (
-    <main className="rules container">
-      <header>
-        <h1>{t('startScreen.welcome')}</h1>
-        <p>{t('startScreen.subtitle')}</p>
+    <main className="rules container" role="main" aria-label={t('startScreen.welcome')}>
+      <header className="start-screen-header">
+        <Logo />
+        <LanguageSwitcher />
       </header>
+
+      <h1>{t('startScreen.welcome')}</h1>
+      <p>{t('startScreen.subtitle')}</p>
       
       <section className="rules-panel" aria-labelledby="rules-heading">
         <h2 id="rules-heading">{t('startScreen.rulesHeading')}</h2>
-        <ol className="rules-list" role="list">
+        <ul className="rules-list" role="list">
           <li>{t('startScreen.rule1')}</li>
           <li>{t('startScreen.rule2')}</li>
           <li>{t('startScreen.rule3')}</li>
-        </ol>
+        </ul>
       </section>
 
       <section className="themes-selection" aria-labelledby="themes-heading">
