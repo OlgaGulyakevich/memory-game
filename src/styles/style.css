@@ -78,7 +78,25 @@
   /* === Z-index === */
   --z-card-overlay: 1;
   --z-modal: 1000;
+  --z-language-switcher: 1000;
   
+  /* === Language Switcher === */
+  --lang-button-width: 60px;
+  --lang-button-height: 44px;
+  --lang-icon-size: 20px;
+  --lang-dropdown-width: 120px;
+  --lang-text-color: #6B7280;
+  --lang-hover-bg: rgba(255, 255, 255, 0.6);
+  --lang-active-bg: rgba(255, 255, 255, 0.8);
+  
+  /* === Logo === */
+  --color-brand-light: #8CAEC8;
+  --color-brand-dark: #6B7280;
+  
+  /* === Заголовки (Typography Scale) === */
+  --font-size-h1: 40px;
+  --font-size-h2-large: 32px;
+  --font-size-h2-medium: 24px;
   
   /* === Игровые настройки === */
   --game-card-aspect-ratio: 1.375; /* 220:160 */
@@ -140,7 +158,7 @@
   src: url("../../public/fonts/Nunito-Black.woff2") format("woff2");
 }
 
-/* ===== MOBILE VIEWPORT FIXES ===== */
+/* ===== MOBILE VIEWPORT ===== */
 /* Dynamic Viewport Height поддержка для современных браузеров */
 @supports (height: 100dvh) {
   :root {
@@ -239,7 +257,7 @@ body {
 .start-screen-intro h1 {
   margin: 0;
   margin-bottom: var(--space-md);
-  font-size: 40px;
+  font-size: var(--font-size-h1);
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-normal);
 }
@@ -253,7 +271,7 @@ body {
 .rules-heading {
   margin: 0;
   margin-bottom: var(--space-md);
-  font-size: 32px;
+  font-size: var(--font-size-h2-large);
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-normal);
 }
@@ -261,7 +279,7 @@ body {
 .themes-heading {
   margin: 0;
   margin-bottom: var(--space-base);
-  font-size: 24px;
+  font-size: var(--font-size-h2-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
 }
@@ -1186,263 +1204,266 @@ body {
    Language Switcher Component Styles
    ==================================== */
 
-   .language-switcher {
-    position: relative;
-    display: inline-block;
-    z-index: 1000;
-  }
-  
-  /* ====================================
-     Button Styles
-     ==================================== */
-  
-  .language-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
-    width: 60px;
-    height: var(--touch-target-min);
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background-color var(--animation-duration-fast) var(--animation-easing);
-    font-family: var(--font-family);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    color: #6B7280;
-  }
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  z-index: var(--z-language-switcher);
+}
 
-  .language-button::before {
-    content: "";
-    width: 20px;
-    height: 20px;
-    background-image: url("../../public/img/icon-globe.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    filter: invert(47%) sepia(8%) saturate(531%) hue-rotate(182deg) brightness(92%) contrast(88%);
-    /* Фильтр создает цвет #6B7280 */
-  }
+/* ====================================
+   Button Styles
+   ==================================== */
+
+.language-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: var(--lang-button-width);
+  height: var(--lang-button-height);
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--animation-duration-fast) var(--animation-easing);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--lang-text-color);
+}
+
+.language-button::before {
+  content: "";
+  width: var(--lang-icon-size);
+  height: var(--lang-icon-size);
+  background-image: url("../../public/img/icon-globe.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: invert(47%) sepia(8%) saturate(531%) hue-rotate(182deg) brightness(92%) contrast(88%);
+  /* Фильтр создает цвет #6B7280 */
+}
+
+.language-button:hover {
+  background-color: var(--lang-hover-bg);
+}
+
+.language-button:active {
+  background-color: var(--lang-active-bg);
+}
+
+.language-button:focus {
+  outline: none;
+  background-color: var(--lang-hover-bg);
+}
   
-  .language-button:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+.language-button:focus-visible {
+  outline: 2px solid var(--color-success);
+  outline-offset: 2px;
+}
+
+.language-code {
+  font-size: var(--font-size-xs-responsive);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+/* ====================================
+   Dropdown Menu Styles
+   ==================================== */
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: var(--lang-dropdown-width);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--color-white);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 24px var(--color-shadow);
+  animation: dropdownFadeIn var(--animation-duration-fast) var(--animation-easing);
+  overflow: hidden;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
   }
-  
-  .language-button:active {
-    background-color: rgba(255, 255, 255, 0.8);
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
-  
-  .language-button:focus {
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.6);
-  }
-  
-  .language-button:focus-visible {
-    outline: 2px solid var(--color-success);
-    outline-offset: 2px;
+}
+
+/* ====================================
+   Menu Item Styles
+   ==================================== */
+
+.language-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-target-min);
+  padding: var(--space-md) var(--space-base);
+  cursor: pointer;
+  transition: background-color var(--animation-duration-fast) var(--animation-easing);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--lang-text-color);
+  user-select: none;
+}
+
+.language-item:hover,
+.language-item.focused {
+  background-color: rgba(0, 202, 81, 0.08);
+  /* --color-success с прозрачностью */
+}
+
+.language-item:active {
+  background-color: rgba(0, 202, 81, 0.15);
+}
+
+.language-item.active {
+  color: var(--color-success);
+}
+
+.language-item:focus {
+  outline: none;
+  background-color: rgba(0, 202, 81, 0.08);
+}
+
+.language-item:focus-visible {
+  outline: 2px solid var(--color-success);
+  outline-offset: -2px;
+}
+
+/* ====================================
+   Responsive Breakpoints
+   ==================================== */
+
+/* Desktop (>1024px) - Default styles above */
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .language-button {
+    width: 56px;
+    height: 40px;
   }
   
   .language-code {
-    font-size: var(--font-size-xs-responsive);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-tight);
+    font-size: var(--font-size-sm);
   }
-  
-  /* ====================================
-     Dropdown Menu Styles
-     ==================================== */
   
   .language-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 120px;
-    margin: 0;
-    padding: 0px;
-    list-style: none;
-    background-color: var(--color-white);
-    backdrop-filter: blur(8px);
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 4px 24px var(--color-shadow);
-    animation: dropdownFadeIn var(--animation-duration-fast) var(--animation-easing);
-    overflow: hidden;
+    width: 110px;
+  }
+}
+
+/* Mobile Portrait (≤768px) */
+@media (max-width: 768px) {
+  .language-button {
+    width: 52px;
+    height: 40px;
+    gap: var(--space-xs);
   }
   
-  @keyframes dropdownFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-8px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+  .language-code {
+    font-size: 12px;
   }
   
-  /* ====================================
-     Menu Item Styles
-     ==================================== */
+  .language-dropdown {
+    width: 110px;
+  }
   
   .language-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--touch-target-min);
-    padding: var(--space-md) var(--space-base);
-    cursor: pointer;
-    transition: background-color var(--animation-duration-fast) var(--animation-easing);
-    font-family: var(--font-family);
-    font-size: 14px;
-    font-weight: var(--font-weight-bold);
-    color: #6B7280;;
-    user-select: none;
+    min-height: 40px;
+    padding: var(--space-sm) var(--space-base);
+    font-size: 13px;
+  }
+}
+
+/* Mobile Landscape (≤768px) */
+@media (max-width: 768px) and (orientation: landscape) {
+  .language-button {
+    width: 48px;
+    height: 36px;
+    gap: 2px;
   }
   
-  .language-item:hover,
-  .language-item.focused {
-    background-color: rgba(0, 202, 81, 0.08);
-    /* --color-success с прозрачностью */
+  .language-code {
+    font-size: 11px;
   }
   
-  .language-item:active {
-    background-color: rgba(0, 202, 81, 0.15);
+  .language-dropdown {
+    width: 100px;
+  }
+  
+  .language-item {
+    min-height: 36px;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
+  }
+}
+
+/* ====================================
+   Accessibility Enhancements
+   ==================================== */
+
+/* Высококонтрастный режим */
+@media (prefers-contrast: high) {
+  .language-button {
+    outline: 2px solid var(--lang-text-color);
+  }
+  
+  .language-dropdown {
+    outline: 2px solid var(--color-border);
   }
   
   .language-item.active {
-    color: var(--color-success);
+    background-color: rgba(0, 202, 81, 0.2);
   }
-  
-  .language-item:focus {
-    outline: none;
-    background-color: rgba(0, 202, 81, 0.08);
-  }
-  
-  .language-item:focus-visible {
-    outline: 2px solid var(--color-success);
-    outline-offset: -2px;
-  }
-  
-  
-  /* ====================================
-     Responsive Breakpoints
-     ==================================== */
-  
-  /* Desktop (>1024px) - Default styles above */
-  
-  /* Tablet (769px - 1024px) */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .language-button {
-      width: var(--touch-target-min);
-      height: var(--touch-target-min);
-    }
-    
-    .language-code {
-      font-size: var(--font-size-sm);
-    }
-  }
-  
-  /* Mobile Portrait (≤768px) */
-  @media (max-width: 768px) {
-    .language-button {
-      width: 40px;
-      height: 40px;
-      gap: var(--space-xs);
-    }
-    
-    .language-code {
-      font-size: var(--font-size-xs);
-    }
-    
-    .language-dropdown {
-      width: 100px;
-    }
-    
-    .language-item {
-      min-height: 40px;
-      padding: var(--space-sm) var(--space-md);
-      font-size: var(--font-size-sm);
-    }
-  }
-  
-  /* Mobile Landscape (≤768px) */
-  @media (max-width: 768px) and (orientation: landscape) {
-    .language-button {
-      width: 40px;
-      height: 40px;
-      gap: var(--space-xs);
-    }
-    
-    .language-code {
-      font-size: var(--font-size-xs);
-    }
-    
-    .language-dropdown {
-      width: 100px;
-    }
-    
-    .language-item {
-      min-height: 40px;
-      padding: var(--space-sm) var(--space-md);
-      font-size: var(--font-size-xs);
-    }
-  }
-  
-  /* ====================================
-     Accessibility Enhancements
-     ==================================== */
-  
-  /* Высококонтрастный режим */
-  @media (prefers-contrast: high) {
-    .language-button {
-      outline: 2px solid #6B7280;
-    }
-    
-    .language-dropdown {
-      outline: 2px solid var(--color-border);
-    }
-    
-    .language-item.active {
-      background-color: rgba(0, 202, 81, 0.2);
-    }
-  }
-  
-  /* Режим уменьшенной анимации */
-  @media (prefers-reduced-motion: reduce) {
-    .language-button,
-    .language-item {
-      transition: none;
-    }
-    
-    .language-dropdown {
-      animation: none;
-    }
-    
-    .language-button:hover {
-      transform: none;
-    }
-  }
-  
-  /* Touch device optimization */
-  @media (hover: none) and (pointer: coarse) {
-    .language-button:hover {
-      transform: none;
-    }
-    
-    .language-item:hover {
-      background-color: transparent;
-    }
-    
-    /* Увеличиваем touch targets для touch devices */
-    .language-item {
-      min-height: 44px;
-    }
-  }
+}
 
-  /* ====================================
+/* Режим уменьшенной анимации */
+@media (prefers-reduced-motion: reduce) {
+  .language-button,
+  .language-item {
+    transition: none;
+  }
+  
+  .language-dropdown {
+    animation: none;
+  }
+  
+  .language-button:hover {
+    transform: none;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+  .language-button:hover {
+    transform: none;
+  }
+  
+  .language-item:hover {
+    background-color: transparent;
+  }
+  
+  /* Увеличиваем touch targets для touch devices */
+  .language-item {
+    min-height: var(--touch-target-min);
+  }
+}
+
+/* ====================================
    StartScreen Navigation with Logo and Language Switcher
    ==================================== */
 
@@ -1549,13 +1570,13 @@ body {
   position: relative;
 }
 
-  /* ====================================
+/* ====================================
    LOGO
    ==================================== */
 
 .logo {
-  color: #8CAEC8;
-  background: linear-gradient(135deg, #8CAEC8 0%, #6B7280 100%);
+  color: var(--color-brand-light);
+  background: linear-gradient(135deg, var(--color-brand-light) 0%, var(--color-brand-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
