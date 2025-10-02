@@ -63,6 +63,15 @@
     },
     "noResults": "No results yet for this theme. Play to set a record!",
     "yourResult": "Your result",
+    "player1": "Anna",
+    "player2": "Michael",
+    "player3": "Elena",
+    "player4": "Olga",
+    "player5": "Nicholas",
+    "player6": "Adolf",
+    "player7": "Maria",
+    "player8": "Zoya",
+    "player9": "Victor",
     "tryAgain": "Want to try again?",
     "newGameButton": "New game"
   },
@@ -76,5 +85,10 @@
     "ariaExpanded": "Language selection menu {{state}}",
     "opened": "opened",
     "closed": "closed"
+  },
+  "navigation": {
+    "returnHome": "Return to home",
+    "back": "Back",
+    "backToStart": "Back to theme selection"
   }
 }

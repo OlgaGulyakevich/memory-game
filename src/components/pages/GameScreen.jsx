@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import Navigation from '../ui/Navigation';
 import GameHeader from '../ui/GameHeader';
 import GameBoard from '../ui/GameBoard';
 import GameModal from '../ui/GameModal';
@@ -34,6 +35,8 @@ function GameScreen({ images, selectedTheme, onNewGame, onGameFinish }) {
 
   return (
     <main className="game container" role="main" aria-label={t('gameScreen.ariaLabel')}>
+      <Navigation />
+      
       <header className="game-header">
         <GameHeader 
           moves={stepsCount}

@@ -23,8 +23,8 @@ function App() {
   
     if (savedResults.length > 0) {
       setAllResults(savedResults);
-      // Если данных нет, то загружаем из файла
     } else {
+      // Если данных нет, загружаем из файла
       fetch(getAssetPath('data/results.json'))
         .then(response => response.json())
         .then(data => {
@@ -59,7 +59,7 @@ function App() {
   // Обработчик завершения игры
   const handleGameFinish = useCallback((gameData) => {
     const newResult = {
-      name: t('resultScreen.yourResult'),
+      nameKey: 'resultScreen.yourResult',  // Сохраняем ключ перевода, а не перевод!
       stepsCount: gameData.moves,
       errors: gameData.errors,
       timestamp: new Date().toISOString(),

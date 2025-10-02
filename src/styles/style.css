@@ -649,7 +649,10 @@ body {
 }
 
 .result .button {
-  width: min(160px, 100%);
+  width: min(200px, 100%);
+  white-space: nowrap;
+  padding-left: var(--space-base);
+  padding-right: var(--space-base);
 }
 
 .result-footer {
@@ -1573,6 +1576,29 @@ body {
 /* ====================================
    LOGO
    ==================================== */
+
+.logo-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity var(--animation-duration-fast) var(--animation-easing);
+  font: inherit;
+}
+
+.logo-button:hover .logo {
+  opacity: 0.8;
+}
+
+.logo-button:active .logo {
+  opacity: 0.6;
+}
+
+.logo-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
 
 .logo {
   color: var(--color-brand-light);

@@ -1,8 +1,7 @@
 import React from 'react';
 import { themes } from '../../data/themes';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../ui/LanguageSwitcher';
-import Logo from '../ui/Logo';
+import Navigation from '../ui/Navigation';
 
 function StartScreen({ onThemeSelect }) {
   const { t } = useTranslation();
@@ -10,10 +9,7 @@ function StartScreen({ onThemeSelect }) {
   return (
     <main className="rules container" aria-label={t('startScreen.welcome')}>
 
-      <div className="screen-navigation">
-        <Logo />
-        <LanguageSwitcher />
-      </div>
+      <Navigation />
 
       <header className="start-screen-intro">
       <h1>{t('startScreen.welcome')}</h1>

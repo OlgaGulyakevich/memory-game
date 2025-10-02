@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import Navigation from '../ui/Navigation';
 import { themes } from '../../data/themes';
 import { sortResults } from '../../utils/helpers';
 
@@ -28,6 +29,14 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
     return count === 1 ? 'one' : 'many';
   };
 
+  // Получаем отображаемое имя - переводим, если это ключ
+  const getDisplayName = (result) => {
+    if (result.nameKey) {
+      return t(result.nameKey);  // Переводим ключ на текущий язык
+    }
+    return result.name || t('resultScreen.yourResult');  // Fallback для старых результатов
+  };
+
   const combinedResults = useMemo(() => {
     const filteredByTheme = allResults.filter(result => result.theme === selectedTheme);
     const results = [...filteredByTheme];
@@ -52,6 +61,8 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
 
   return (
     <main className="result container" role="main" aria-label={t('resultScreen.ariaLabel')}>
+      <Navigation />
+      
       <header className="result-header">
         <h1 id="result-heading" className="visually-hidden">
         {t('resultScreen.heading', { theme: themeName })}
@@ -89,7 +100,7 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
                   className={`result-table-row ${result.isCurrent ? 'active' : ''}`}
                 >
                   <td>{index + 1}</td>
-                  <td>{result.name}</td>
+                  <td>{getDisplayName(result)}</td>
                   <td>{result.stepsCount}</td>
                 </tr>
               ))}

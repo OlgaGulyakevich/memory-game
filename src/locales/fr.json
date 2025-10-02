@@ -63,6 +63,15 @@
     },
     "noResults": "Aucun résultat pour ce thème pour le moment. Jouez pour établir un record !",
     "yourResult": "Votre résultat",
+    "player1": "Anna",
+    "player2": "Michel",
+    "player3": "Éléna",
+    "player4": "Olga",
+    "player5": "Nicolas",
+    "player6": "Adolphe",
+    "player7": "Marie",
+    "player8": "Zoé",
+    "player9": "Victor",
     "tryAgain": "Voulez-vous réessayer ?",
     "newGameButton": "Nouvelle partie"
   },
@@ -76,5 +85,10 @@
     "ariaExpanded": "Menu de sélection de la langue {{state}}",
     "opened": "ouvert",
     "closed": "fermé"
+  },
+  "navigation": {
+    "returnHome": "Retour à l'accueil",
+    "back": "Retour",
+    "backToStart": "Retour à la sélection du thème"
   }
 }

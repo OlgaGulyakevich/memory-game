@@ -1,12 +1,191 @@
 [
-  {"name": "Ольга", "stepsCount": 9, "theme": "cats"},
-  {"name": "Вася", "stepsCount": 12, "theme": "cars"},
-  {"name": "Петя", "stepsCount": 19, "theme": "flowers"},
-  {"name": "Игорь", "stepsCount": 11, "theme": "cats"},
-  {"name": "Мария", "stepsCount": 15, "theme": "cars"},
-  {"name": "Дмитрий", "stepsCount": 17, "theme": "flowers"},
-  {"name": "Петр", "stepsCount": 12, "theme": "flowers"},
-  {"name": "Зоя", "stepsCount": 14, "theme": "cats"},
-  {"name": "Маша", "stepsCount": 15, "theme": "cars"},
-  {"name": "Денис", "stepsCount": 13, "theme": "flowers"}
+  {
+    "nameKey": "resultScreen.player1",
+    "stepsCount": 9,
+    "errors": 1,
+    "theme": "cats",
+    "timestamp": "2024-01-15T10:30:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player2",
+    "stepsCount": 12,
+    "errors": 2,
+    "theme": "cats",
+    "timestamp": "2024-01-16T14:20:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player3",
+    "stepsCount": 15,
+    "errors": 3,
+    "theme": "cats",
+    "timestamp": "2024-01-17T09:45:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player4",
+    "stepsCount": 8,
+    "errors": 0,
+    "theme": "cats",
+    "timestamp": "2024-01-18T16:10:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player5",
+    "stepsCount": 13,
+    "errors": 2,
+    "theme": "cats",
+    "timestamp": "2024-01-19T11:25:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player6",
+    "stepsCount": 18,
+    "errors": 4,
+    "theme": "cats",
+    "timestamp": "2024-01-20T13:40:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player7",
+    "stepsCount": 10,
+    "errors": 1,
+    "theme": "cats",
+    "timestamp": "2024-01-21T15:55:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player8",
+    "stepsCount": 14,
+    "errors": 3,
+    "theme": "cats",
+    "timestamp": "2024-01-22T12:05:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player9",
+    "stepsCount": 11,
+    "errors": 2,
+    "theme": "cats",
+    "timestamp": "2024-01-23T10:15:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player1",
+    "stepsCount": 10,
+    "errors": 1,
+    "theme": "cars",
+    "timestamp": "2024-01-24T09:30:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player2",
+    "stepsCount": 14,
+    "errors": 3,
+    "theme": "cars",
+    "timestamp": "2024-01-25T14:45:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player3",
+    "stepsCount": 16,
+    "errors": 4,
+    "theme": "cars",
+    "timestamp": "2024-01-26T11:20:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player4",
+    "stepsCount": 9,
+    "errors": 1,
+    "theme": "cars",
+    "timestamp": "2024-01-27T16:35:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player5",
+    "stepsCount": 12,
+    "errors": 2,
+    "theme": "cars",
+    "timestamp": "2024-01-28T10:50:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player6",
+    "stepsCount": 20,
+    "errors": 5,
+    "theme": "cars",
+    "timestamp": "2024-01-29T13:15:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player7",
+    "stepsCount": 11,
+    "errors": 2,
+    "theme": "cars",
+    "timestamp": "2024-01-30T15:40:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player8",
+    "stepsCount": 13,
+    "errors": 2,
+    "theme": "cars",
+    "timestamp": "2024-01-31T12:25:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player9",
+    "stepsCount": 15,
+    "errors": 3,
+    "theme": "cars",
+    "timestamp": "2024-02-01T10:55:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player1",
+    "stepsCount": 11,
+    "errors": 2,
+    "theme": "flowers",
+    "timestamp": "2024-02-02T09:20:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player2",
+    "stepsCount": 13,
+    "errors": 2,
+    "theme": "flowers",
+    "timestamp": "2024-02-03T14:30:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player3",
+    "stepsCount": 17,
+    "errors": 4,
+    "theme": "flowers",
+    "timestamp": "2024-02-04T11:45:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player4",
+    "stepsCount": 10,
+    "errors": 1,
+    "theme": "flowers",
+    "timestamp": "2024-02-05T16:10:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player5",
+    "stepsCount": 14,
+    "errors": 3,
+    "theme": "flowers",
+    "timestamp": "2024-02-06T10:25:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player6",
+    "stepsCount": 19,
+    "errors": 5,
+    "theme": "flowers",
+    "timestamp": "2024-02-07T13:40:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player7",
+    "stepsCount": 12,
+    "errors": 2,
+    "theme": "flowers",
+    "timestamp": "2024-02-08T15:55:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player8",
+    "stepsCount": 15,
+    "errors": 3,
+    "theme": "flowers",
+    "timestamp": "2024-02-09T12:10:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player9",
+    "stepsCount": 16,
+    "errors": 4,
+    "theme": "flowers",
+    "timestamp": "2024-02-10T10:30:00.000Z"
+  }
 ]
