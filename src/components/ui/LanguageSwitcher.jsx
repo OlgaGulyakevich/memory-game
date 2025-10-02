@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../utils/i18n';
 import '../../styles/style.css';
 
 
@@ -10,7 +11,7 @@ const LANGUAGES = [
 ];
 
 const LanguageSwitcher = React.memo(() => {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
@@ -54,7 +55,7 @@ const LanguageSwitcher = React.memo(() => {
     if (buttonRef.current) {
       buttonRef.current.focus();
     }
-  }, [i18n]);
+  }, []);
 
   // Переключение открытия/закрытия dropdown
   const handleToggle = useCallback(() => {
