@@ -8,29 +8,32 @@ function StartScreen({ onThemeSelect }) {
   const { t } = useTranslation();
   
   return (
-    <main className="rules container" role="main" aria-label={t('startScreen.welcome')}>
-      <header className="start-screen-header">
+    <main className="rules container" aria-label={t('startScreen.welcome')}>
+
+      <div className="screen-navigation">
         <Logo />
         <LanguageSwitcher />
-      </header>
+      </div>
 
+      <header className="start-screen-intro">
       <h1>{t('startScreen.welcome')}</h1>
       <p>{t('startScreen.subtitle')}</p>
+      </header>
+
       
       <section className="rules-panel" aria-labelledby="rules-heading">
         <h2 id="rules-heading">{t('startScreen.rulesHeading')}</h2>
-        <ul className="rules-list" role="list">
+        <ol className="rules-list">
           <li>{t('startScreen.rule1')}</li>
           <li>{t('startScreen.rule2')}</li>
           <li>{t('startScreen.rule3')}</li>
-        </ul>
+        </ol>
       </section>
 
       <section className="themes-selection" aria-labelledby="themes-heading">
-        <h3 id="themes-heading">{t('startScreen.themesHeading')}</h3>
+        <h2 id="themes-heading">{t('startScreen.themesHeading')}</h2>
         <nav 
           className="theme-buttons" 
-          role="navigation" 
           aria-label={t('startScreen.themesAriaLabel')}
         >
           {Object.entries(themes).map(([key, theme]) => (

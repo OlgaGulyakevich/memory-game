@@ -239,7 +239,6 @@ body {
   margin: 0;
   margin-bottom: var(--space-md);
   font-weight: var(--font-weight-black);
-  font-size: var(--font-size-2xl);
   line-height: var(--line-height-normal);
 }
 
@@ -1373,7 +1372,7 @@ body {
    StartScreen Header with Language Switcher
    ==================================== */
 
-.start-screen-header {
+.screen-navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
