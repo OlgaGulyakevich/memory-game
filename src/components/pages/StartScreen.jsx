@@ -22,7 +22,7 @@ function StartScreen({ onThemeSelect }) {
 
       
       <section className="rules-panel" aria-labelledby="rules-heading">
-        <h2 id="rules-heading">{t('startScreen.rulesHeading')}</h2>
+        <h2 className="rules-heading" id="rules-heading">{t('startScreen.rulesHeading')}</h2>
         <ol className="rules-list">
           <li>{t('startScreen.rule1')}</li>
           <li>{t('startScreen.rule2')}</li>
@@ -31,7 +31,7 @@ function StartScreen({ onThemeSelect }) {
       </section>
 
       <section className="themes-selection" aria-labelledby="themes-heading">
-        <h2 id="themes-heading">{t('startScreen.themesHeading')}</h2>
+        <h2 className="themes-heading" id="themes-heading">{t('startScreen.themesHeading')}</h2>
         <nav 
           className="theme-buttons" 
           aria-label={t('startScreen.themesAriaLabel')}
