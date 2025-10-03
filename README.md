@@ -254,6 +254,6 @@ This project demonstrates:
 
 **Built with ❤️ using React 19 and modern web standards**
 
-[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://www.linkedin.com/in/olga-gulyakevich-ab166674/) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com) • [🛠️ Tech Stack Details](TECH_STACK.md)
+[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://www.linkedin.com/in/olga-gulyakevich-ab166674/) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com) • [🛠️ Tech Stack Details](public/docs/TECH_STACK.md)
 
 </div>
