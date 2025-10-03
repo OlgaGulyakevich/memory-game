@@ -1,6 +1,6 @@
-# 🎨 Future Enhancements (Roadmap)
+# 🗺️ Future Enhancements Roadmap
 
-> This document outlines planned features and improvements for the Memory Game project. 
+> Planned features and improvements for the Memory Game project
 
 - 🔄 **TypeScript migration** for type safety
 - 🔄 **Unit testing** with Jest and React Testing Library
