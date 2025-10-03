@@ -25,7 +25,7 @@
 
 <video src="file:///Users/olgagulakevic/Desktop/html-academy/memory-game/public/img/screenshots/gameplay-screenshot.mp4" width="800" controls></video>
 
-*Note: If video doesn't play, [view it here](public/img/screenshots/gameplay-demo.mp4)*
+*Note: If video doesn't play, [view it here](public/img/screenshots/gameplay-screenshot.mp4)*
 
 ### 📱 Mobile Responsive Design
 
@@ -33,11 +33,11 @@
 <tr>
 <td width="50%">
   <img src="public/img/screenshots/mobile-responsive-1.jpg" alt="Mobile Portrait" width="100%">
-  <p align="center"><em>Portrait Mode</em></p>
+  <p align="center"><em>Home Screen (Mobile Portrait)</em></p>
 </td>
 <td width="50%">
   <img src="public/img/screenshots/mobile-responsive-2.jpg" alt="Mobile Portrait" width="100%">
-  <p align="center"><em>Landscape Mode</em></p>
+  <p align="center"><em>In-Game Screen (Portrait)</em></p>
 </td>
 </tr>
 </table>
