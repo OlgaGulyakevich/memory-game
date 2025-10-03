@@ -60,6 +60,7 @@
   --space-4xl: 48px;
   --space-5xl: 56px;
   --space-6xl: 72px;
+
   
   /* === Размеры === */
   --container-max-width: 940px;
@@ -67,7 +68,7 @@
   --button-height: 48px;
   --card-width: 220px;
   --card-min-width: 180px;
-  --progress-height: 16px;
+  --progress-height: 12px;
   
   /* === Border Radius === */
   --radius-sm: 5px;
@@ -248,29 +249,29 @@ body {
 
 /* ===== РАЗДЕЛ: Правила игры ===== */
 .rules {
-  padding-top: var(--space-3xl);
-  padding-bottom: var(--space-3xl);
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-base);
   text-align: center;
 }
 
 /* Заголовки StartScreen */
 .start-screen-intro h1 {
   margin: 0;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
   font-size: var(--font-size-h1);
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-normal);
 }
 
 .start-screen-intro p {
-  margin: 0;
+  margin-bottom: var(--space-lg);
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
 }
 
 .rules-heading {
   margin: 0;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
   font-size: var(--font-size-h2-large);
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-normal);
@@ -278,7 +279,7 @@ body {
 
 .themes-heading {
   margin: 0;
-  margin-bottom: var(--space-base);
+  margin-bottom: var(--space-xl);
   font-size: var(--font-size-h2-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
@@ -291,8 +292,8 @@ body {
 
 .rules-panel {
   width: min(520px, 100%);
-  margin: calc(var(--space-2xl) + var(--space-xs)) auto var(--space-3xl);
-  padding: var(--space-xl) var(--space-2xl) calc(var(--space-2xl) + var(--space-xs));
+  margin: var(--space-xl) auto var(--space-2xl);
+  padding: var(--space-base) var(--space-xl) var(--space-base);
   background-color: var(--color-white);
   box-shadow: 0 5px 20px var(--color-shadow);
   border-radius: var(--radius-md);
@@ -315,7 +316,7 @@ body {
 }
 
 .rules-list li:not(:last-child) {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-base);
 }
 
 .rules-list li::before {
@@ -353,26 +354,31 @@ body {
 .game {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  gap: var(--space-lg);
-  padding-top: var(--space-3xl);
-  margin-bottom: 155px;
+  /* grid-template-rows: auto 1fr; */
+  /* gap: var(--space-base); */
+  padding-top: var(--space-sm);
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .game-header {
   display: grid;
   grid-template-columns: minmax(280px, 460px) auto 1fr;
   align-items: center;
-  gap: var(--space-3xl) var(--space-lg);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-xl);
+  max-height: 52px;
 }
 
 .game-board-section {
   width: 100%;
+  margin-bottom: var(--space-3xl);
 }
 
 .game-board-section .cards {
   grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), var(--card-width)));
-  gap: var(--game-card-gap);
+  gap: var(--space-base);
   justify-content: center;
   max-width: var(--container-max-width);
   margin: 0 auto;
@@ -396,16 +402,16 @@ body {
 
 .progress-description {
   margin: 0 auto;
-  font-size: var(--font-size-sm);
-  line-height: calc(var(--font-size-sm) * 1.375);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
 }
 
 .steps {
   justify-self: end;
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--space-xs) var(--space-base);
   font-weight: var(--font-weight-black);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
   color: var(--color-white);
   background-color: var(--color-success);
   border-radius: var(--radius-lg);
@@ -589,9 +595,9 @@ body {
 
 /* ===== РЕЗУЛЬТАТЫ ===== */
 .result {
-  padding-top: var(--space-3xl);
   padding-bottom: var(--space-3xl);
   text-align: center;
+  margin-bottom: var(--space-3xl);
 }
 
 .result h2 {
@@ -762,9 +768,10 @@ body {
   /* Игровая область */
   .game {
     grid-template-columns: 1fr;
-    gap: var(--space-base);
-    padding: var(--space-lg) 0;
-    margin-bottom: var(--space-3xl);
+    /* gap: var(--space-sm); */
+    padding: var(--space-sm) 0;
+    padding-bottom: var(--space-base);
+    margin-bottom: var(--space-base);
     min-height: 0;
   }
 
@@ -784,7 +791,7 @@ body {
     gap: var(--space-mobile-base);
     padding: var(--space-mobile-base);
     text-align: center;
-    margin-bottom: var(--space-mobile-sm);
+    margin-bottom: var(--space-3xl);
   }
   
   .game-header .progress-wrapper {
@@ -800,6 +807,9 @@ body {
     justify-self: center;
   }
 
+  .result-header {
+    margin: auto;
+  }
   
   .progress-wrapper {
     width: 100%;
@@ -973,7 +983,7 @@ body {
   /* Общие отступы */
   .rules,
   .result {
-    padding: var(--space-lg) 0;
+    padding: var(--space-sm) 0;
   }
   
   .rules-panel {
@@ -1068,8 +1078,8 @@ body {
   }
   
   .game {
-    gap: var(--space-sm);
-    padding: var(--space-md) 0;
+    gap: var(--space-xs);
+    padding: var(--space-xs) 0;
   }
 }
 
@@ -1114,9 +1124,10 @@ body {
 
   /* Компактная игровая область */
   .game {
-    gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    margin-bottom: var(--space-base);
+    gap: var(--space-xs);
+    padding: var(--space-xs) 0;
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
   }
 }
 
@@ -1474,13 +1485,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-xl);
-  padding: var(--space-base) 0;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-xl);
 }
 
 .start-screen-intro {
   text-align: center;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-sm);
 }
 
 /* ====================================
@@ -1490,8 +1501,8 @@ body {
 /* Tablet (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
   .screen-navigation {
-    margin-bottom: var(--space-lg);
-    padding: var(--space-md) 0;
+    margin-bottom: var(--space-base);
+    padding: var(--space-xs) 0;
   }
   
   .language-button {
@@ -1508,11 +1519,11 @@ body {
 @media (max-width: 768px) {
   .screen-navigation {
     margin-bottom: var(--space-base);
-    padding: var(--space-sm) 0;
+    padding: var(--space-xs) 0;
   }
   
   .start-screen-intro {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-xs);
   }
   
   .language-button {
@@ -1539,12 +1550,12 @@ body {
 /* Mobile Landscape (≤768px) */
 @media (max-width: 768px) and (orientation: landscape) {
   .screen-navigation {
-    margin-bottom: var(--space-sm);
-    padding: var(--space-xs) 0;
+    margin-bottom: 2px;
+    padding: 0;
   }
   
   .start-screen-intro {
-    margin-bottom: var(--space-base);
+    margin-bottom: var(--space-xs);
   }
   
   .language-button {
