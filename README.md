@@ -9,12 +9,6 @@
 
 <div align="center">
 
-![View Demo]<video src="public/img/screenshots/gameplay-screenshot.mp4" width="1000" controls autoplay loop muted></video> 
-
-![Game Preview](public/img/screenshots/game-previw.jpg)
-![Game Preview](public/img/screenshots/mobile-responsive-1.jpg)
-![Game Preview](public/img/screenshots/mobile-responsive-2.jpg)
-
 **[🎮 Play Game](https://olgagulyakevich.github.io/memory-game/)** • **[📖 Documentation](https://github.com/OlgaGulyakevich/memory-game#features)** • **[🐛 Report Bug](https://github.com/OlgaGulyakevich/memory-game/issues)**
 
 </div>
@@ -166,6 +160,11 @@ src/
 - react-i18next for internationalization
 - Webpack 5 with optimizations
 - CSS3 with custom properties
+
+**📖 Detailed Documentation:**
+- [Tech Stack Overview](public/docs/TECH_STACK.md)
+- [Architecture Decisions](public/docs/ARCHITECTURE.md)
+- [Future Roadmap](public/docs/ROADMAP.md)
 
 <details>
 <summary><b>💡 Code Quality Example — Custom Hook Architecture</b></summary>
