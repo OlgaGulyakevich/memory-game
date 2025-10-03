@@ -51,6 +51,7 @@ export const sortResults = (results) => {
 };
 
 // Функция для вычисления размера карточки и количества колонок
+// Функция для вычисления размера карточки и количества колонок
 export const useCardSize = () => {
   const [layoutConfig, setLayoutConfig] = useState({
     cardSize: null,
@@ -73,18 +74,17 @@ export const useCardSize = () => {
           const bottomMargin = 10;
           const topPadding = 10;
           const gapSize = Math.min(6, vw * 0.015);
-          const verticalGaps = 1 * gapSize; // 1 gaps между 2 рядами
-          const horizontalGaps = 5 * gapSize; // 5 gaps между 6 колонками
+          const verticalGaps = 1 * gapSize;
+          const horizontalGaps = 5 * gapSize;
           
           const availableHeight = vh - headerHeight - bottomMargin - topPadding - verticalGaps;
-          const maxCardHeight = availableHeight / 2; // 2 ряда
+          const maxCardHeight = availableHeight / 2;
           
           const sidePadding = 15;
           const availableWidth = vw - (sidePadding * 2) - horizontalGaps;
-          const maxCardWidth = availableWidth / 6; // 6 колонки
+          const maxCardWidth = availableWidth / 6;
           
           const size = Math.min(maxCardHeight, maxCardWidth);
-          // const finalSize = Math.max(Math.min(size, 80), 50);
           const finalSize = Math.max(Math.min(size, 120), 70);
           
           setLayoutConfig({
@@ -94,22 +94,27 @@ export const useCardSize = () => {
           });
         } else {
           // PORTRAIT: 3 колонки × 4 ряда
-          const headerHeight = 90;
-          const bottomMargin = 20;
-          const topPadding = 15;
-          const gapSize = Math.min(8, vw * 0.01);
-          const totalGaps = 3 * gapSize; // 3 gaps между 4 рядами
+          // ✅ ИСПРАВЛЕНИЕ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ
+          const navigationHeight = vw <= 375 ? 50 : 80;
+          const headerHeight = vw <= 375 ? 60 : 90;
+          const bottomMargin = vw <= 375 ? 12 : 20;
+          const topPadding = vw <= 375 ? 4 : 15;
+          const gapSize = vw <= 375 ? 4 : Math.min(8, vw * 0.01);
+          const totalGaps = 3 * gapSize;
           
-          const availableHeight = vh - headerHeight - bottomMargin - topPadding - totalGaps;
-          const maxCardHeight = availableHeight / 4; // 4 ряда
+          const availableHeight = vh - navigationHeight - headerHeight - bottomMargin - topPadding - totalGaps;
+          const maxCardHeight = availableHeight / 4;
           
-          const sidePadding = 20;
-          const horizontalGaps = 2 * gapSize; // 2 gaps между 3 колонками
+          const sidePadding = vw <= 375 ? 12 : 20;
+          const horizontalGaps = 2 * gapSize;
           const availableWidth = vw - (sidePadding * 2) - horizontalGaps;
-          const maxCardWidth = availableWidth / 3; // 3 колонки
+          const maxCardWidth = availableWidth / 3;
           
           const size = Math.min(maxCardHeight, maxCardWidth);
-          const finalSize = Math.max(Math.min(size, 120), 110);
+          // ✅ Уменьшаем минимальный размер для очень маленьких экранов
+          const minSize = vw <= 360 ? 85 : (vw <= 375 ? 95 : 110);
+          const maxSize = vw <= 375 ? 105 : 120;
+          const finalSize = Math.max(Math.min(size, maxSize), minSize);
           
           setLayoutConfig({
             cardSize: finalSize,

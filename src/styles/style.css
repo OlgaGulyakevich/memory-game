@@ -1410,7 +1410,20 @@ body {
   .language-item {
     min-height: 40px;
     padding: var(--space-sm) var(--space-base);
-    font-size: 13px;
+    font-size: 12px;
+  }
+}
+
+/* Очень маленькие экраны: ≤375px */
+@media (max-width: 375px) {
+  .language-dropdown {
+    width: 90px;
+    max-height: 168px; 
+  }
+  
+  .language-item {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
   }
 }
 
@@ -1436,6 +1449,8 @@ body {
     font-size: 12px;
   }
 }
+
+
 
 /* ====================================
    Accessibility Enhancements
@@ -1655,3 +1670,246 @@ body {
     font-size: var(--font-size-xs);
   }
 }
+
+/* =====================================================
+   FIX: Вертикальный скролл на экранах ≤375px
+   ===================================================== */
+
+/* Очень маленькие экраны: ≤375px */
+@media (max-width: 375px) {
+  /* Адаптивные переменные */
+  :root {
+    --game-header-height: clamp(55px, 10vh, 70px);
+    --navigation-height: clamp(45px, 8vh, 60px);
+    --card-gap: clamp(3px, 0.8vw, 6px);
+  }
+  
+  /* Scroll optimization */
+  html, 
+  body {
+    overscroll-behavior-y: none;
+  }
+  
+  .game.container {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Компактная навигация */
+  .screen-navigation {
+    margin-bottom: var(--space-xs);
+    padding: var(--space-xs) 0;
+    min-height: var(--navigation-height);
+  }
+  
+  /* Компактный game header */
+  .game-header {
+    padding: var(--space-xs) var(--space-sm);
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+    max-height: var(--game-header-height);
+  }
+  
+  .progress-wrapper {
+    height: 8px;
+    margin-bottom: 4px;
+  }
+  
+  .progress-description {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+  
+  .steps {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 13px;
+  }
+  
+  /* Оптимизация карточек */
+  .cards {
+    gap: var(--card-gap);
+    margin-bottom: var(--space-sm);
+  }
+  
+  .card {
+    aspect-ratio: 1.35 / 1;
+  }
+  
+  /* Компактный игровой контейнер */
+  .game {
+    padding: var(--space-xs) 0;
+    gap: var(--space-xs);
+    margin-bottom: 0;
+  }
+  
+  .game-board-section {
+    margin-bottom: var(--space-sm);
+    touch-action: pan-y;
+  }
+}
+
+/* Экстра маленькие: ≤360px */
+@media (max-width: 360px) {
+  :root {
+    --game-header-height: clamp(50px, 9vh, 60px);
+    --navigation-height: clamp(40px, 7vh, 50px);
+    --card-gap: 3px;
+  }
+  
+  .screen-navigation {
+    margin-bottom: 2px;
+    padding: 2px 0;
+  }
+  
+  .game-header {
+    padding: 2px var(--space-xs);
+    gap: 2px;
+    margin-bottom: var(--space-xs);
+  }
+  
+  .progress-wrapper {
+    height: 6px;
+  }
+  
+  .progress-description {
+    font-size: 10px;
+  }
+  
+  .steps {
+    padding: 2px var(--space-xs);
+    font-size: 12px;
+  }
+  
+  .cards {
+    gap: 3px;
+    margin-bottom: var(--space-xs);
+  }
+  
+  .game {
+    padding: 2px 0;
+    gap: 2px;
+  }
+}
+
+/* =====================================================
+   FIX: Вертикальный скролл на StartScreen ≤375px
+   ===================================================== */
+
+   @media (max-width: 375px) {
+    /* Компактная структура StartScreen */
+    .rules {
+      padding-top: var(--space-xs); /* 4px вместо 20px */
+      padding-bottom: var(--space-xs);
+    }
+    
+    .screen-navigation {
+      margin-bottom: 2px; /* Минимальный отступ */
+      padding: 2px 0;
+    }
+    
+    .start-screen-intro {
+      margin-bottom: var(--space-xs); /* 4px вместо 8px */
+    }
+    
+    .start-screen-intro h1 {
+      margin-bottom: var(--space-sm); /* 8px вместо 20px */
+      font-size: 26px;
+      line-height: 1.2;
+    }
+    
+    .start-screen-intro p {
+      margin-bottom: var(--space-sm); /* 8px вместо 20px */
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    
+    .rules-panel {
+      margin: var(--space-sm) auto var(--space-md); /* 8px вместо 24px и 12px вместо 32px */
+      padding: var(--space-sm) var(--space-base); /* 8px 16px вместо 16px 24px */
+    }
+    
+    .rules-heading {
+      margin-bottom: var(--space-sm); /* 8px вместо 20px */
+      font-size: 20px;
+    }
+    
+    .rules-list li {
+      font-size: 12px;
+      line-height: 1.3;
+      gap: var(--space-sm); /* 8px вместо 16px */
+    }
+    
+    .rules-list li:not(:last-child) {
+      margin-bottom: var(--space-sm); /* 8px вместо 16px */
+    }
+    
+    .themes-selection {
+      margin-top: var(--space-sm); /* 8px */
+    }
+    
+    .themes-heading {
+      margin-bottom: var(--space-md); /* 12px вместо 24px */
+      font-size: 18px;
+    }
+    
+    .theme-buttons {
+      gap: var(--space-sm); /* 8px вместо 12px */
+      max-width: 260px; /* Компактнее */
+    }
+    
+    .theme-buttons .ico-button {
+      text-align: center;
+      background-position: left var(--space-lg) center; /* 20px для иконки */
+      font-size: var(--font-size-xs-responsive);
+      min-height: 40px; /* Вместо 44px */
+    }
+  }
+  
+  /* Экстра маленькие: ≤360px */
+  @media (max-width: 360px) {
+    .start-screen-intro h1 {
+      font-size: 24px;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .start-screen-intro p {
+      font-size: 13px;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .rules-panel {
+      margin: var(--space-xs) auto var(--space-sm);
+      padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .rules-heading {
+      font-size: 18px;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .rules-list li {
+      font-size: 11px;
+      gap: var(--space-xs);
+    }
+    
+    .rules-list li:not(:last-child) {
+      margin-bottom: var(--space-xs);
+    }
+    
+    .themes-heading {
+      font-size: 16px;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .theme-buttons {
+      gap: var(--space-xs);
+      max-width: 240px;
+    }
+    
+    .theme-buttons .ico-button {
+      text-align: center;
+      background-position: left var(--space-base) center; /* 16px для иконки */
+      font-size: var(--font-size-xs-responsive);
+      min-height: 38px;
+    }
+  }
