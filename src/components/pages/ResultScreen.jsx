@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import Navigation from '../ui/Navigation';
 import { themes } from '../../data/themes';
 import { sortResults } from '../../utils/helpers';
+import { getPlural } from '../../utils/pluralization';
 
 function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
   const { t, i18n } = useTranslation();
   
-  // Функция для правильного склонения слова "шаг"
+  // Function to correctly declension the word "step"
   const getStepsWord = (count) => {
     return t('resultScreen.steps', { 
       count, 
@@ -15,26 +16,12 @@ function ResultScreen({ currentResult, allResults, onNewGame, selectedTheme }) {
     });
   };
 
-  // Вспомогательная функция для определения правильной формы множественного числа
-  const getPlural = (count, language) => {
-    if (language === 'ru') {
-      const mod10 = count % 10;
-      const mod100 = count % 100;
-      if (mod100 >= 11 && mod100 <= 19) return 'many';
-      if (mod10 === 1) return 'one';
-      if (mod10 >= 2 && mod10 <= 4) return 'few';
-      return 'many';
-    }
-    // Для английского и французского
-    return count === 1 ? 'one' : 'many';
-  };
-
-  // Получаем отображаемое имя - переводим, если это ключ
+  // Get the display name - translate if it is a key
   const getDisplayName = (result) => {
     if (result.nameKey) {
-      return t(result.nameKey);  // Переводим ключ на текущий язык
+      return t(result.nameKey);  // Translate the key to the current language
     }
-    return result.name || t('resultScreen.yourResult');  // Fallback для старых результатов
+    return result.name || t('resultScreen.yourResult');  // Fallback for old results
   };
 
   const combinedResults = useMemo(() => {

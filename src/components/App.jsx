@@ -10,21 +10,26 @@ import { useTranslation } from 'react-i18next';
 
 function App() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentResult, setCurrentResult] = useState(null);
   const [allResults, setAllResults] = useState([]);
   const [gameImages, setGameImages] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState('cats');
   
-  // Загружаем результаты при монтировании
+  // Dynamic lang attribute for SEO and accessibility
   useEffect(() => {
-    // Сначала проверяем в localStorage
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
+  
+  // Load results on mount
+  useEffect(() => {
+    // First check in localStorage
     const savedResults = getFromStorage('gameResults', []);
   
     if (savedResults.length > 0) {
       setAllResults(savedResults);
     } else {
-      // Если данных нет, загружаем из файла
+      // If no data, load from file
       fetch(getAssetPath('data/results.json'))
         .then(response => response.json())
         .then(data => {
@@ -35,7 +40,7 @@ function App() {
     }
   }, []);
 
-  // Предзагрузка изображений выбранной темы
+  // Preload images for selected theme
   const preloadThemeImages = useCallback((theme) => {
     const images = getImages(theme);
     images.forEach(image => {
@@ -44,22 +49,22 @@ function App() {
     });
   }, []);
 
-  // Обработчик выбора темы и начала игры
+  // Handler for theme selection and game start
   const handleThemeSelect = useCallback((theme) => {
     setSelectedTheme(theme);
     const images = getImages(theme);
     setGameImages(images);
     
-    // Предзагружаем изображения для плавности игры
+    // Preload images for smooth gameplay
     preloadThemeImages(theme);
     
     navigate('/game');
   }, [navigate, preloadThemeImages]);
 
-  // Обработчик завершения игры
+  // Handler for game finish
   const handleGameFinish = useCallback((gameData) => {
     const newResult = {
-      nameKey: 'resultScreen.yourResult',  // Сохраняем ключ перевода, а не перевод!
+      nameKey: 'resultScreen.yourResult',  // Save translation key, not translation!
       stepsCount: gameData.moves,
       errors: gameData.errors,
       timestamp: new Date().toISOString(),
@@ -75,7 +80,7 @@ function App() {
     navigate('/results');
   }, [allResults, selectedTheme, navigate]);
 
-  // Обработчик новой игры
+  // Handler for new game
   const handleNewGame = useCallback(() => {
     setCurrentResult(null);
     navigate('/start');

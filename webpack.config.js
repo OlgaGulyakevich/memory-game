@@ -31,27 +31,27 @@ module.exports = (env, argv) => {
         minSize: 20000,
         maxSize: 244000,
         cacheGroups: {
-          // React отдельно
+          // React separately
           react: {
             test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
             name: 'react-vendor',
             priority: 20,
             enforce: true,
           },
-          // React Router отдельно
+          // React Router separately
           router: {
             test: /[\\/]node_modules[\\/](react-router|react-router-dom|@remix-run)[\\/]/,
             name: 'router-vendor',
             priority: 15,
             enforce: true,
           },
-          // Остальные vendor библиотеки
+          // Other vendor libraries
           vendors: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             priority: 10,
           },
-         // Общий код приложения
+         // Common code of the application
           common: {
             minChunks: 2,
             priority: 5,
@@ -166,7 +166,7 @@ module.exports = (env, argv) => {
         ],
       }),
 
-      // Bundle analyzer для анализа размера
+      // Bundle analyzer for analyzing the size
       ...(env && env.analyze ? [
         new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
       ] : []),

@@ -1,14 +1,7 @@
 export const GAME_SETTINGS = {
-  FLIP_DELAY: 900,           // Задержка закрытия карточек
-  SHUFFLE_CARDS: true,        // Перемешивание при старте
-  DEBUG_MODE: false,          // Режим отладки
-  LIVES_COUNT: 300,          // Количество жизней (большое значение для соответствия ТЗ)
-  THEMES: ['flowers', 'cats', 'cars']  // Доступные темы
-};
-
-// Экраны приложения
-export const SCREENS = {
-  START: 'start',
-  GAME: 'game',
-  RESULTS: 'results'
+  FLIP_DELAY: 900,           // Card flip delay
+  SHUFFLE_CARDS: true,        // Shuffle cards at start
+  DEBUG_MODE: false,          // Debug mode
+  LIVES_COUNT: 300,          // Number of lives (large value to match TZ)
+  THEMES: ['flowers', 'cats', 'cars']  // Available themes
 };

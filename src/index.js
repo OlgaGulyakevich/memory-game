@@ -8,7 +8,7 @@ require('./styles/style.css');
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-// Определяем basename в зависимости от окружения
+// Define basename depending on the environment
 const basename = process.env.PUBLIC_URL || '';
 
 root.render(

@@ -21,7 +21,7 @@ const GameHeader = React.memo(({ moves, progress, remainingLives, matchedPairs, 
         {t('gameScreen.progress.description')} <span>{matchedPairs}</span> {t('gameScreen.progress.of')} <span>{totalPairs}</span>
       </p>
       <div className="steps">{t('gameScreen.steps', { count: moves })}</div>
-      {/* Система жизней готова к активации */}
+      {/* Life system ready to activate */}
       {/* <div className="lives">{t('gameScreen.lives', { count: remainingLives })}</div> */}
     </>
   );
