@@ -35,20 +35,6 @@
     "timestamp": "2024-01-24T09:30:00.000Z"
   },
   {
-    "nameKey": "resultScreen.player2",
-    "stepsCount": 14,
-    "errors": 3,
-    "theme": "cars",
-    "timestamp": "2024-01-25T14:45:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player3",
-    "stepsCount": 16,
-    "errors": 4,
-    "theme": "cars",
-    "timestamp": "2024-01-26T11:20:00.000Z"
-  },
-  {
     "nameKey": "resultScreen.player4",
     "stepsCount": 9,
     "errors": 1,
@@ -63,18 +49,18 @@
     "timestamp": "2024-01-28T10:50:00.000Z"
   },
   {
-    "nameKey": "resultScreen.player6",
-    "stepsCount": 20,
-    "errors": 5,
-    "theme": "cars",
-    "timestamp": "2024-01-29T13:15:00.000Z"
-  },
-  {
     "nameKey": "resultScreen.player9",
     "stepsCount": 15,
     "errors": 3,
     "theme": "cars",
     "timestamp": "2024-02-01T10:55:00.000Z"
+  },
+  {
+    "nameKey": "resultScreen.player2",
+    "stepsCount": 14,
+    "errors": 3,
+    "theme": "cars",
+    "timestamp": "2024-01-25T14:45:00.000Z"
   },
   {
     "nameKey": "resultScreen.player3",
