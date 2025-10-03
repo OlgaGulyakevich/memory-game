@@ -366,7 +366,7 @@ body {
   grid-template-columns: minmax(280px, 460px) auto 1fr;
   align-items: center;
   gap: var(--space-xl);
-  margin-bottom: var(--space-xl);
+  /* margin-bottom: var(--space-xl); */
   padding: var(--space-xl);
   max-height: 52px;
 }
