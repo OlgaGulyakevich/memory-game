@@ -8,8 +8,39 @@
 [![Bundle](https://img.shields.io/badge/Bundle-115KB-success?style=for-the-badge)](https://github.com/OlgaGulyakevich/memory-game)
 
 <div align="center">
+  
+![Game Preview](public/img/screenshots/game-preview.jpg)
 
-**[🎮 Play Game](https://olgagulyakevich.github.io/memory-game/)** • **[📖 Documentation](https://github.com/OlgaGulyakevich/memory-game#features)** • **[🐛 Report Bug](https://github.com/OlgaGulyakevich/memory-game/issues)**
+**[🎮 Play Game](https://olgagulyakevich.github.io/memory-game/)** • **[📖 Documentation](https://github.com/OlgaGulyakevich/memory-game#-features-deep-dive)** • **[🐛 Report Bug](https://github.com/OlgaGulyakevich/memory-game/issues)**
+
+</div>
+
+---
+
+<div align="center">
+  
+![Game Preview](public/img/screenshots/game-preview.jpg)
+
+### 🎬 Gameplay Demo
+
+<video src="file:///Users/olgagulakevic/Desktop/html-academy/memory-game/public/img/screenshots/gameplay-screenshot.mp4" width="800" controls></video>
+
+*Note: If video doesn't play, [view it here](public/img/screenshots/gameplay-demo.mp4)*
+
+### 📱 Mobile Responsive Design
+
+<table>
+<tr>
+<td width="50%">
+  <img src="public/img/screenshots/mobile-responsive-1.jpg" alt="Mobile Portrait" width="100%">
+  <p align="center"><em>Portrait Mode</em></p>
+</td>
+<td width="50%">
+  <img src="public/img/screenshots/mobile-responsive-2.jpg" alt="Mobile Portrait" width="100%">
+  <p align="center"><em>Landscape Mode</em></p>
+</td>
+</tr>
+</table>
 
 </div>
 
@@ -161,11 +192,6 @@ src/
 - Webpack 5 with optimizations
 - CSS3 with custom properties
 
-**📖 Detailed Documentation:**
-- [Tech Stack Overview](public/docs/TECH_STACK.md)
-- [Architecture Decisions](public/docs/ARCHITECTURE.md)
-- [Future Roadmap](public/docs/ROADMAP.md)
-
 <details>
 <summary><b>💡 Code Quality Example — Custom Hook Architecture</b></summary>
 
@@ -254,6 +280,6 @@ This project demonstrates:
 
 **Built with ❤️ using React 19 and modern web standards**
 
-[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://www.linkedin.com/in/olga-gulyakevich-ab166674/) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com) • [🛠️ Tech Stack Details](public/docs/TECH_STACK.md)
+[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://linkedin.com/in/olga-gulyakevich) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com) • [🛠️ Tech Stack Details](public/docs/TECH_STACK.md)
 
 </div>
