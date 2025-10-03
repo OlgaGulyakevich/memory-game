@@ -692,6 +692,12 @@ body {
   .rules-heading {
     font-size: 28px;
   }
+
+  .rules-list {
+    font-size: var(--font-size-xs);
+  }
+
+ 
   
   .themes-heading {
     font-size: 22px;
@@ -805,6 +811,11 @@ body {
   .game-header .steps {
     order: 3;
     justify-self: center;
+  }
+
+  .rules-list {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-tight);
   }
 
   .result-header {
