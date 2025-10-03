@@ -1,0 +1,94 @@
+{
+  "startScreen": {
+    "welcome": "Bienvenue !",
+    "subtitle": "Memory — un jeu pour entraîner votre mémoire visuelle",
+    "rulesHeading": "Règles du jeu",
+    "rule1": "L'ensemble contient de nombreuses cartes – deux pièces avec la même image.",
+    "rule2": "Vous devez disposer les cartes face cachée sur la table, puis en retourner deux à la fois.",
+    "rule3": "Si elles correspondent – le joueur les prend et obtient un autre tour.",
+    "themesHeading": "Choisissez un thème de cartes",
+    "themesAriaLabel": "Choix du thème de jeu",
+    "themeAriaLabel": "Jouer avec le thème: {{theme}}",
+    "themes": {
+      "cats": "Chats",
+      "cars": "Voitures",
+      "flowers": "Fleurs"
+    }
+  },
+  "gameScreen": {
+    "ariaLabel": "Écran de jeu",
+    "boardHeading": "Plateau de jeu",
+    "boardAriaLabel": "Plateau de jeu avec {{count}} cartes du thème {{theme}}",
+    "progress": {
+      "ariaLabel": "Progression du jeu : {{progress}}%",
+      "description": "Ouvertes",
+      "of": "/"
+    },
+    "steps": "Coup {{count}}",
+    "lives": "❤️ Vies : {{count}}"
+  },
+  "gameModal": {
+    "victory": {
+      "title": "Victoire !",
+      "description": "Maintenant, voyons les résultats de cette partie",
+      "button": "Afficher les résultats"
+    },
+    "gameOver": {
+      "title": "Jeu terminé",
+      "description": "Vous avez collecté {{count}} {{pairs}}",
+      "button": "Nouvelle partie"
+    },
+    "pairs": {
+      "one": "paire",
+      "few": "paires",
+      "many": "paires"
+    }
+  },
+  "resultScreen": {
+    "ariaLabel": "Écran des résultats",
+    "heading": "Meilleurs résultats pour le thème \"{{theme}}\" :",
+    "completedIn": "Vous avez terminé le jeu en",
+    "steps": "{{count}} {{word}}",
+    "stepsWords": {
+      "one": "coup",
+      "few": "coups",
+      "many": "coups"
+    },
+    "encouragement": "continuez comme ça !",
+    "tableHeading": "Tableau des résultats",
+    "tableHeaders": {
+      "place": "Place",
+      "name": "Nom",
+      "steps": "Coups"
+    },
+    "noResults": "Aucun résultat pour ce thème pour le moment. Jouez pour établir un record !",
+    "yourResult": "Votre résultat",
+    "player1": "Anna",
+    "player2": "Michel",
+    "player3": "Éléna",
+    "player4": "Olga",
+    "player5": "Nicolas",
+    "player6": "Adolphe",
+    "player7": "Marie",
+    "player8": "Zoé",
+    "player9": "Victor",
+    "tryAgain": "Voulez-vous réessayer ?",
+    "newGameButton": "Nouvelle partie"
+  },
+  "card": {
+    "finished": "Paire assortie",
+    "closed": "Carte fermée, appuyez sur Entrée pour ouvrir",
+    "altText": "Image de la carte"
+  },
+  "languageSwitcher": {
+    "ariaLabel": "Sélectionner la langue",
+    "ariaExpanded": "Menu de sélection de la langue {{state}}",
+    "opened": "ouvert",
+    "closed": "fermé"
+  },
+  "navigation": {
+    "returnHome": "Retour à l'accueil",
+    "back": "Retour",
+    "backToStart": "Retour à la sélection du thème"
+  }
+}

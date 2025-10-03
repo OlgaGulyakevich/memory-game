@@ -1,13 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-// Мемоизируем компонент для предотвращения лишних ре-рендеров
-const Card = React.memo(({item, isVisible, isFinished, onCardClick}) => {
-  const {id, url, description} = item;
+const Card = React.memo(({ item, isVisible, isFinished, onCardClick }) => {
+  const { t } = useTranslation();
+  const { id, url, description } = item;
   const className = `${isVisible ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
 
   const handleClick = () => onCardClick(id);
   
-  // Обработчик клавиатуры
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -22,11 +22,11 @@ const Card = React.memo(({item, isVisible, isFinished, onCardClick}) => {
       className={`card ${className}`} 
       role="button" 
       tabIndex={isFinished ? -1 : 0} 
-      aria-label={isFinished ? 'Собранная пара' : 'Закрытая карточка, нажмите Enter для открытия'}
+      aria-label={isFinished ? t('card.finished') : t('card.closed')}
     >
       <img 
         src={url} 
-        alt={description || 'Изображение карточки'} 
+        alt={description || t('card.altText')} 
         loading="lazy"
         decoding="async"
       />

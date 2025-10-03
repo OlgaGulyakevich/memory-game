@@ -4,7 +4,7 @@
   "description": "Memory card game with React and Webpack",
   "main": "src/index.js",
   "homepage": "https://olgagulyakevich.github.io/memory-game",
-"scripts": {
+  "scripts": {
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "build:deploy": "GITHUB_PAGES=true webpack --mode production",
@@ -24,8 +24,10 @@
   "author": "Olga Gulyakevich <olga.gulyakevi4@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "i18next": "^25.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-i18next": "^16.0.0",
     "react-router-dom": "^7.9.0"
   },
   "devDependencies": {

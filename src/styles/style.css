@@ -60,6 +60,7 @@
   --space-4xl: 48px;
   --space-5xl: 56px;
   --space-6xl: 72px;
+
   
   /* === Размеры === */
   --container-max-width: 940px;
@@ -67,7 +68,7 @@
   --button-height: 48px;
   --card-width: 220px;
   --card-min-width: 180px;
-  --progress-height: 16px;
+  --progress-height: 12px;
   
   /* === Border Radius === */
   --radius-sm: 5px;
@@ -78,7 +79,25 @@
   /* === Z-index === */
   --z-card-overlay: 1;
   --z-modal: 1000;
+  --z-language-switcher: 1000;
   
+  /* === Language Switcher === */
+  --lang-button-width: 60px;
+  --lang-button-height: 44px;
+  --lang-icon-size: 20px;
+  --lang-dropdown-width: 120px;
+  --lang-text-color: #6B7280;
+  --lang-hover-bg: rgba(255, 255, 255, 0.6);
+  --lang-active-bg: rgba(255, 255, 255, 0.8);
+  
+  /* === Logo === */
+  --color-brand-light: #8CAEC8;
+  --color-brand-dark: #6B7280;
+  
+  /* === Заголовки (Typography Scale) === */
+  --font-size-h1: 40px;
+  --font-size-h2-large: 32px;
+  --font-size-h2-medium: 24px;
   
   /* === Игровые настройки === */
   --game-card-aspect-ratio: 1.375; /* 220:160 */
@@ -140,7 +159,7 @@
   src: url("../../public/fonts/Nunito-Black.woff2") format("woff2");
 }
 
-/* ===== MOBILE VIEWPORT FIXES ===== */
+/* ===== MOBILE VIEWPORT ===== */
 /* Dynamic Viewport Height поддержка для современных браузеров */
 @supports (height: 100dvh) {
   :root {
@@ -230,23 +249,39 @@ body {
 
 /* ===== РАЗДЕЛ: Правила игры ===== */
 .rules {
-  padding-top: var(--space-3xl);
-  padding-bottom: var(--space-3xl);
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-base);
   text-align: center;
 }
 
-.rules h2 {
+/* Заголовки StartScreen */
+.start-screen-intro h1 {
   margin: 0;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-h1);
   font-weight: var(--font-weight-black);
-  font-size: var(--font-size-2xl);
   line-height: var(--line-height-normal);
 }
 
-.rules h3 {
+.start-screen-intro p {
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.rules-heading {
   margin: 0;
-  margin-bottom: var(--space-base);
-  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-h2-large);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-normal);
+}
+
+.themes-heading {
+  margin: 0;
+  margin-bottom: var(--space-xl);
+  font-size: var(--font-size-h2-medium);
+  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
 }
 
@@ -257,8 +292,8 @@ body {
 
 .rules-panel {
   width: min(520px, 100%);
-  margin: calc(var(--space-2xl) + var(--space-xs)) auto var(--space-3xl);
-  padding: var(--space-xl) var(--space-2xl) calc(var(--space-2xl) + var(--space-xs));
+  margin: var(--space-xl) auto var(--space-2xl);
+  padding: var(--space-base) var(--space-xl) var(--space-base);
   background-color: var(--color-white);
   box-shadow: 0 5px 20px var(--color-shadow);
   border-radius: var(--radius-md);
@@ -281,7 +316,7 @@ body {
 }
 
 .rules-list li:not(:last-child) {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-base);
 }
 
 .rules-list li::before {
@@ -319,26 +354,31 @@ body {
 .game {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  gap: var(--space-lg);
-  padding-top: var(--space-3xl);
-  margin-bottom: 155px;
+  /* grid-template-rows: auto 1fr; */
+  /* gap: var(--space-base); */
+  padding-top: var(--space-sm);
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .game-header {
   display: grid;
   grid-template-columns: minmax(280px, 460px) auto 1fr;
   align-items: center;
-  gap: var(--space-3xl) var(--space-lg);
+  gap: var(--space-xl);
+  /* margin-bottom: var(--space-xl); */
+  padding: var(--space-xl);
+  max-height: 52px;
 }
 
 .game-board-section {
   width: 100%;
+  margin-bottom: var(--space-3xl);
 }
 
 .game-board-section .cards {
   grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), var(--card-width)));
-  gap: var(--game-card-gap);
+  gap: var(--space-base);
   justify-content: center;
   max-width: var(--container-max-width);
   margin: 0 auto;
@@ -362,16 +402,16 @@ body {
 
 .progress-description {
   margin: 0 auto;
-  font-size: var(--font-size-sm);
-  line-height: calc(var(--font-size-sm) * 1.375);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
 }
 
 .steps {
   justify-self: end;
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--space-xs) var(--space-base);
   font-weight: var(--font-weight-black);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
   color: var(--color-white);
   background-color: var(--color-success);
   border-radius: var(--radius-lg);
@@ -555,9 +595,9 @@ body {
 
 /* ===== РЕЗУЛЬТАТЫ ===== */
 .result {
-  padding-top: var(--space-3xl);
   padding-bottom: var(--space-3xl);
   text-align: center;
+  margin-bottom: var(--space-3xl);
 }
 
 .result h2 {
@@ -615,7 +655,10 @@ body {
 }
 
 .result .button {
-  width: min(160px, 100%);
+  width: min(200px, 100%);
+  white-space: nowrap;
+  padding-left: var(--space-base);
+  padding-right: var(--space-base);
 }
 
 .result-footer {
@@ -641,6 +684,25 @@ body {
 /* ===== МЕДИА-ЗАПРОСЫ ===== */
 /* Планшеты: 769px - 1024px */
 @media (max-width: 1024px) and (min-width: 769px) {
+  /* Адаптивные заголовки для Tablet */
+  .start-screen-intro h1 {
+    font-size: 36px;
+  }
+  
+  .rules-heading {
+    font-size: 28px;
+  }
+
+  .rules-list {
+    font-size: var(--font-size-xs);
+  }
+
+ 
+  
+  .themes-heading {
+    font-size: 22px;
+  }
+  
   .cards {
     grid-template-columns: repeat(3, var(--card-min-width));
     gap: var(--space-base);
@@ -712,9 +774,10 @@ body {
   /* Игровая область */
   .game {
     grid-template-columns: 1fr;
-    gap: var(--space-base);
-    padding: var(--space-lg) 0;
-    margin-bottom: var(--space-3xl);
+    /* gap: var(--space-sm); */
+    padding: var(--space-sm) 0;
+    padding-bottom: var(--space-base);
+    margin-bottom: var(--space-base);
     min-height: 0;
   }
 
@@ -734,7 +797,7 @@ body {
     gap: var(--space-mobile-base);
     padding: var(--space-mobile-base);
     text-align: center;
-    margin-bottom: var(--space-mobile-sm);
+    margin-bottom: var(--space-3xl);
   }
   
   .game-header .progress-wrapper {
@@ -750,6 +813,14 @@ body {
     justify-self: center;
   }
 
+  .rules-list {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-tight);
+  }
+
+  .result-header {
+    margin: auto;
+  }
   
   .progress-wrapper {
     width: 100%;
@@ -923,7 +994,7 @@ body {
   /* Общие отступы */
   .rules,
   .result {
-    padding: var(--space-lg) 0;
+    padding: var(--space-sm) 0;
   }
   
   .rules-panel {
@@ -932,19 +1003,27 @@ body {
     padding: var(--space-lg) var(--space-xl);
   }
   
-  /* Адаптивные заголовки */
-  .rules h2,
-  .result h2 {
-    /* Используем responsive переменную вместо clamp */
-    font-size: var(--font-size-2xl-responsive);
-    line-height: var(--line-height-mobile-tight); /* 1.3 вместо 1.2 */
+  /* Адаптивные заголовки для Mobile Portrait */
+  .start-screen-intro h1 {
+    font-size: 32px;
+    line-height: var(--line-height-mobile-tight);
     margin-bottom: var(--space-mobile-base);
   }
   
-  .rules h3 {
-    /* Используем responsive переменную */
-    font-size: var(--font-size-lg-responsive);
-    line-height: var(--line-height-mobile-tight); /* 1.3 вместо 1.2 */
+  .rules-heading {
+    font-size: 24px;
+    line-height: var(--line-height-mobile-tight);
+  }
+  
+  .themes-heading {
+    font-size: 20px;
+    line-height: var(--line-height-mobile-tight);
+  }
+  
+  .result h2 {
+    font-size: var(--font-size-2xl-responsive);
+    line-height: var(--line-height-mobile-tight);
+    margin-bottom: var(--space-mobile-base);
   }
 }
 
@@ -965,6 +1044,18 @@ body {
 
 /* Маленькие мобильные: ≤414px */
 @media (max-width: 414px) {
+  .start-screen-intro h1 {
+    font-size: 28px;
+  }
+  
+  .rules-heading {
+    font-size: 22px;
+  }
+  
+  .themes-heading {
+    font-size: 18px;
+  }
+  
   .cards {
     gap: var(--space-md);
   }
@@ -976,6 +1067,18 @@ body {
 
 /* Очень маленькие экраны: ≤360px */
 @media (max-width: 360px) {
+  .start-screen-intro h1 {
+    font-size: 26px;
+  }
+  
+  .rules-heading {
+    font-size: 20px;
+  }
+  
+  .themes-heading {
+    font-size: 16px;
+  }
+  
   .container {
     width: calc(100vw - var(--space-base));
     padding: 0 var(--space-sm);
@@ -986,13 +1089,25 @@ body {
   }
   
   .game {
-    gap: var(--space-sm);
-    padding: var(--space-md) 0;
+    gap: var(--space-xs);
+    padding: var(--space-xs) 0;
   }
 }
 
 /* Карточки с responsive оптимизацией - LANDSCAPE */
 @media (max-width: 768px) and (orientation: landscape) {
+  /* Адаптивные заголовки для Mobile Landscape */
+  .start-screen-intro h1 {
+    font-size: 28px;
+  }
+  
+  .rules-heading {
+    font-size: 22px;
+  }
+  
+  .themes-heading {
+    font-size: 18px;
+  }
  
   .cards {
     /* Управление через inline style из React */
@@ -1020,9 +1135,10 @@ body {
 
   /* Компактная игровая область */
   .game {
-    gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    margin-bottom: var(--space-base);
+    gap: var(--space-xs);
+    padding: var(--space-xs) 0;
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
   }
 }
 
@@ -1106,5 +1222,436 @@ body {
   .card::after {
     transition: none;
     animation: none;
+  }
+}
+
+/* ====================================
+   Language Switcher Component Styles
+   ==================================== */
+
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  z-index: var(--z-language-switcher);
+}
+
+/* ====================================
+   Button Styles
+   ==================================== */
+
+.language-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: var(--lang-button-width);
+  height: var(--lang-button-height);
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--animation-duration-fast) var(--animation-easing);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--lang-text-color);
+}
+
+.language-button::before {
+  content: "";
+  width: var(--lang-icon-size);
+  height: var(--lang-icon-size);
+  background-image: url("../../public/img/icon-globe.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: invert(47%) sepia(8%) saturate(531%) hue-rotate(182deg) brightness(92%) contrast(88%);
+  /* Фильтр создает цвет #6B7280 */
+}
+
+.language-button:hover {
+  background-color: var(--lang-hover-bg);
+}
+
+.language-button:active {
+  background-color: var(--lang-active-bg);
+}
+
+.language-button:focus {
+  outline: none;
+  background-color: var(--lang-hover-bg);
+}
+  
+.language-button:focus-visible {
+  outline: 2px solid var(--color-success);
+  outline-offset: 2px;
+}
+
+.language-code {
+  font-size: var(--font-size-xs-responsive);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+/* ====================================
+   Dropdown Menu Styles
+   ==================================== */
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: var(--lang-dropdown-width);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--color-white);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 24px var(--color-shadow);
+  animation: dropdownFadeIn var(--animation-duration-fast) var(--animation-easing);
+  overflow: hidden;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ====================================
+   Menu Item Styles
+   ==================================== */
+
+.language-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-target-min);
+  padding: var(--space-md) var(--space-base);
+  cursor: pointer;
+  transition: background-color var(--animation-duration-fast) var(--animation-easing);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--lang-text-color);
+  user-select: none;
+}
+
+.language-item:hover,
+.language-item.focused {
+  background-color: rgba(0, 202, 81, 0.08);
+  /* --color-success с прозрачностью */
+}
+
+.language-item:active {
+  background-color: rgba(0, 202, 81, 0.15);
+}
+
+.language-item.active {
+  color: var(--color-success);
+}
+
+.language-item:focus {
+  outline: none;
+  background-color: rgba(0, 202, 81, 0.08);
+}
+
+.language-item:focus-visible {
+  outline: 2px solid var(--color-success);
+  outline-offset: -2px;
+}
+
+/* ====================================
+   Responsive Breakpoints
+   ==================================== */
+
+/* Desktop (>1024px) - Default styles above */
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .language-button {
+    width: 56px;
+    height: 40px;
+  }
+  
+  .language-code {
+    font-size: var(--font-size-sm);
+  }
+  
+  .language-dropdown {
+    width: 110px;
+  }
+}
+
+/* Mobile Portrait (≤768px) */
+@media (max-width: 768px) {
+  .language-button {
+    width: 52px;
+    height: 40px;
+    gap: var(--space-xs);
+  }
+  
+  .language-code {
+    font-size: 12px;
+  }
+  
+  .language-dropdown {
+    width: 110px;
+  }
+  
+  .language-item {
+    min-height: 40px;
+    padding: var(--space-sm) var(--space-base);
+    font-size: 13px;
+  }
+}
+
+/* Mobile Landscape (≤768px) */
+@media (max-width: 768px) and (orientation: landscape) {
+  .language-button {
+    width: 48px;
+    height: 36px;
+    gap: 2px;
+  }
+  
+  .language-code {
+    font-size: 11px;
+  }
+  
+  .language-dropdown {
+    width: 100px;
+  }
+  
+  .language-item {
+    min-height: 36px;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
+  }
+}
+
+/* ====================================
+   Accessibility Enhancements
+   ==================================== */
+
+/* Высококонтрастный режим */
+@media (prefers-contrast: high) {
+  .language-button {
+    outline: 2px solid var(--lang-text-color);
+  }
+  
+  .language-dropdown {
+    outline: 2px solid var(--color-border);
+  }
+  
+  .language-item.active {
+    background-color: rgba(0, 202, 81, 0.2);
+  }
+}
+
+/* Режим уменьшенной анимации */
+@media (prefers-reduced-motion: reduce) {
+  .language-button,
+  .language-item {
+    transition: none;
+  }
+  
+  .language-dropdown {
+    animation: none;
+  }
+  
+  .language-button:hover {
+    transform: none;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+  .language-button:hover {
+    transform: none;
+  }
+  
+  .language-item:hover {
+    background-color: transparent;
+  }
+  
+  /* Увеличиваем touch targets для touch devices */
+  .language-item {
+    min-height: var(--touch-target-min);
+  }
+}
+
+/* ====================================
+   StartScreen Navigation with Logo and Language Switcher
+   ==================================== */
+
+.screen-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-xl);
+}
+
+.start-screen-intro {
+  text-align: center;
+  margin-bottom: var(--space-sm);
+}
+
+/* ====================================
+   Responsive Breakpoints - Screen Navigation
+   ==================================== */
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .screen-navigation {
+    margin-bottom: var(--space-base);
+    padding: var(--space-xs) 0;
+  }
+  
+  .language-button {
+    width: 56px;
+    height: 40px;
+  }
+  
+  .language-dropdown {
+    width: 110px;
+  }
+}
+
+/* Mobile Portrait (≤768px) */
+@media (max-width: 768px) {
+  .screen-navigation {
+    margin-bottom: var(--space-base);
+    padding: var(--space-xs) 0;
+  }
+  
+  .start-screen-intro {
+    margin-bottom: var(--space-xs);
+  }
+  
+  .language-button {
+    width: 52px;
+    height: 40px;
+    gap: var(--space-xs);
+  }
+  
+  .language-code {
+    font-size: 12px;
+  }
+  
+  .language-dropdown {
+    width: 110px;
+  }
+  
+  .language-item {
+    min-height: 40px;
+    padding: var(--space-sm) var(--space-base);
+    font-size: 13px;
+  }
+}
+
+/* Mobile Landscape (≤768px) */
+@media (max-width: 768px) and (orientation: landscape) {
+  .screen-navigation {
+    margin-bottom: 2px;
+    padding: 0;
+  }
+  
+  .start-screen-intro {
+    margin-bottom: var(--space-xs);
+  }
+  
+  .language-button {
+    width: 48px;
+    height: 36px;
+    gap: 2px;
+  }
+  
+  .language-code {
+    font-size: 11px;
+  }
+  
+  .language-dropdown {
+    width: 100px;
+  }
+  
+  .language-item {
+    min-height: 36px;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
+  }
+}
+
+/* Убедитесь, что .rules container имеет position: relative для правильного позиционирования */
+.rules.container {
+  position: relative;
+}
+
+/* ====================================
+   LOGO
+   ==================================== */
+
+.logo-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity var(--animation-duration-fast) var(--animation-easing);
+  font: inherit;
+}
+
+.logo-button:hover .logo {
+  opacity: 0.8;
+}
+
+.logo-button:active .logo {
+  opacity: 0.6;
+}
+
+.logo-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.logo {
+  color: var(--color-brand-light);
+  background: linear-gradient(135deg, var(--color-brand-light) 0%, var(--color-brand-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.02em;
+  line-height: var(--line-height-tight);
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .logo {
+    font-size: 18px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 768px) {
+  .logo {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .logo {
+    font-size: var(--font-size-xs);
   }
 }

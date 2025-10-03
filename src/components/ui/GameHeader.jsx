@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const GameHeader = React.memo(({ moves, progress, remainingLives, matchedPairs, totalPairs }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="progress-wrapper">
@@ -11,15 +14,15 @@ const GameHeader = React.memo(({ moves, progress, remainingLives, matchedPairs, 
           aria-valuenow={Math.round(progress)}
           aria-valuemin="0"
           aria-valuemax="100"
-          aria-label={`Прогресс игры: ${Math.round(progress)}%`}
+          aria-label={t('gameScreen.progress.ariaLabel', { progress: Math.round(progress) })}
         />
       </div>
       <p className="progress-description">
-        Открыто <span>{matchedPairs}</span> / <span>{totalPairs}</span>
+        {t('gameScreen.progress.description')} <span>{matchedPairs}</span> {t('gameScreen.progress.of')} <span>{totalPairs}</span>
       </p>
-      <div className="steps">Шаг {moves}</div>
+      <div className="steps">{t('gameScreen.steps', { count: moves })}</div>
       {/* Система жизней готова к активации */}
-      {/* <div className="lives">❤️ Жизни: {remainingLives}</div> */}
+      {/* <div className="lives">{t('gameScreen.lives', { count: remainingLives })}</div> */}
     </>
   );
 });
