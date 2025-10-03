@@ -39,22 +39,21 @@ export const themes = {
 };
 
 export const getImages = (type) => {
-  // Получаем базовый набор по типу
   const baseImages = themes[type]?.images || [];
   if (baseImages.length === 0) {
     return [];
   }
 
-   // Создаем пары - дублируем каждое изображение с новым ID
+   // Create pairs - duplicate each image with a new ID
    const pairs = [];
    baseImages.forEach((image, index) => {
-     // Первая карточка пары
+     // The first card of the pair
      pairs.push({ 
        id: generateCardId(type, index, 1), 
        url: image.url, 
        description: image.description 
      });
-     // Вторая карточка пары
+     // The second card of the pair
      pairs.push({ 
        id: generateCardId(type, index, 2), 
        url: image.url, 
@@ -62,7 +61,7 @@ export const getImages = (type) => {
      });
    });
 
-  // Перемешиваем карточки если включена настройка
+  // Shuffle the cards if the setting is enabled
   if (GAME_SETTINGS.SHUFFLE_CARDS) {
     return shuffleArray(pairs);
   }

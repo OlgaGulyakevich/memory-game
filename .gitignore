@@ -28,7 +28,7 @@ yarn-error.log*
 *.bak
 *.backup
 
-# Node modules (если будешь использовать)
+# Node modules 
 node_modules/
 npm-debug.log
 
@@ -42,7 +42,7 @@ notes/
 .env.test.local
 .env.production.local
 
-# Build outputs (если будет сборка)
+# Build outputs
 dist/
 build/
 

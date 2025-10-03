@@ -78,34 +78,61 @@ Experience the full application with all features:
 ```
 memory-game/
 ├── public/                 # Static assets
-│   ├── img/               # Game images by theme
-│   ├── fonts/             # Custom typography
-│   ├── data/              # Game data and results
-│   ├── docs/               # Documentation & testing
-│   │   └── testing/        # Manual testing resources
-│   ├── 404.html            # SPA routing fallback
-│   ├── index.html          # Application entry point
-│   ├── favicon.ico         # Browser icon
-│   └── og-image.jpg        # Social sharing preview
+│   ├── img/               # Game images by theme (cats, cars, flowers)
+│   ├── fonts/             # Custom typography files
+│   ├── data/              # Game data and results (results.json)
+│   ├── docs/              # Documentation & testing
+│   │   └── testing/       # Manual testing resources
+│   ├── 404.html           # SPA routing fallback
+│   ├── index.html         # Application entry point with SEO meta tags
+│   ├── favicon.ico        # Browser icon
+│   └── og-image.jpg       # Social sharing preview
 ├── src/
 │   ├── components/        # React components
+│   │   ├── App.jsx        # Main application component with routing
 │   │   ├── pages/         # Route-level components  
+│   │   │   ├── StartScreen.jsx    # Welcome screen with theme selection
+│   │   │   ├── GameScreen.jsx     # Main game interface
+│   │   │   └── ResultScreen.jsx   # Leaderboard with game history
 │   │   └── ui/            # Reusable UI components
+│   │       ├── Card.jsx           # Animated flip card component
+│   │       ├── GameBoard.jsx      # Card grid layout
+│   │       ├── GameHeader.jsx     # Progress and stats display
+│   │       ├── GameModal.jsx      # Win/lose modal dialog
+│   │       ├── Navigation.jsx     # App navigation bar
+            ├── Logo.jsx           # Application's main logo component.
+│   │       └── LanguageSwitcher.jsx # i18n language switcher 
+│   │      
+│   │       
 │   ├── hooks/             # Custom React hooks
+│   │   └── useGame.js     # Game state and logic management
 │   ├── data/              # Game themes and configuration
+│   │   └── themes.js      # Card themes data (cats, cars, flowers)
 │   ├── utils/             # Helper functions and utilities
-│   ├── index.js           # Application entry point
-│   └── styles/            # CSS with design tokens
+│   │   ├── helpers.js     # Game logic helpers (shuffle, sort, localStorage)
+│   │   ├── pluralization.js # Multilingual plural forms (RU/EN/FR)
+│   │   ├── settings.js    # Game configuration constants
+│   │   │── path.js        # Path and asset URL utilities
+│   │   └── i18n.js        # react-i18next configuration
+│   ├── locales/           # Translation files
+│   │   ├── en.json        # English translations
+│   │   ├── fr.json        # French translations
+│   │   └── ru.json        # Russian translations
+│   ├── index.js           # Application entry point with routing
+│   └── styles/
+│       └── style.css      # Global styles with CSS custom properties
 ├── package.json           # Dependencies & scripts
-├── webpack.config.js      # Build configuration  
+├── webpack.config.js      # Build configuration with optimizations
 └── README.md              # Project documentation
 ```
 
 ### **Component Architecture**
+- **App Component**: Main application wrapper with React Router and i18n setup
 - **Page Components**: Route-level containers (StartScreen, GameScreen, ResultScreen)
-- **UI Components**: Reusable elements (Card, GameBoard, GameModal)
-- **Custom Hooks**: Business logic abstraction (useGame)
-- **Utility Functions**: Pure functions for calculations and data manipulation
+- **UI Components**: Reusable elements (Card, GameBoard, GameModal, LanguageSwitcher, Logo)
+- **Custom Hooks**: Business logic abstraction (useGame for game state management)
+- **Utility Functions**: Pure functions for calculations, pluralization, and data manipulation
+- **Internationalization**: react-i18next with 3 languages (EN/FR/RU) and centralized translations
 
 ## 🌐 Internationalization
 

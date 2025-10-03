@@ -1,24 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getPlural } from '../../utils/pluralization';
 
 function GameModal({ isWin, matchedPairs, onNewGame, onShowResults }) {
   const { t, i18n } = useTranslation();
 
-  const getPlural = (count) => {
-    const language = i18n.language;
-    if (language === 'ru') {
-      const mod10 = count % 10;
-      const mod100 = count % 100;
-      if (mod100 >= 11 && mod100 <= 19) return 'many';
-      if (mod10 === 1) return 'one';
-      if (mod10 >= 2 && mod10 <= 4) return 'few';
-      return 'many';
-    }
-    return count === 1 ? 'one' : 'many';
-  };
-
   const getPairsText = () => {
-    const pluralForm = getPlural(matchedPairs);
+    const pluralForm = getPlural(matchedPairs, i18n.language);
     return t(`gameModal.pairs.${pluralForm}`);
   };
 

@@ -7,39 +7,11 @@
     "timestamp": "2024-01-15T10:30:00.000Z"
   },
   {
-    "nameKey": "resultScreen.player2",
-    "stepsCount": 12,
-    "errors": 2,
-    "theme": "cats",
-    "timestamp": "2024-01-16T14:20:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player3",
-    "stepsCount": 15,
-    "errors": 3,
-    "theme": "cats",
-    "timestamp": "2024-01-17T09:45:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player4",
-    "stepsCount": 8,
-    "errors": 0,
-    "theme": "cats",
-    "timestamp": "2024-01-18T16:10:00.000Z"
-  },
-  {
     "nameKey": "resultScreen.player5",
     "stepsCount": 13,
     "errors": 2,
     "theme": "cats",
     "timestamp": "2024-01-19T11:25:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player6",
-    "stepsCount": 18,
-    "errors": 4,
-    "theme": "cats",
-    "timestamp": "2024-01-20T13:40:00.000Z"
   },
   {
     "nameKey": "resultScreen.player7",
@@ -54,13 +26,6 @@
     "errors": 3,
     "theme": "cats",
     "timestamp": "2024-01-22T12:05:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player9",
-    "stepsCount": 11,
-    "errors": 2,
-    "theme": "cats",
-    "timestamp": "2024-01-23T10:15:00.000Z"
   },
   {
     "nameKey": "resultScreen.player1",
@@ -105,20 +70,6 @@
     "timestamp": "2024-01-29T13:15:00.000Z"
   },
   {
-    "nameKey": "resultScreen.player7",
-    "stepsCount": 11,
-    "errors": 2,
-    "theme": "cars",
-    "timestamp": "2024-01-30T15:40:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player8",
-    "stepsCount": 13,
-    "errors": 2,
-    "theme": "cars",
-    "timestamp": "2024-01-31T12:25:00.000Z"
-  },
-  {
     "nameKey": "resultScreen.player9",
     "stepsCount": 15,
     "errors": 3,
@@ -126,39 +77,11 @@
     "timestamp": "2024-02-01T10:55:00.000Z"
   },
   {
-    "nameKey": "resultScreen.player1",
-    "stepsCount": 11,
-    "errors": 2,
-    "theme": "flowers",
-    "timestamp": "2024-02-02T09:20:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player2",
-    "stepsCount": 13,
-    "errors": 2,
-    "theme": "flowers",
-    "timestamp": "2024-02-03T14:30:00.000Z"
-  },
-  {
     "nameKey": "resultScreen.player3",
     "stepsCount": 17,
     "errors": 4,
     "theme": "flowers",
     "timestamp": "2024-02-04T11:45:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player4",
-    "stepsCount": 10,
-    "errors": 1,
-    "theme": "flowers",
-    "timestamp": "2024-02-05T16:10:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player5",
-    "stepsCount": 14,
-    "errors": 3,
-    "theme": "flowers",
-    "timestamp": "2024-02-06T10:25:00.000Z"
   },
   {
     "nameKey": "resultScreen.player6",
@@ -173,13 +96,6 @@
     "errors": 2,
     "theme": "flowers",
     "timestamp": "2024-02-08T15:55:00.000Z"
-  },
-  {
-    "nameKey": "resultScreen.player8",
-    "stepsCount": 15,
-    "errors": 3,
-    "theme": "flowers",
-    "timestamp": "2024-02-09T12:10:00.000Z"
   },
   {
     "nameKey": "resultScreen.player9",

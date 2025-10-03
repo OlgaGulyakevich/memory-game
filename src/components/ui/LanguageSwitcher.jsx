@@ -19,7 +19,7 @@ const LanguageSwitcher = React.memo(() => {
 
   const currentLanguage = i18n.language || 'en';
 
-  // Закрытие dropdown при клике вне компонента
+  // Close dropdown when clicking outside the component
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -44,20 +44,20 @@ const LanguageSwitcher = React.memo(() => {
     };
   }, [isOpen]);
 
-  // Обработчик выбора языка
+  // Handler for selecting the language
   const handleSelectLanguage = useCallback((langCode) => {
     i18n.changeLanguage(langCode);
     localStorage.setItem('memoryGameLang', langCode);
     setIsOpen(false);
     setFocusedIndex(-1);
     
-    // Возвращаем фокус на кнопку после выбора
+    // Return focus to the button after selection
     if (buttonRef.current) {
       buttonRef.current.focus();
     }
   }, []);
 
-  // Переключение открытия/закрытия dropdown
+  // Toggle opening/closing dropdown
   const handleToggle = useCallback(() => {
     setIsOpen(prev => !prev);
     setFocusedIndex(-1);
@@ -66,7 +66,7 @@ const LanguageSwitcher = React.memo(() => {
   // Keyboard navigation
   const handleKeyDown = useCallback((event) => {
     if (!isOpen) {
-      // Открываем меню по Enter, Space, ArrowDown, ArrowUp
+      // Open menu by Enter, Space, ArrowDown, ArrowUp
       if (['Enter', ' ', 'ArrowDown', 'ArrowUp'].includes(event.key)) {
         event.preventDefault();
         setIsOpen(true);
@@ -108,7 +108,7 @@ const LanguageSwitcher = React.memo(() => {
         break;
 
       case 'Tab':
-        // Закрываем меню при Tab
+        // Close menu by Tab
         setIsOpen(false);
         setFocusedIndex(-1);
         break;
@@ -118,12 +118,12 @@ const LanguageSwitcher = React.memo(() => {
     }
   }, [isOpen, focusedIndex, handleSelectLanguage]);
 
-  // Обработчик клика на элемент меню
+  // Handler for clicking on the menu item
   const handleMenuItemClick = useCallback((langCode) => {
     handleSelectLanguage(langCode);
   }, [handleSelectLanguage]);
 
-  // Обработчик hover для синхронизации с keyboard navigation
+  // Handler for hover to synchronize with keyboard navigation
   const handleMenuItemMouseEnter = useCallback((index) => {
     setFocusedIndex(index);
   }, []);

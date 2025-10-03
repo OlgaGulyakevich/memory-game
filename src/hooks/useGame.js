@@ -6,33 +6,33 @@ const useGame = (images) => {
   const [stepsCount, setStepsCount] = useState(0);
   const [errors, setErrors] = useState(0);
 
-  // Проверка пары карточек 
+  // Check pair of cards
   const checkItems = (firstItem, secondItem) => {
     const firstImage = images.find(({id}) => id === firstItem);
     const secondImage = images.find(({id}) => id === secondItem);
     
     if (firstImage.url === secondImage.url) {
-      // Пара совпала - добавляем в отгаданные
+      // Pair matched - add to guessed
       setFinishedItems((items) => [...items, firstItem, secondItem]);
     } else {
-      // Пара не совпала - увеличиваем ошибки
+      // Pair not matched - increase errors
       setErrors((e) => e + 1);
     }
-    // Увеличиваем счетчик шагов
+    // Increase steps counter
     setStepsCount((i) => i + 1);
   };
 
-  // Сброс игры
+  // Reset game
   const handleReset = () => {
     setFinishedItems([]);
     setStepsCount(0);
     setErrors(0);
   };
 
-  // Проверка победы
+  // Check win
   const isWin = finishedItems.length > 0 && finishedItems.length === images.length;
   
-  // Проверка поражения
+  // Check loss
   const isGameOver = errors >= GAME_SETTINGS.LIVES_COUNT;
 
   return {
