@@ -11,21 +11,21 @@
   
 ![Game Preview](public/img/screenshots/game-preview.jpg)
 
-**[🎮 Play Game](https://olgagulyakevich.github.io/memory-game/)** • **[📖 Documentation](https://github.com/OlgaGulyakevich/memory-game#-features-deep-dive)** • **[🐛 Report Bug](https://github.com/OlgaGulyakevich/memory-game/issues)**
+**[🎮 Play Game](https://olgagulyakevich.github.io/memory-game/)** • **[📖 Documentation](#-features-deep-dive)** • **[🐛 Report Bug](https://github.com/OlgaGulyakevich/memory-game/issues)**
 
 </div>
 
 ---
 
+## 📸 Screenshots
+
 <div align="center">
-  
-![Game Preview](public/img/screenshots/game-preview.jpg)
 
 ### 🎬 Gameplay Demo
 
-<video src="file:///Users/olgagulakevic/Desktop/html-academy/memory-game/public/img/screenshots/gameplay-screenshot.mp4" width="800" controls></video>
+https://github.com/user-attachments/assets/040afd26-1f54-46b3-ae41-520d11f48d38
 
-*Note: If video doesn't play, [view it here](public/img/screenshots/gameplay-screenshot.mp4)*
+*Smooth card flipping animations and responsive gameplay*
 
 ### 📱 Mobile Responsive Design
 
@@ -33,11 +33,11 @@
 <tr>
 <td width="50%">
   <img src="public/img/screenshots/mobile-responsive-1.jpg" alt="Mobile Portrait" width="100%">
-  <p align="center"><em>Home Screen (Mobile Portrait)</em></p>
+  <p align="center"><em>Home Screen (Portrait Mode)</em></p>
 </td>
 <td width="50%">
   <img src="public/img/screenshots/mobile-responsive-2.jpg" alt="Mobile Portrait" width="100%">
-  <p align="center"><em>In-Game Screen (Portrait)</em></p>
+  <p align="center"><em>In-Game Screen (Portrait Mode)</em></p>
 </td>
 </tr>
 </table>
@@ -192,6 +192,11 @@ src/
 - Webpack 5 with optimizations
 - CSS3 with custom properties
 
+**📖 Detailed Documentation:**
+- [Architecture Decisions](public/docs/ARCHITECTURE.md) — System design and patterns
+- [Tech Stack Overview](public/docs/TECH_STACK.md) — Technologies and tools
+- [Future Roadmap](public/docs/ROADMAP.md) — Planned enhancements
+
 <details>
 <summary><b>💡 Code Quality Example — Custom Hook Architecture</b></summary>
 
@@ -280,6 +285,6 @@ This project demonstrates:
 
 **Built with ❤️ using React 19 and modern web standards**
 
-[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://linkedin.com/in/olga-gulyakevich) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com) • [🛠️ Tech Stack Details](public/docs/TECH_STACK.md)
+[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://www.linkedin.com/in/olga-gulyakevich-ab166674/) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com)
 
 </div>
