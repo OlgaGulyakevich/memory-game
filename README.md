@@ -1,161 +1,77 @@
-# 🎮 Memory Game
+# Memory Game
 
-> Modern React memory training app with production-grade architecture and exceptional performance
+[![Live demo](https://img.shields.io/badge/Live_demo-Play_now-2563EB)](https://olgagulyakevich.github.io/memory-game/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Webpack](https://img.shields.io/badge/Webpack-5-8DD6F9?logo=webpack&logoColor=black)](https://webpack.js.org/)
+[![i18next](https://img.shields.io/badge/i18n-EN·FR·RU-26A69A?logo=i18next&logoColor=white)](https://www.i18next.com/)
+[![PageSpeed 100](https://img.shields.io/badge/PageSpeed-100·100·100·100-00C853?logo=lighthouse&logoColor=white)](#quality--engineering)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue)](#license)
 
-[![Live Demo](https://img.shields.io/badge/🎮_Live_Demo-Play_Now-4A90E2?style=for-the-badge)](https://olgagulyakevich.github.io/memory-game/)
-[![React](https://img.shields.io/badge/React-19.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
-[![Performance](https://img.shields.io/badge/Lighthouse-98/100-00C851?style=for-the-badge&logo=lighthouse)](https://github.com/OlgaGulyakevich/memory-game)
-[![Bundle](https://img.shields.io/badge/Bundle-115KB-success?style=for-the-badge)](https://github.com/OlgaGulyakevich/memory-game)
+**A multilingual memory card game — tactile 3D card flips, three themed decks, and a 115 KB bundle that still scores Lighthouse 98.**
 
-<div align="center">
-  
-![Game Preview](public/img/screenshots/game-preview.jpg)
+<p align="center">
+  <a href="https://olgagulyakevich.github.io/memory-game/"><img src="public/img/screenshots/game-preview.jpg" width="100%" alt="Memory Game — the board mid-round, cards flipping"/></a>
+</p>
 
-**[🎮 Play Game](https://olgagulyakevich.github.io/memory-game/)** • **[📖 Documentation](#-features-deep-dive)** • **[🐛 Report Bug](https://github.com/OlgaGulyakevich/memory-game/issues)**
+## Live Demo
 
-</div>
+**[Play the game](https://olgagulyakevich.github.io/memory-game/)** — pick a deck, flip cards, beat your own step count.
 
 ---
 
-## 📸 Screenshots
+## Motion & Interaction Craft
 
-<div align="center">
+The whole game *is* an interaction, so the motion has one job: make a flip feel like turning a real card.
 
-### 🎬 Gameplay Demo
+- **3D card flip** — `rotateY` on a preserved-3d container with a backface-hidden face, so the card turns rather than cross-fades. GPU-only (`transform`), no layout or paint per frame.
+- **Mismatch feedback** — a wrong pair stays visible long enough to be memorised, then turns back; the delay is the game mechanic, not a decoration.
+- **Reduced motion respected** — animations are gated behind `prefers-reduced-motion`, so a player who asks the OS for less movement still gets the full game, just without the spin.
+
+---
+
+## Gameplay
+
+Press play — card flips, matches and the step counter in a full round:
 
 https://github.com/user-attachments/assets/040afd26-1f54-46b3-ae41-520d11f48d38
 
-*Smooth card flipping animations and responsive gameplay*
-
-### 📱 Mobile Responsive Design
-
-<table>
-<tr>
-<td width="50%">
-  <img src="public/img/screenshots/mobile-responsive-1.jpg" alt="Mobile Portrait" width="100%">
-  <p align="center"><em>Home Screen (Portrait Mode)</em></p>
-</td>
-<td width="50%">
-  <img src="public/img/screenshots/mobile-responsive-2.jpg" alt="Mobile Portrait" width="100%">
-  <p align="center"><em>In-Game Screen (Portrait Mode)</em></p>
-</td>
-</tr>
-</table>
-
-</div>
+<p align="center">
+  <img src="public/img/screenshots/mobile-responsive-1.jpg" width="45%" alt="Home screen on mobile, portrait"/>
+  &nbsp;&nbsp;
+  <img src="public/img/screenshots/mobile-responsive-2.jpg" width="45%" alt="In-game screen on mobile, portrait"/>
+</p>
 
 ---
 
-## ✨ Highlights
+## Tech Stack
 
-<table>
-<tr>
-<td width="50%">
+| Category | Tools |
+| --- | --- |
+| **Framework** | React 19 (hooks) · React Router 7 |
+| **Bundler** | Webpack 5 — hand-configured (code splitting, vendor chunks, asset pipeline) |
+| **i18n** | i18next · react-i18next — EN / FR / RU with persisted preference |
+| **Styles** | CSS3 with custom properties, mobile-first |
+| **Deployment** | GitHub Pages (`gh-pages`) with SPA 404 fallback |
 
-### 🎯 User Experience
-- **3 Themed Card Sets** with custom artwork
-- **Multilingual** (EN/RU/FR) with i18next
-- **Smooth 3D Animations** (60fps+)
-- **Fully Responsive** — mobile-first design
-- **Keyboard Navigation** — WCAG AA compliant
-
-</td>
-<td width="50%">
-
-### ⚡ Technical Excellence
-- **React 19** with modern hooks architecture
-- **Lighthouse 98/100** performance score
-- **115KB gzipped** total bundle size
-- **Zero runtime errors** in production
-- **Comprehensive testing** documentation
-
-</td>
-</tr>
-</table>
+No UI kit and no animation library — the board, the cards and the flip are hand-built.
 
 ---
 
-## 🎬 Quick Start
+## Quality & Engineering
 
-```bash
-# Clone repository
-git clone https://github.com/olgagulyakevich/memory-game.git
+- **PageSpeed Insights 100 · 100 · 100 · 100** — performance, accessibility, best practices and SEO, measured on the live build.
 
-# Install dependencies
-npm install
+<p align="center"><img src="public/img/screenshots/psi.png" width="70%" alt="PageSpeed Insights: 100 performance, 100 accessibility, 100 best practices, 100 SEO"/></p>
 
-# Start development server
-npm start  # Opens at http://localhost:3001
-
-# Build for production
-npm run build
-```
-
----
-
-## 🎮 Features Deep Dive
+- **115 KB gzipped total**, split into vendor / router / app chunks rather than one blob.
+- **Hand-configured Webpack** — the split above is a deliberate config, not a framework default.
+- **`React.memo` on the card** — a board of 16+ cards re-renders only what changed on each flip.
+- **Images optimised** to WebP with fallbacks.
 
 <details>
-<summary><b>🎨 Three Beautiful Themes</b></summary>
+<summary>Bundle composition</summary>
 
-- **Cats Theme** — Adorable feline companions
-- **Cars Theme** — Classic automotive collection  
-- **Flowers Theme** — Botanical garden variety
-
-Each theme features hand-picked imagery optimized for performance.
-
-</details>
-
-<details>
-<summary><b>🌍 Full Internationalization</b></summary>
-
-- **3 Languages**: English, Russian, French
-- **react-i18next** integration
-- **Persistent language preference**
-- **Fallback to English** for missing translations
-
-</details>
-
-<details>
-<summary><b>♿ Accessibility First</b></summary>
-
-- **WCAG AA Compliant** — proper contrast ratios
-- **Keyboard Navigation** — fully playable without mouse
-- **Screen Reader Support** — comprehensive ARIA labels
-- **Semantic HTML** — proper document structure
-
-</details>
-
-<details>
-<summary><b>⚡ Performance Optimized</b></summary>
-
-- **React.memo** — component memoization
-- **Hardware Acceleration** — CSS 3D transforms
-- **Code Splitting** — optimized bundle chunks
-- **Image Optimization** — WebP with fallbacks
-
-**Lighthouse Scores:**
-- Desktop: 98/100 Performance
-- Mobile: 95+/100 Performance
-- 100/100 Accessibility, Best Practices, SEO
-
-</details>
-
----
-
-## 📊 Performance Metrics
-
-| Metric | Desktop | Mobile | Target |
-|--------|---------|--------|--------|
-| **Performance** | 98/100 | 95/100 | >90 ✅ |
-| **FCP** | 0.4s | 1.0s | <1.8s ✅ |
-| **LCP** | 0.6s | 2.3s | <2.5s ✅ |
-| **Bundle Size** | 115KB gzipped | — | <250KB ✅ |
-
-<details>
-<summary>📦 Bundle Composition (click to expand)</summary>
-
-```
+```text
 react-vendor.js        51.39 KB  (44.5%)
 main.js                29.42 KB  (25.5%)
 vendors.js             16.64 KB  (14.4%)
@@ -164,127 +80,83 @@ react-vendor-2.js       5.30 KB   (4.6%)
 runtime.js              0.96 KB   (0.8%)
 ```
 
-*Total gzipped: 115.44 KB*
+Total gzipped: **115.44 KB**
 
 </details>
 
+> Quality here is verified by **documented manual QA**, not an automated suite — see the checklists below. Automated tests are on the roadmap.
+
 ---
 
-## 🏗️ Architecture
+## Accessibility
 
-Built with modern React patterns and professional development practices:
+- **WCAG AA** contrast across all three decks.
+- **Fully keyboard-playable** — every card is reachable and flippable without a mouse.
+- **ARIA labelling** on cards, board, header and the language switcher, so a screen-reader player knows what is face-up, what is matched and how many steps they've taken.
+- **Semantic structure** — landmarks and headings, not a soup of divs.
+- **`prefers-reduced-motion`** honoured throughout.
 
-```
+---
+
+## Project Structure
+
+```text
 src/
-├── components/          # React components
-│   ├── pages/          # Route-level components
-│   └── ui/             # Reusable UI components
-├── hooks/              # Custom React hooks (useGame)
-├── utils/              # Helper functions & config
-├── locales/            # i18n translation files
-└── styles/             # Global CSS with design tokens
+├── components/
+│   ├── pages/        # StartScreen · GameScreen · ResultScreen
+│   └── ui/           # Card · GameBoard · GameHeader · GameModal · Navigation · LanguageSwitcher
+├── hooks/            # useGame — all game logic in one place
+├── utils/            # helpers, i18n setup, path handling, pluralisation, settings
+├── data/             # deck definitions
+└── styles/           # global CSS with design tokens
 ```
 
-**Key Technologies:**
-- React 19 with hooks
-- React Router 7 for SPA routing
-- react-i18next for internationalization
-- Webpack 5 with optimizations
-- CSS3 with custom properties
-
-**📖 Detailed Documentation:**
-- [Architecture Decisions](public/docs/ARCHITECTURE.md) — System design and patterns
-- [Tech Stack Overview](public/docs/TECH_STACK.md) — Technologies and tools
-- [Future Roadmap](public/docs/ROADMAP.md) — Planned enhancements
-
-<details>
-<summary><b>💡 Code Quality Example — Custom Hook Architecture</b></summary>
-
-```javascript
-// Custom hook with optimized game logic
-const useGame = (images) => {
-  const [finishedItems, setFinishedItems] = useState([]);
-  const [stepsCount, setStepsCount] = useState(0);
-  const [errors, setErrors] = useState(0);
-
-  const checkItems = (firstItem, secondItem) => {
-    const firstImage = images.find(({id}) => id === firstItem);
-    const secondImage = images.find(({id}) => id === secondItem);
-    
-    if (firstImage.url === secondImage.url) {
-      setFinishedItems((items) => [...items, firstItem, secondItem]);
-    } else {
-      setErrors((e) => e + 1);
-    }
-    setStepsCount((i) => i + 1);
-  };
-
-  const isWin = finishedItems.length > 0 && 
-                finishedItems.length === images.length;
-
-  return { finishedItems, stepsCount, errors, checkItems, isWin };
-};
-```
-
-**Why this approach?**
-- Clean separation of business logic from UI
-- Immutable state updates for predictable behavior
-- Easy to test and maintain
-- Follows React best practices
-
-</details>
+The game's rules live entirely in **`useGame`** — the components render state and report clicks, nothing more. That separation is what keeps the screens small and the logic testable.
 
 ---
 
-## 🧪 Quality Assurance
-
-This project includes comprehensive testing documentation:
-
-- ✅ **[Manual Testing Checklist](public/docs/testing/manual-testing-checklist.md)** — Cross-browser compatibility
-- ♿ **[Accessibility Audit](public/docs/testing/accessibility-checklist.md)** — WCAG AA compliance
-- ⚡ **[Performance Benchmarks](public/docs/testing/performance-benchmarks.md)** — Core Web Vitals
-
----
-
-## 🚀 Deployment
-
-Deployed on **GitHub Pages** with automatic CI/CD:
+## Getting Started
 
 ```bash
-npm run deploy  # Builds and deploys to gh-pages branch
+npm install
+npm start        # dev server, opens automatically
+npm run build    # production build → dist/
 ```
 
-**Production Features:**
-- SPA routing with 404 fallback
-- Asset optimization and caching
-- SEO-friendly meta tags
-- Social media preview cards
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `npm start` | dev server with hot reload |
+| `npm run build` | production build |
+| `npm run deploy` | build + publish to the `gh-pages` branch |
+| `npm run serve` | serve the built `dist/` locally |
+| `npm run analyze` | bundle analyzer — the source of the numbers above |
 
 ---
 
-## 📝 License
+## Documentation
 
-MIT License — feel free to use this code for learning and inspiration.
-
----
-
-## 💼 Portfolio Highlight
-
-This project demonstrates:
-- ✅ Modern React development practices
-- ✅ Performance-focused architecture  
-- ✅ Accessibility compliance (WCAG AA)
-- ✅ Production-ready deployment pipeline
-- ✅ Comprehensive documentation
-
-**Perfect for:** Frontend Developer / React Developer / Senior Frontend Engineer positions
+- **[Architecture](public/docs/ARCHITECTURE.md)** — system design and the patterns behind it
+- **[Tech Stack](public/docs/TECH_STACK.md)** — what each tool is doing here and why
+- **[Roadmap](public/docs/ROADMAP.md)** — planned work
+- **[Manual testing checklist](public/docs/testing/manual-testing-checklist.md)** — cross-browser and cross-device passes
+- **[Accessibility audit](public/docs/testing/accessibility-checklist.md)** — WCAG AA verification
+- **[Performance benchmarks](public/docs/testing/performance-benchmarks.md)** — Core Web Vitals
 
 ---
 
-<div align="center">
+## License
 
-**Built with ❤️ using React 19 and modern web standards**
+MIT
 
-[🎮 Play Now](https://olgagulyakevich.github.io/memory-game/) • [💼 LinkedIn](https://www.linkedin.com/in/olga-gulyakevich-ab166674/) • [📧 Contact](mailto:olga.gulyakevi4@gmail.com)
+## Author
 
-</div>
+<a href="https://github.com/OlgaGulyakevich"><img src="https://wsrv.nl/?url=github.com/OlgaGulyakevich.png&w=96&h=96&mask=circle" width="48" height="48" alt="Olga Gulyakevich" align="left"></a>
+
+**Olga Gulyakevich** — Frontend Developer
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/OlgaGulyakevich)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/olga-gulyakevich-ab166674/)
+
+<br clear="left"/>
