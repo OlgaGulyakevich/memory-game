@@ -48,7 +48,7 @@ https://github.com/user-attachments/assets/040afd26-1f54-46b3-ae41-520d11f48d38
 
 ## ✨ Highlights
 
-<table>
+<table align="center">
 <tr>
 <td width="50%">
 
@@ -144,6 +144,7 @@ Each theme features hand-picked imagery optimized for performance.
 ---
 
 ## 📊 Performance Metrics
+<div align="center">
 
 | Metric | Desktop | Mobile | Target |
 |--------|---------|--------|--------|
@@ -151,6 +152,8 @@ Each theme features hand-picked imagery optimized for performance.
 | **FCP** | 0.4s | 1.0s | <1.8s ✅ |
 | **LCP** | 0.6s | 2.3s | <2.5s ✅ |
 | **Bundle Size** | 115KB gzipped | — | <250KB ✅ |
+
+</div>
 
 <details>
 <summary>📦 Bundle Composition (click to expand)</summary>
