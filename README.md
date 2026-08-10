@@ -68,6 +68,8 @@ No UI kit and no animation library — the board, the cards and the flip are han
 - **`React.memo` on the card** — a board of 16+ cards re-renders only what changed on each flip.
 - **Images optimised** to WebP with fallbacks.
 
+</div>
+
 <details>
 <summary>Bundle composition</summary>
 
