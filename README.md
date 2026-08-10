@@ -7,11 +7,9 @@
 [![PageSpeed 100](https://img.shields.io/badge/PageSpeed-100·100·100·100-00C853?logo=lighthouse&logoColor=white)](#quality--engineering)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue)](#license)
 
-**A multilingual memory card game — tactile 3D card flips, three themed decks, and a 115 KB bundle that still scores Lighthouse 98.**
+**A multilingual memory card game — tactile 3D card flips, three themed decks, and a 115 KB bundle that still scores PageSpeed 100.**
 
-<p align="center">
-  <a href="https://olgagulyakevich.github.io/memory-game/"><img src="public/img/screenshots/game-preview.jpg" width="100%" alt="Memory Game — the board mid-round, cards flipping"/></a>
-</p>
+https://github.com/user-attachments/assets/040afd26-1f54-46b3-ae41-520d11f48d38
 
 ## Live Demo
 
@@ -26,20 +24,6 @@ The whole game *is* an interaction, so the motion has one job: make a flip feel 
 - **3D card flip** — `rotateY` on a preserved-3d container with a backface-hidden face, so the card turns rather than cross-fades. GPU-only (`transform`), no layout or paint per frame.
 - **Mismatch feedback** — a wrong pair stays visible long enough to be memorised, then turns back; the delay is the game mechanic, not a decoration.
 - **Reduced motion respected** — animations are gated behind `prefers-reduced-motion`, so a player who asks the OS for less movement still gets the full game, just without the spin.
-
----
-
-## Gameplay
-
-Press play — card flips, matches and the step counter in a full round:
-
-https://github.com/user-attachments/assets/040afd26-1f54-46b3-ae41-520d11f48d38
-
-<p align="center">
-  <img src="public/img/screenshots/mobile-responsive-1.jpg" width="45%" alt="Home screen on mobile, portrait"/>
-  &nbsp;&nbsp;
-  <img src="public/img/screenshots/mobile-responsive-2.jpg" width="45%" alt="In-game screen on mobile, portrait"/>
-</p>
 
 ---
 
@@ -86,7 +70,7 @@ Total gzipped: **115.44 KB**
 
 </details>
 
-> Quality here is verified by **documented manual QA**, not an automated suite — see the checklists below. Automated tests are on the roadmap.
+> Quality here is verified by **documented manual QA** — cross-browser passes and a WCAG AA audit — not by an automated suite. Automated tests are on the roadmap.
 
 ---
 
@@ -134,17 +118,6 @@ npm run build    # production build → dist/
 | `npm run deploy` | build + publish to the `gh-pages` branch |
 | `npm run serve` | serve the built `dist/` locally |
 | `npm run analyze` | bundle analyzer — the source of the numbers above |
-
----
-
-## Documentation
-
-- **[Architecture](public/docs/ARCHITECTURE.md)** — system design and the patterns behind it
-- **[Tech Stack](public/docs/TECH_STACK.md)** — what each tool is doing here and why
-- **[Roadmap](public/docs/ROADMAP.md)** — planned work
-- **[Manual testing checklist](public/docs/testing/manual-testing-checklist.md)** — cross-browser and cross-device passes
-- **[Accessibility audit](public/docs/testing/accessibility-checklist.md)** — WCAG AA verification
-- **[Performance benchmarks](public/docs/testing/performance-benchmarks.md)** — Core Web Vitals
 
 ---
 
